@@ -77,8 +77,10 @@ async def get_todos(user_id: int):
       repo = RequestsRepo(session)
     finally:
       await session.close()
-    content = {}
+    content = []
     todos = await repo.todos.select_todos(user_id)
+    for todo in todos:
+      
     
 @app.get("/api/get_todos_calendar/{time}")
 async def get_todos_calendar(time: datetime.time):
@@ -90,4 +92,5 @@ async def get_todos_calendar(time: datetime.time):
 
     finally:
       await session.close()
-    todos = await repo.todos.select_todos_calendar
+    todos = await repo.todos.select_todos_calendar(time)
+    
