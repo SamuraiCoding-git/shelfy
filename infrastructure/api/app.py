@@ -77,5 +77,17 @@ async def get_todos(user_id: int):
       repo = RequestsRepo(session)
     finally:
       await session.close()
+    content = {}
     todos = await repo.todos.select_todos(user_id)
+    
+@app.get("/api/get_todos_calendar/{time}")
+async def get_todos_calendar(time: datetime.time):
+  async with engine.begin() as conn:
+    await conn.run_sync(ToDo.metadata.create_all, checkfirst=True)
+  async with session_pool() as session:
+    try:
+      repo = RequestsRepo(session)
 
+    finally:
+      await session.close()
+    todos = await repo.todos.select_todos_calendar
