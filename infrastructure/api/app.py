@@ -80,6 +80,16 @@ async def get_todos(user_id: int):
     content = []
     todos = await repo.todos.select_todos(user_id)
     for todo in todos:
+      content.append({
+      "id": todo.id,
+      "time": todo.time,
+      "duration": todo.duration,
+      "status": todo.status,
+      "title": todo.title,
+      "description": todo.description,
+      "badges": todo.badges
+    })
+    return JSONResponse(status_code=200, content=content)
       
     
 @app.get("/api/get_todos_calendar/{time}")
@@ -89,8 +99,19 @@ async def get_todos_calendar(time: datetime.time):
   async with session_pool() as session:
     try:
       repo = RequestsRepo(session)
-
     finally:
       await session.close()
+    content = []
     todos = await repo.todos.select_todos_calendar(time)
+    for todo in todos:
+      content.append({
+      "id": todo.id,
+      "time": todo.time,
+      "duration": todo.duration,
+      "status": todo.status,
+      "title": todo.title,
+      "description": todo.description,
+      "badges": todo.badges
+    })
+    return JSONResponse(status_code=200, content=content)
     
