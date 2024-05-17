@@ -55,5 +55,9 @@ class TodoRepo(BaseRepo):
     return result.scalar_one()
 
   async def select_todos(self, user_id):
-    query = select([ToDo.time, ToDo.duration, ToDo.status, ToDo.title, ToDo.description, ToDo.badges]).where(ToDo.user_id == user_id)
+    query = select([ToDO.id, ToDo.time, ToDo.duration, ToDo.status, ToDo.title, ToDo.description, ToDo.badges]).where(ToDo.user_id == user_id)
+    return await self.session.scalars(query)
+
+  async def select_todos_calendar(self, time):
+    query = select([ToDO.id, ToDo.time, ToDo.duration, ToDo.status, ToDo.title, ToDo.description, ToDo.badges]).where(ToDo.time == time)
     return await self.session.scalars(query)
