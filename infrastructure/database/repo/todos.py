@@ -44,3 +44,7 @@ class TodoRepo(BaseRepo):
   async def select_todos_calendar(self, time):
     query = select(ToDo).where(ToDo.time == time)
     return await self.session.scalars(query)
+
+  async def update_badges(self, user_id, id):
+    query = update()
+  
