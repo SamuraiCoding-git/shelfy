@@ -11,14 +11,14 @@
     },
     {
       "id": 2,
-      "time": "2024-05-16T10:00:00",
+      "time": "2024-05-17T10:00:00",
       "status": false,
       "title": "Morning run",
       "badges": ["sport", "health"]
     },
     {
       "id": 3,
-      "time": "2024-05-16T11:00:00",
+      "time": "2024-05-17T11:00:00",
       "status": false,
       "title": "Reading a book",
       "description": "Read '1984' by George Orwell",
@@ -26,7 +26,7 @@
     },
     {
       "id": 4,
-      "time": "2024-05-16T13:00:00",
+      "time": "2024-05-17T13:00:00",
       "status": false,
       "title": "Work meeting",
       "description": "Weekly project team meeting",
@@ -34,7 +34,7 @@
     },
     {
       "id": 5,
-      "time": "2024-05-16T15:00:00",
+      "time": "2024-05-17T15:00:00",
       "status": true,
       "title": "Shopping at the store",
       "description": "Buy groceries for the week",
@@ -42,7 +42,7 @@
     },
     {
       "id": 6,
-      "time": "2024-05-16T16:00:00",
+      "time": "2024-05-18T16:00:00",
       "status": false,
       "title": "Study",
       "description": "Learn a new programming topic",
@@ -50,7 +50,7 @@
     },
     {
       "id": 7,
-      "time": "2024-05-02T18:00:00",
+      "time": "2024-05-19T18:00:00",
       "status": false,
       "title": "Yoga",
       "description": "One-hour yoga session",
@@ -66,7 +66,7 @@
     },
     {
       "id": 9,
-      "time": "2024-05-02T20:00:00",
+      "time": "2024-05-20T20:00:00",
       "status": false,
       "title": "Playing chess",
       "description": "Play chess with a friend online",
@@ -74,7 +74,7 @@
     },
     {
       "id": 10,
-      "time": "2024-05-03T21:00:00",
+      "time": "2024-05-21T21:00:00",
       "status": false,
       "title": "Preparing for tomorrow",
       "description": "Get ready for tomorrow's events",

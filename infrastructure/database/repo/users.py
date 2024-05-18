@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import select, update
 from sqlalchemy.dialects.postgresql import insert
 
 from infrastructure.database.models import User
@@ -10,14 +10,14 @@ class UserRepo(BaseRepo):
         self,
         id: int,
         name: str,
-        friends: int,
-        invitation: int,
-        achievements: int,
-        currentLeague: str,
-        taskCompleted: int,
-        userImageProfile: str,
-        burningDays: int,
-        tokenBalance: int,
+        friends: int = 0,
+        invitation: int = 0,
+        achievements: int = 0,
+        currentLeague: str = "First",
+        taskCompleted: int = 0,
+        userImageProfile: str = None,
+        burningDays: int = 0,
+        tokenBalance: int = 0,
     ):
         """
         Creates or updates a new user in the database and returns the user object.
@@ -63,8 +63,19 @@ class UserRepo(BaseRepo):
         result = await self.session.execute(insert_stmt)
 
         await self.session.commit()
+        await self.session.close()
         return result.scalar_one()
 
     async def select_user(self, id):
         query = select(User).where(User.id == id)
         return await self.session.scalar(query)
+
+    async def update_balance(self, user_id: int, newTokenBalance: int):
+        user = await self.select_user(user_id)
+        balance = user.tokenBalance
+        new_balance = balance + newTokenBalance
+        update_stmt = (update(User).where(User.id == user_id).values(newTokenBalance=new_balance))
+        await self.session.execute(update_stmt)
+        await self.session.commit()
+        await self.session.close()
+        return new_balance
