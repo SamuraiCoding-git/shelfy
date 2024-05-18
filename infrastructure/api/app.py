@@ -223,4 +223,9 @@ async def update_badges(user_id: int, id: int, badges: str):
   }
   return JSONResponse(status_code=200, content=content)
   
-  
+@app.get("/api/get_ref_link/{id}")
+async def get_ref_link(id: int):
+    content = {
+      f"https://t.me/example_bot_name?start={id}"
+    }
+  return JSONResponse(status_code=200, content=content)
