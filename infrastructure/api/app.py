@@ -229,3 +229,7 @@ async def get_ref_link(id: int):
       f"https://t.me/example_bot_name?start={id}"
     }
   return JSONResponse(status_code=200, content=content)
+
+@app.post("/api/complete_todo/{user_id}/{id}")
+async def complete_task(user_id: int, id: int):
+  
