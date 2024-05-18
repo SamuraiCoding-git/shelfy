@@ -46,10 +46,17 @@ class TodoRepo(BaseRepo):
     return await self.session.scalars(query)
 
   async def update_badges(self, user_id, id, badges):
-    query = update(ToDo).where(ToDo.user_id == user_id, ToDo.id == id).values(badges=badges)
+    query = update(ToDo).where(and_(ToDo.user_id == user_id, ToDo.id == id)).values(badges=badges)
     await self.session.execute(update_stmt)
     await self.session.commit()
     await self.session.close()
     return badges
+
+async def update_status(self, user_id, id):
+    query = update(Todo).where(and_(ToDo.user_id == user_id, ToDo.id == id)).values(status=True)
+    await self.session.execute(update_stmt)
+    await self.session.commit()
+    await self.session.close()
+    return True
     
   
