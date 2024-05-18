@@ -47,5 +47,9 @@ class TodoRepo(BaseRepo):
 
   async def update_badges(self, user_id, id, badges):
     query = update(ToDo).where(ToDo.user_id == user_id, ToDo.id == id).values(badges=badges)
+    await self.session.execute(update_stmt)
+    await self.session.commit()
+    await self.session.close()
+    return badges
     
   
