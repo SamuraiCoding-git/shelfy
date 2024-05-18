@@ -206,3 +206,21 @@ async def get_leaderboard(period: str, number_of_users: int):
         "all_time": leader.all_time
       })
   return JSONResponse(status_code=200, content=content)
+
+@app.post("/api/update_badges/{user_id}/{id}/{badges}")
+async def update_badges(user_id: int, id: int, badges: str):
+  badges = ast.literal_eval(badges)
+  async with engine.begin() as conn:
+    await conn.run_sync(Leaderboard.metadata.create_all, checkfirst=True)
+  async with session_pool() as session:
+    try:
+      repo = RequestsRepo(session)
+    finally:
+      await session.close()
+  badges = await repo.todos.update_badges(user_id, id, badges)
+  content = {
+    "badges": badges
+  }
+  return JSONResponse(status_code=200, content=content)
+  
+  
