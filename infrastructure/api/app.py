@@ -232,4 +232,16 @@ async def get_ref_link(id: int):
 
 @app.post("/api/complete_todo/{user_id}/{id}")
 async def complete_task(user_id: int, id: int):
+  async with engine.begin() as conn:
+    await conn.run_sync(Leaderboard.metadata.create_all, checkfirst=True)
+  async with session_pool() as session:
+    try:
+      repo = RequestsRepo(session)
+    finally:
+      await session.close()
+  status = await repo.todos.update_status(user_id, id)
+  content = {
+    "status": status
+  }
+  return JSONResponse(status_code=200, content=content)
   
