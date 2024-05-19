@@ -207,6 +207,7 @@ async def get_leaderboard(period: str, number_of_users: int):
       })
   return JSONResponse(status_code=200, content=content)
 
+
 @app.post("/api/update_badges/{user_id}/{id}/{badges}")
 async def update_badges(user_id: int, id: int, badges: str):
   badges = ast.literal_eval(badges)
@@ -222,13 +223,15 @@ async def update_badges(user_id: int, id: int, badges: str):
     "badges": badges
   }
   return JSONResponse(status_code=200, content=content)
-  
+
+
 @app.get("/api/get_ref_link/{id}")
 async def get_ref_link(id: int):
-    content = {
-      f"https://t.me/example_bot_name?start={id}"
-    }
+  content = {
+    f"https://t.me/example_bot_name?start={id}"
+  }
   return JSONResponse(status_code=200, content=content)
+
 
 @app.post("/api/complete_todo/{user_id}/{id}")
 async def complete_task(user_id: int, id: int):
@@ -244,4 +247,3 @@ async def complete_task(user_id: int, id: int):
     "status": status
   }
   return JSONResponse(status_code=200, content=content)
-  
