@@ -28,7 +28,7 @@ const WeekDays = () => {
     };
 
     return (
-        <div className="flex overflow-x-auto gap-4 scrollbar-hide overflow-y-hidden">
+        <div className="flex overflow-x-auto gap-4 scrollbar-hide overflow-y-hidden scrollbar-hide">
             {daysOfWeek.map((day, index) => (
                 <WeekDayCard
                     key={index}
