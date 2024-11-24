@@ -6,7 +6,7 @@ import UserStatistics from "../components/UserStatistics.jsx";
 const Home = () => {
     return (
         <div>
-            <div className="p-4 flex flex-col gap-4">
+            <div className="p-4 flex flex-col gap-8">
                 <UserStatistics/>
                 <WeekDays/>
             </div>
