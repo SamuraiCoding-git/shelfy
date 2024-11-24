@@ -7,7 +7,7 @@ const WeekDayCard = ({ day, isSelected, onClick }) => {
     return (
         <button
             onClick={onClick}
-            className={`flex-none flex flex-col items-center justify-between gap-1 w-20 h-20 p-3 rounded-xl ${
+            className={`flex-none flex flex-col items-center justify-between gap-1 w-16 h-20 p-3 rounded-xl ${
                 isSelected ? 'bg-blue-600' : 'bg-gray-900'
             } focus:outline-none`}
         >
