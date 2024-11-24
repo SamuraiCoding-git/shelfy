@@ -32,8 +32,9 @@ body {
     scrollbar-width: none;
 }
 
-body::-webkit-scrollbar {
-    display: none;
+::-webkit-scrollbar { /* chrome based */
+    width: 0;  /* ширина scrollbar'a */
+    background: transparent;  /* опционально */
 }
 
 button {
