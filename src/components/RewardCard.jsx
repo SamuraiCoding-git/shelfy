@@ -6,21 +6,31 @@ const RewardCard = () => {
     const userId = initData.user ? initData.user.id : 422999166;
 
     const inviteUser = () => {
-        const link = `https://t.me/share/url?url=https://t.me/${initData.chat.username}/app?startapp=${userId}`
+        const link = `https://t.me/share/url?url=https://t.me/${initData.chat.username}/app?startapp=${userId}`;
         tg.openTelegramLink(link);
-    }
+    };
 
     return (
-        <div className="reward-card bg-white shadow-md rounded-lg p-4">
-            <img src="/assets/images/chest.svg" alt="chest" className="reward-image w-full h-48 object-cover rounded-t-lg" />
-            <h2 className="reward-title text-xl font-semibold mt-4"></h2>
-            <p className="reward-description text-gray-600 mt-2">Invite your friends and get rewards</p>
-            <button
-                onClick={inviteUser}
-                className="redeem-button bg-blue-500 text-white py-2 px-4 rounded mt-4 hover:bg-blue-600"
-            >
-                Get invite link
-            </button>
+        <div className="relative bg-[#1e79ff] flex h-[158px] text-white rounded-[24px]">
+            <div className="w-[60%] p-[24px_0_24px_24px] flex flex-col gap-[14px] justify-start z-[1]">
+                <h2 className="text-[20px] font-bold leading-[27px]">Invite Friends</h2>
+                <p className="inline text-[rgba(255,255,255,0.6)]">
+                    Invite your friends and get rewards
+                </p>
+                <button
+                    onClick={inviteUser}
+                    className="w-[154px] p-[4px_24px] bg-white text-[#1e79ff] text-[16px] font-semibold leading-[26px] rounded-[12px]"
+                >
+                    Get invite link
+                </button>
+            </div>
+            <div className="relative w-[182px] rounded-[24px]">
+                <img
+                    src="/assets/images/chest.svg"
+                    alt="chest"
+                    className="absolute top-0 right-0 rounded-[24px] object-contain"
+                />
+            </div>
         </div>
     );
 };
