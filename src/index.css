@@ -28,6 +28,12 @@ body {
     height: 100vh;
     background-color: rgb(16, 17, 20);
     color: var(--primary-text-color);
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
 
 button {
