@@ -1,12 +1,13 @@
 import React from 'react';
-import { useInitData,  from "@vkruglikov/react-telegram-web-app"
 
 const RewardCard = () => {
-    const [initDataUnsafe, initData] = useInitData();
-    const userId = initDataUnsafe.user ? initDataUnsafe.user.id : 422999166;
+    const tg = window.Telegram.WebApp;
+    const initData = tg.initDataUnsafe;
+    const userId = initData.user ? initData.user.id : 422999166;
 
-    const inviteLink = () => {
-
+    const inviteUser = () => {
+        const link = `https://t.me/share/url?url=https://t.me/${initData.chat.username}/app?startapp=${userId}`
+        tg.openTelegramLink(link);
     }
 
     return (
