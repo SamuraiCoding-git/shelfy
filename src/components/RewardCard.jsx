@@ -11,11 +11,11 @@ const RewardCard = () => {
     };
 
     return (
-        <div className="relative bg-[#1e79ff] flex h-[158px] text-white rounded-[24px]">
-            <div className="w-[60%] p-[24px_0_24px_24px] flex flex-col gap-[14px] justify-start z-[1]">
-                <h2 className="text-[20px] font-bold leading-[27px]">Invite Friends</h2>
-                <p className="inline text-[rgba(255,255,255,0.6)]">
-                    Invite your friends and get rewards
+        <div className="relative bg-[#1e79ff] flex h-[158px] text-white rounded-[24px] overflow-hidden">
+            <div className="relative z-10 w-[60%] p-[24px_0_24px_24px] flex flex-col gap-[14px] justify-start">
+                <p className="text-[20px] font-bold leading-[27px]">
+                    Invite your friends and get{' '}
+                    <a className="inline text-[rgba(255,255,255,0.6)]">rewards</a>
                 </p>
                 <button
                     onClick={inviteUser}
@@ -24,13 +24,11 @@ const RewardCard = () => {
                     Get invite link
                 </button>
             </div>
-            <div className="relative w-[182px] rounded-[24px]">
-                <img
-                    src="/assets/images/chest.svg"
-                    alt="chest"
-                    className="absolute top-0 right-0 rounded-[24px] object-contain"
-                />
-            </div>
+            <img
+                src="/assets/images/chest.svg"
+                alt="chest"
+                className="absolute top-0 right-0 h-full object-contain"
+            />
         </div>
     );
 };
