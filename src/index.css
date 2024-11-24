@@ -22,6 +22,8 @@
 html {
     font-family: 'Gilroy', sans-serif;
     scroll-behavior: smooth;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
 body {
@@ -32,9 +34,9 @@ body {
     scrollbar-width: none;
 }
 
-body::-webkit-scrollbar { /* chrome based */
-    width: 0;  /* ширина scrollbar'a */
-    background: transparent;  /* опционально */
+::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
 }
 
 button {

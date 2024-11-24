@@ -9,7 +9,7 @@ const Home = () => {
         <div>
             <div className="p-4 flex flex-col gap-8">
                 <UserStatistics/>
-                <WeekDays/>
+                <WeekDays className="mt-4"/>
                 <RewardCard/>
             </div>
         </div>
