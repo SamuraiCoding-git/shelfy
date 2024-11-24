@@ -6,7 +6,6 @@ const RewardCard = () => {
     const userId = initData.user ? initData.user.id : 422999166;
 
     const inviteUser = () => {
-        console.log(initData.chat)
         const link = `https://t.me/share/url?url=https://t.me/shelfy_bot_bot/app?startapp=${userId}`;
         tg.openTelegramLink(link);
     };
