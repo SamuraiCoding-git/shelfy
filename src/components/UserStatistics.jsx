@@ -21,7 +21,7 @@ const UserStatistics = () => {
                         alt="days in fire icon"
                         className="w-6" // Icon width: 24px
                     />
-                    <span className="text-lg font-medium">{formatNumber(user.burningDays)}</span>
+                    <span className="text-lg font-bold">{formatNumber(user.burningDays)}</span>
                 </div>
                 <div className="flex items-center gap-3">
                     <img
@@ -29,7 +29,7 @@ const UserStatistics = () => {
                         alt="token balance icon"
                         className="w-6" // Icon width: 24px
                     />
-                    <span className="text-lg font-medium">{formatNumber(user.tokenBalance)}</span>
+                    <span className="text-lg font-bold">{formatNumber(user.tokenBalance)}</span>
                 </div>
             </div>
             {/* Profile button */}

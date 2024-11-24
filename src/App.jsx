@@ -13,6 +13,8 @@ const router = createBrowserRouter(
 );
 
 function App() {
+    const tg = window.Telegram.WebApp;
+    tg.expand();
     return <RouterProvider router={router} />;
 }
 
