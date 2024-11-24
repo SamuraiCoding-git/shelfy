@@ -1,0 +1,14 @@
+{
+  "user": {
+    "id": 1,
+    "name": "Жмышенко Валерий Альбертович",
+    "friends": 5,
+    "invitation": 12,
+    "achievements": 3,
+    "currentLeague": "Gold",
+    "taskCompleted": 120,
+    "userImageProfile": "https://pbs.twimg.com/media/EKZ9cXdWkAA_U6B.jpg",
+    "burningDays": 365,
+    "tokenBalance": 12021
+  }
+}

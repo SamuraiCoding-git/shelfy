@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "name": "urgent",
+    "color": "#e27d60",
+    "checked": false
+  },
+  {
+    "id": 2,
+    "name": "important",
+    "color": "#8d8741",
+    "checked": false
+  },
+  {
+    "id": 3,
+    "name": "optional",
+    "color": "#e8a87c",
+    "checked": false
+  },
+  {
+    "id": 4,
+    "name": "completed",
+    "color": "#7395ae",
+    "checked": false
+  },
+  {
+    "id": 5,
+    "name": "in-progress",
+    "color": "#41b3a3",
+    "checked": false
+  },
+  {
+    "id": 6,
+    "name": "review",
+    "color": "#242582",
+    "checked": false
+  },
+  {
+    "id": 7,
+    "name": "scheduled",
+    "color": "#553d67",
+    "checked": false
+  }
+]
