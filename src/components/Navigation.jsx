@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
+import CreateNewTask from '../components/CreateNewTask';
 
 const Navigation = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [buttons, setButtons] = useState([]);
+    const [showCreateTask, setShowCreateTask] = useState(false);
 
     const absoluteIconPath = '/assets/icons/navigation';
 
@@ -51,22 +54,38 @@ const Navigation = () => {
 
     const navigateTo = (path) => {
         if (path === 'add') {
-            showCreateNewTaskComponent();
+            setShowCreateTask(true);
         } else {
             navigate(path);
         }
     };
 
-    const showCreateNewTaskComponent = () => {
-        console.log('Toggling display for new task component');
+    const closeCreateTask = () => {
+        setShowCreateTask(false);
     };
 
     return (
         <div className="flex flex-col min-h-screen">
-            <main className="flex-grow">
+            <main className="flex-grow pb-16">
                 <Outlet />
             </main>
-            <footer className="w-full h-16 bg-gray-900 bg-opacity-90 backdrop-blur-md">
+
+            {/* Animated CreateNewTask */}
+            <AnimatePresence>
+                {showCreateTask && (
+                    <motion.div
+                        initial={{ y: '100%' }}
+                        animate={{ y: 0 }}
+                        exit={{ y: '100%' }}
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                        className="fixed inset-x-0 bottom-0 bg-white shadow-lg z-20 p-6 rounded-t-2xl"
+                    >
+                        <CreateNewTask onClose={closeCreateTask} />
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            <footer className="fixed bottom-0 left-0 w-full h-16 bg-gray-900 bg-opacity-90 backdrop-blur-md z-10">
                 <div className="flex justify-between px-8 py-3">
                     {buttons.map((button, index) => (
                         <button
