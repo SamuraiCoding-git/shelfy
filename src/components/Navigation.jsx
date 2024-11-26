@@ -74,11 +74,11 @@ const Navigation = () => {
             <AnimatePresence>
                 {showCreateTask && (
                     <motion.div
-                        initial={{ y: '100%' }}
-                        animate={{ y: 0 }}
-                        exit={{ y: '100%' }}
-                        transition={{ duration: 0.3, ease: 'easeInOut' }}
-                        className="fixed inset-x-0 bottom-0 bg-white shadow-lg z-20 p-6 rounded-t-2xl"
+                        initial={{ y: '100%', opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: '100%', opacity: 0 }}
+                        transition={{ duration: 0.4, ease: 'easeInOut' }}
+                        className="fixed inset-x-0 bottom-0 bg-[#101114] shadow-lg z-20 p-6 rounded-t-2xl"
                     >
                         <CreateNewTask onClose={closeCreateTask} />
                     </motion.div>
