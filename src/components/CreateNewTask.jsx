@@ -9,12 +9,15 @@ export default function CreateNewTask({ onClose }) {
     return (
         <motion.form
             initial={{ y: "100%", opacity: 0, backgroundColor: "rgba(0,0,0,0)" }}
-            animate={{ y: 0, opacity: 1, backgroundColor: "#101114" }}
+            animate={{
+                y: 0,
+                opacity: 1,
+                backgroundColor: "#101114",
+                height: isExpanded ? "70%" : "30%",
+            }}
             exit={{ y: "100%", opacity: 0, backgroundColor: "rgba(0,0,0,0)" }}
             transition={{ duration: 0.3 }}
-            className={`fixed bottom-0 left-0 w-full z-100 p-6 pb-8 bg-[#101114] rounded-t-3xl flex flex-col transition-transform ${
-                isExpanded ? "h-[70%]" : "h-[30%]"
-            }`}
+            className="fixed bottom-0 left-0 w-full z-100 p-6 pb-8 bg-[#101114] rounded-t-3xl flex flex-col"
         >
             {/* Верхняя панель */}
             <div
@@ -49,21 +52,32 @@ export default function CreateNewTask({ onClose }) {
 
             {/* Кнопки */}
             <div className={`mt-6 ${isExpanded ? "flex flex-col gap-4" : "flex flex-row gap-2"}`}>
+                {/* Первая кнопка с текстом "Today" */}
                 <button
-                    className={`flex items-center ${
+                    className={`flex items-center gap-3 ${
                         isExpanded
                             ? "w-full justify-start px-4 py-3"
-                            : "justify-center w-12 h-12"
+                            : "justify-center px-3 py-3"
                     } bg-[#1e1f24] rounded-lg`}
                     onClick={() => console.log("Pick a date")}
                 >
-                    <img src="/assets/icons/task/calendar.svg" alt="calendar" />
-                    {isExpanded && (
-                        <span className="ml-3 text-[#1D77FF] text-sm font-semibold">
-                            Today
-                        </span>
-                    )}
+                    <img
+                        src="/assets/icons/task/calendar.svg"
+                        alt="calendar"
+                        className={`${
+                            isExpanded ? "w-5 h-5" : "w-6 h-6"
+                        }`} // Иконка одинаково выглядит в обоих состояниях
+                    />
+                    <span
+                        className={`text-sm font-semibold ${
+                            isExpanded ? "text-[#1D77FF]" : "text-[#1D77FF]"
+                        }`}
+                    >
+                        Today
+                    </span>
                 </button>
+
+                {/* Остальные кнопки */}
                 <button
                     className={`flex items-center ${
                         isExpanded
