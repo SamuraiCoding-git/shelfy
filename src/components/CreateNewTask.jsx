@@ -149,7 +149,10 @@ export default function CreateNewTask({ onClose }) {
             {showDatePicker && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white p-6 rounded-lg">
-                        <DatePicker />
+                        <DatePicker
+                            onClose={toggleDatePicker}
+                            onSave={(selectedDate) => console.log("Selected date and time:", selectedDate)}
+                        />
                         <button
                             className="mt-4 w-full bg-blue-500 text-white py-2 rounded"
                             onClick={toggleDatePicker}
