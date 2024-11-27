@@ -65,4 +65,4 @@ export default function DatePicker({ onClose, onSave }) {
             </div>
         </div>
     );
-}
+};
