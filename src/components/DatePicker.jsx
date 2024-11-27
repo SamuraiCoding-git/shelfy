@@ -1,68 +1,83 @@
 import React, { useState } from "react";
 
 const DatePicker = () => {
-    const [hours, setHours] = useState(0);
-    const [minutes, setMinutes] = useState(0);
     const [date, setDate] = useState(new Date());
-
-    const incrementHour = () => setHours((prev) => (prev + 1) % 24);
-    const decrementHour = () => setHours((prev) => (prev - 1 + 24) % 24);
-    const incrementMinute = () => setMinutes((prev) => (prev + 1) % 60);
-    const decrementMinute = () => setMinutes((prev) => (prev - 1 + 60) % 60);
+    const [time, setTime] = useState("");
+    const [repeat, setRepeat] = useState("None");
 
     const saveCalendar = () => {
-        console.log("Saved date:", date);
-        console.log("Time:", `${hours}:${minutes}`);
+        alert(`Date: ${date.toDateString()}, Time: ${time}, Repeat: ${repeat}`);
     };
 
     return (
-        <div className="text-white">
-            <div className="flex items-center justify-center gap-2 mb-4">
-                <div className="flex flex-col items-center justify-center gap-1">
-                    <button
-                        className="bg-blue-500 text-white border-none p-1 rounded cursor-pointer hover:bg-blue-700 text-lg"
-                        onClick={incrementHour}
-                    >
-                        ▲
-                    </button>
-                    <div className="font-sans text-xl">{hours.toString().padStart(2, "0")}</div>
-                    <button
-                        className="bg-blue-500 text-white border-none p-1 rounded cursor-pointer hover:bg-blue-700 text-lg"
-                        onClick={decrementHour}
-                    >
-                        ▼
-                    </button>
+        <div className="flex flex-col items-center p-6 bg-gray-900 text-white rounded-lg max-w-md mx-auto shadow-lg">
+            {/* Calendar */}
+            <div className="w-full text-center mb-6">
+                <div className="text-xl font-semibold mb-2">{date.toLocaleString("default", { month: "long", year: "numeric" })}</div>
+                <div className="grid grid-cols-7 gap-1 text-gray-400">
+                    {["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"].map((day) => (
+                        <div key={day} className="text-sm font-medium">{day}</div>
+                    ))}
                 </div>
-                <span className="text-xl">:</span>
-                <div className="flex flex-col items-center justify-center gap-1">
-                    <button
-                        className="bg-blue-500 text-white border-none p-1 rounded cursor-pointer hover:bg-blue-700 text-lg"
-                        onClick={incrementMinute}
-                    >
-                        ▲
-                    </button>
-                    <div className="font-sans text-xl">{minutes.toString().padStart(2, "0")}</div>
-                    <button
-                        className="bg-blue-500 text-white border-none p-1 rounded cursor-pointer hover:bg-blue-700 text-lg"
-                        onClick={decrementMinute}
-                    >
-                        ▼
-                    </button>
+                <div className="grid grid-cols-7 gap-1 mt-2">
+                    {Array.from({ length: 31 }, (_, i) => (
+                        <button
+                            key={i}
+                            onClick={() => setDate(new Date(date.getFullYear(), date.getMonth(), i + 1))}
+                            className={`py-1 rounded ${
+                                date.getDate() === i + 1 ? "bg-blue-500 text-white" : "hover:bg-gray-800"
+                            }`}
+                        >
+                            {i + 1}
+                        </button>
+                    ))}
                 </div>
             </div>
 
-            <div className="max-w-full mb-4">
-                <input
-                    type="date"
-                    className="w-full p-2 border rounded bg-gray-800 text-white"
-                    value={date.toISOString().split("T")[0]}
-                    onChange={(e) => setDate(new Date(e.target.value))}
-                />
+            {/* Time and Repeat Options */}
+            <div className="w-full bg-gray-800 p-4 rounded-lg mb-4">
+                <div className="flex justify-between items-center mb-3">
+          <span className="flex items-center gap-2">
+            <span className="material-icons">access_time</span>
+            Time
+          </span>
+                    <select
+                        value={time}
+                        onChange={(e) => setTime(e.target.value)}
+                        className="bg-gray-900 text-white border-none rounded px-2 py-1 focus:outline-none"
+                    >
+                        <option value="">None</option>
+                        {Array.from({ length: 24 }, (_, h) =>
+                            ["00", "15", "30", "45"].map((m) => (
+                                <option key={`${h}:${m}`} value={`${h}:${m}`}>
+                                    {`${h.toString().padStart(2, "0")}:${m}`}
+                                </option>
+                            ))
+                        )}
+                    </select>
+                </div>
+                <div className="flex justify-between items-center">
+          <span className="flex items-center gap-2">
+            <span className="material-icons">autorenew</span>
+            Add repeats
+          </span>
+                    <select
+                        value={repeat}
+                        onChange={(e) => setRepeat(e.target.value)}
+                        className="bg-gray-900 text-white border-none rounded px-2 py-1 focus:outline-none"
+                    >
+                        <option value="None">None</option>
+                        <option value="Daily">Daily</option>
+                        <option value="Weekly">Weekly</option>
+                        <option value="Monthly">Monthly</option>
+                    </select>
+                </div>
             </div>
 
+            {/* Save Button */}
             <button
-                className="w-full mt-6 bg-blue-500 text-white font-bold text-lg py-3 rounded text-center hover:bg-blue-700"
                 onClick={saveCalendar}
+                className="w-full py-3 bg-blue-500 rounded-lg text-lg font-semibold hover:bg-blue-700"
             >
                 Save
             </button>
