@@ -93,7 +93,7 @@ export default function CreateNewTask({ onClose }) {
                     } bg-[#1e1f24] rounded-lg`}
                     onClick={() => console.log("Add Reminder")}
                 >
-                    <img src="/assets/icons/task/notification.svg" alt="notification" />
+                    <img src="/assets/icons/task/notification.svg" alt="notification"/>
                     {isExpanded && (
                         <span className="ml-3 text-white text-sm font-semibold">
                             Add Reminder
@@ -108,28 +108,45 @@ export default function CreateNewTask({ onClose }) {
                     } bg-[#1e1f24] rounded-lg`}
                     onClick={() => console.log("Assign Tags")}
                 >
-                    <img src="/assets/icons/task/tag.svg" alt="tags" />
+                    <img src="/assets/icons/task/tag.svg" alt="tags"/>
                     {isExpanded && (
                         <span className="ml-3 text-white text-sm font-semibold">
                             Assign Tags
                         </span>
                     )}
                 </button>
-                <button
-                    className={`flex items-center ${
-                        isExpanded
-                            ? "w-full justify-start px-4 py-3"
-                            : "justify-center w-12 h-12"
-                    } bg-[#1e1f24] rounded-lg`}
-                    onClick={toggleExpanded}
-                >
-                    <img src="/assets/icons/task/more.svg" alt="more" />
-                    {isExpanded && (
+                {!isExpanded && (
+                    <button
+                        className="flex items-center justify-center w-12 h-12 bg-[#1e1f24] rounded-lg"
+                        onClick={toggleExpanded}
+                    >
+                        <img src="/assets/icons/task/more.svg" alt="more"/>
+                    </button>
+                )}
+                {isExpanded && (
+                    <button
+                    className={`flex items-center w-full justify-start px-4 py-3 bg-[#1e1f24] rounded-lg`}
+                    onClick={() => console.log("Assign Tags")}
+                    >
+                        <img src="/assets/icons/habit.svg" alt="tags"/>
+
                         <span className="ml-3 text-white text-sm font-semibold">
-                            More Options
+                            Make it a habit
                         </span>
-                    )}
-                </button>
+                    </button>
+                )}
+                {isExpanded && (
+                    <button
+                        className={`flex items-center w-full justify-start px-4 py-3 bg-[#1e1f24] rounded-lg`}
+                        onClick={() => console.log("Assign Tags")}
+                    >
+                        <img src="/assets/icons/gallery.svg" alt="tags"/>
+
+                        <span className="ml-3 text-white text-sm font-semibold">
+                            Add image
+                        </span>
+                    </button>
+                )}
             </div>
         </motion.form>
     );
