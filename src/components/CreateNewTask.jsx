@@ -2,21 +2,30 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 
 export default function CreateNewTask({ onClose }) {
-    const [isExpanded, setIsExpanded] = useState(false); // Управление состоянием (сжато/расширено)
+    const [isExpanded, setIsExpanded] = useState(false);
 
     const toggleExpanded = () => setIsExpanded((prev) => !prev);
 
     return (
         <motion.form
-            initial={{ y: "100%", opacity: 0, backgroundColor: "rgba(0,0,0,0)" }}
+            initial={{ y: "100%", opacity: 0 }}
             animate={{
                 y: 0,
                 opacity: 1,
                 backgroundColor: "#101114",
                 height: isExpanded ? "70%" : "30%",
             }}
-            exit={{ y: "100%", opacity: 0, backgroundColor: "rgba(0,0,0,0)" }}
-            transition={{ duration: 0.3 }}
+            exit={{
+                y: "100%",
+                opacity: 0,
+            }}
+            transition={{
+                duration: 0.4, // Укороченная длительность для быстрого отклика
+                ease: [0.4, 0.0, 0.2, 1], // Плавная ease-out кривая
+            }}
+            style={{
+                willChange: "transform, opacity", // Оптимизация
+            }}
             className="fixed bottom-0 left-0 w-full z-100 p-6 pb-8 bg-[#101114] rounded-t-3xl flex flex-col"
         >
             {/* Верхняя панель */}
@@ -52,7 +61,6 @@ export default function CreateNewTask({ onClose }) {
 
             {/* Кнопки */}
             <div className={`mt-6 ${isExpanded ? "flex flex-col gap-4" : "flex flex-row gap-2"}`}>
-                {/* Первая кнопка с текстом "Today" */}
                 <button
                     className={`flex items-center gap-3 ${
                         isExpanded
@@ -66,7 +74,7 @@ export default function CreateNewTask({ onClose }) {
                         alt="calendar"
                         className={`${
                             isExpanded ? "w-5 h-5" : "w-6 h-6"
-                        }`} // Иконка одинаково выглядит в обоих состояниях
+                        }`}
                     />
                     <span
                         className={`text-sm font-semibold ${
@@ -77,7 +85,6 @@ export default function CreateNewTask({ onClose }) {
                     </span>
                 </button>
 
-                {/* Остальные кнопки */}
                 <button
                     className={`flex items-center ${
                         isExpanded
