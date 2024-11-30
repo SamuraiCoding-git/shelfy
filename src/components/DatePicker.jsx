@@ -1,68 +1,82 @@
-import React, { useState } from "react";
-
-export default function DatePicker({ onClose, onSave }) {
-    const [selectedDays, setSelectedDays] = useState([]);
-    const [time, setTime] = useState("12:00");
-
-    const daysOfWeek = ["1", "8", "15", "22", "29"]; // Example days to match weekly repeat logic.
-
-    const toggleDay = (day) => {
-        setSelectedDays((prev) =>
-            prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day]
-        );
+export default function DatePicker({ currentDate, onClose, onSave }) {
+    // Format the current month and year as "Mmm YYYY"
+    const formatMonthYear = (date) => {
+        const options = { year: "numeric", month: "short" };
+        return new Intl.DateTimeFormat("en-US", options).format(date); // Example: "Nov 2024"
     };
 
-    const handleSave = () => {
-        onSave({ selectedDays, time });
-        onClose();
+    // Function to get the days of the month
+    const getDaysInMonth = (date) => {
+        const startOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+        const endOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+        // Get the first day of the month
+        const firstDay = startOfMonth.getDay(); // Day of the week (0 = Sunday, 1 = Monday, etc.)
+        const lastDate = endOfMonth.getDate();
+
+        // Create an array with all the days in the month
+        const days = [];
+        for (let i = 1; i <= lastDate; i++) {
+            days.push(i);
+        }
+
+        // Add empty spaces before the first day to align correctly with the week
+        const emptyDays = Array(firstDay).fill(null);
+        return [...emptyDays, ...days];
+    };
+
+    // Get the days for the current month
+    const daysInMonth = getDaysInMonth(currentDate);
+
+    // Handle date selection
+    const handleSelectDate = (day) => {
+        if (day) {
+            const selectedDate = new Date(currentDate);
+            selectedDate.setDate(day);
+            onSave(selectedDate);
+        }
     };
 
     return (
-        <div className="p-4 bg-[#101114] rounded-lg">
-            <div className="text-white font-semibold mb-4">May 2024</div>
-            <div className="grid grid-cols-7 gap-2 text-center">
-                {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => (
-                    <button
-                        key={day}
-                        onClick={() => toggleDay(day)}
-                        className={`py-2 rounded ${
-                            selectedDays.includes(day.toString())
-                                ? "bg-[#1D77FF] text-white"
-                                : daysOfWeek.includes(day.toString())
-                                    ? "bg-[#1e1f24] text-[#1D77FF]"
-                                    : "bg-[#1e1f24] text-white"
-                        }`}
-                    >
-                        {day}
-                    </button>
-                ))}
+        <>
+            <div
+                className="absolute left-1/2 transform -translate-x-1/2 top-2 w-9 h-1 rounded bg-[#1e1f24] cursor-pointer z-10"
+                onClick={onClose}
+            />
+            <div className="relative p-6 rounded-lg shadow-lg -mt-6">
+                {/* Date at the top left */}
+                <div className="absolute top-0 left-0 p-6 text-white text-xl font-semibold">
+                    {formatMonthYear(currentDate)}
+                </div>
+
+                {/* Calendar grid */}
+                <div className="mt-12 grid grid-cols-7 gap-2 text-center text-[#AEAEB4]">
+                    {/* Weekday headers */}
+                    <div className="font-bold">Sun</div>
+                    <div className="font-bold">Mon</div>
+                    <div className="font-bold">Tue</div>
+                    <div className="font-bold">Wed</div>
+                    <div className="font-bold">Thu</div>
+                    <div className="font-bold">Fri</div>
+                    <div className="font-bold">Sat</div>
+
+                    {/* Render days of the month */}
+                    {daysInMonth.map((day, index) => (
+                        <div
+                            key={index}
+                            className={`p-4 cursor-pointer 
+                            ${day ? 'hover:bg-[#3A92FF]' : 'bg-transparent'} 
+                            ${day === currentDate.getDate() ? 'bg-[#1D77FF] text-white' : ''} 
+                            w-12 h-12 rounded-full 
+                            flex items-center justify-center 
+                            ${day ? 'border border-transparent hover:ring-2 hover:ring-[#3A92FF]' : ''}`}
+                            onClick={() => handleSelectDate(day)}
+                        >
+                            {day}
+                        </div>
+                    ))}
+                </div>
             </div>
-            <div className="mt-4">
-                <label htmlFor="time" className="block text-white text-sm mb-2">
-                    Time
-                </label>
-                <input
-                    type="time"
-                    id="time"
-                    value={time}
-                    onChange={(e) => setTime(e.target.value)}
-                    className="w-full p-2 rounded bg-[#1e1f24] text-white"
-                />
-            </div>
-            <div className="flex justify-end mt-4">
-                <button
-                    onClick={handleSave}
-                    className="bg-[#1D77FF] text-white py-2 px-4 rounded mr-2"
-                >
-                    Save
-                </button>
-                <button
-                    onClick={onClose}
-                    className="bg-[#1e1f24] text-white py-2 px-4 rounded"
-                >
-                    Cancel
-                </button>
-            </div>
-        </div>
+        </>
     );
-};
+}
