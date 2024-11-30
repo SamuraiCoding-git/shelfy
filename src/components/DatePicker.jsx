@@ -107,4 +107,4 @@ export default function DatePicker({ currentDate, onClose, onSave }) {
             </div>
         </>
     );
-}
+};
