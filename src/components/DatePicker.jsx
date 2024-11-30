@@ -1,3 +1,5 @@
+import React from 'react';
+
 export default function DatePicker({ currentDate, onClose, onSave }) {
     // Format the current month and year as "Mmm YYYY"
     const formatMonthYear = (date) => {
@@ -37,6 +39,19 @@ export default function DatePicker({ currentDate, onClose, onSave }) {
         }
     };
 
+    // Handle changing months
+    const handlePrevMonth = () => {
+        const prevMonth = new Date(currentDate);
+        prevMonth.setMonth(prevMonth.getMonth() - 1);
+        onSave(prevMonth);
+    };
+
+    const handleNextMonth = () => {
+        const nextMonth = new Date(currentDate);
+        nextMonth.setMonth(nextMonth.getMonth() + 1);
+        onSave(nextMonth);
+    };
+
     return (
         <>
             <div
@@ -44,9 +59,22 @@ export default function DatePicker({ currentDate, onClose, onSave }) {
                 onClick={onClose}
             />
             <div className="relative p-6 rounded-lg shadow-lg -mt-6">
-                {/* Date at the top left */}
-                <div className="absolute top-0 left-0 p-6 text-white text-xl font-semibold">
-                    {formatMonthYear(currentDate)}
+                {/* Header with chevrons and month/year text */}
+                <div className="flex items-center justify-between">
+                    {/* Chevron Left */}
+                    <button onClick={handlePrevMonth}>
+                        <img src="/assets/icons/task/chevron-left.svg" alt="Previous month" className="w-6 h-6" />
+                    </button>
+
+                    {/* Month and Year */}
+                    <span className="text-white text-xl font-semibold">
+                        {formatMonthYear(currentDate)}
+                    </span>
+
+                    {/* Chevron Right */}
+                    <button onClick={handleNextMonth}>
+                        <img src="/assets/icons/task/chevron-right.svg" alt="Next month" className="w-6 h-6" />
+                    </button>
                 </div>
 
                 {/* Calendar grid */}
