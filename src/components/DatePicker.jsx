@@ -55,10 +55,10 @@ export default function DatePicker({ currentDate, onClose, onSave }) {
     return (
         <>
             <div
-                className="absolute left-1/2 transform -translate-x-1/2 top-2 w-9 h-1 cursor-pointer z-10"
+                className="absolute left-1/2 transform -translate-x-1/2 top-2 w-9 h-1 rounded bg-[#1e1f24] cursor-pointer z-10"
                 onClick={onClose}
             />
-            <div className="relative p-6 rounded-lg shadow-lg -mt-6">
+            <div className="relative p-6 -mt-6">
                 {/* Header with chevrons and month/year text */}
                 <div className="flex items-center justify-between">
                     {/* Chevron Left */}
