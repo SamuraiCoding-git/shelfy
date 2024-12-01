@@ -103,7 +103,7 @@ export default function DatePicker({ currentDate, onClose, onSave }) {
                     </div>
                 )}
                 {isRepeatPickerVisible && (
-                    <div className="absolute bottom-24 right-10 w-1/2 h-1/2 flex justify-center items-center z-30">
+                    <div className="absolute bottom-20 right-10 w-1/2 h-1/2 flex justify-center items-center z-30">
                         <RepeatPicker onTimeSelect={setSelectedTime} onClose={() => setIsRepeatPickerVisible(false)} />
                     </div>
                 )}
