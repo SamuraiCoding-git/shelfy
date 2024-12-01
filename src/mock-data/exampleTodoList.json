@@ -26,12 +26,8 @@
       "description": "Let him cook",
       "tags": [
         {
-          "name": "urgent",
-          "color": "#e27d60"
-        },
-        {
-          "name": "important",
-          "color": "#8d8741"
+          "name": "Telegram",
+          "color": "#1EAEFF"
         }
       ]
     },
