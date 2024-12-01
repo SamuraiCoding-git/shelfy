@@ -15,7 +15,7 @@ export default function CreateNewTask({ onClose }) {
     };
 
     const toggleExpanded = (flag = false) => {
-        const newHeight = isExpanded ? 30 : 65;
+        const newHeight = isExpanded ? 40 : 65;
         setCurrentHeight(newHeight);
         setIsExpanded(prevState => !prevState);
         if (flag) {
@@ -30,7 +30,7 @@ export default function CreateNewTask({ onClose }) {
         if (newShowDatePicker) {
             setCurrentHeight(100);
         } else {
-            setCurrentHeight(isExpanded ? 75 : 45);
+            setCurrentHeight(isExpanded ? 75 : 40);
         }
     };
 
