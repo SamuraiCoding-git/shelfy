@@ -98,12 +98,12 @@ export default function DatePicker({ currentDate, onClose, onSave }) {
             />
             <div className="relative p-6 mt-2 w-full">
                 {isTimePickerVisible && (
-                    <div className="absolute bottom-36 -right-2 w-1/2 h-1/2 flex justify-center items-center z-10">
+                    <div className="absolute bottom-36 right-4 w-1/2 h-1/2 flex justify-center items-center z-10">
                         <TimePicker onTimeSelect={setSelectedTime} onClose={() => setIsTimePickerVisible(false)} />
                     </div>
                 )}
                 {isRepeatPickerVisible && (
-                    <div className="absolute bottom-20 right-14 w-1/2 h-1/2 flex justify-center items-center z-30">
+                    <div className="absolute bottom-20 right-16 w-1/2 h-1/2 flex justify-center items-center z-30">
                         <RepeatPicker onTimeSelect={setSelectedTime} onClose={() => setIsRepeatPickerVisible(false)} />
                     </div>
                 )}
