@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import clockGrey from "/assets/icons/clock-grey.svg";
 import arrowRepeat from "/assets/icons/arrow-repeat.svg";
 import chevronUpDown from "/assets/icons/chevron-up-down.svg";
+import TimePicker from "./TimePicker.jsx";
+import RepeatPicker from "./RepeatPicker.jsx";
 
 export default function DatePicker({ currentDate, onClose, onSave }) {
     const [selectedTime, setSelectedTime] = useState('');
@@ -95,6 +97,16 @@ export default function DatePicker({ currentDate, onClose, onSave }) {
                 onClick={() => onClose(true)}
             />
             <div className="relative p-6 mt-2 w-full">
+                {isTimePickerVisible && (
+                    <div className="absolute bottom-32 -right-2 w-1/2 h-1/2 flex justify-center items-center z-10">
+                        <TimePicker onTimeSelect={setSelectedTime} onClose={() => setIsTimePickerVisible(false)} />
+                    </div>
+                )}
+                {isRepeatPickerVisible && (
+                    <div className="absolute bottom-24 right-10 w-1/2 h-1/2 flex justify-center items-center z-30">
+                        <RepeatPicker onTimeSelect={setSelectedTime} onClose={() => setIsRepeatPickerVisible(false)} />
+                    </div>
+                )}
                 <div className="flex items-center justify-between">
                     <button onClick={handlePrevMonth}>
                         <img src="/assets/icons/task/chevron-left.svg" alt="Previous month" className="w-6 h-6"/>
@@ -133,6 +145,9 @@ export default function DatePicker({ currentDate, onClose, onSave }) {
                             {day}
                         </div>
                     ))}
+
+                    {/* Empty space to keep the grid balanced */}
+                    <div className="w-10 h-10" /> {/* Placeholder cell for alignment */}
                 </div>
 
                 <div className="mt-6 bg-[#1E1F24] px-3 rounded-xl py-1">
@@ -144,15 +159,17 @@ export default function DatePicker({ currentDate, onClose, onSave }) {
                             onClick={() => setIsTimePickerVisible(!isTimePickerVisible)}
                         />
                         <label htmlFor="time" className="text-white">Time</label>
-                        {isTimePickerVisible && (
-                            <input
-                                type="time"
-                                id="time"
-                                value={selectedTime}
-                                onChange={handleTimeChange}
-                                className="p-2 bg-[#2F3036] text-white rounded"
+                        <div className="ml-auto flex items-center">
+                            <span className="text-[#AEAEB4] ml-2 cursor-pointer">
+                                None
+                            </span>
+                            <img
+                                src={chevronUpDown}
+                                alt="Chevron"
+                                className="w-5 h-5 ml-1 cursor-pointer z-20"
+                                onClick={() => setIsTimePickerVisible(!isTimePickerVisible)}  // Or another action
                             />
-                        )}
+                        </div>
                     </div>
 
                     <div className="flex items-center mb-4">
@@ -163,23 +180,18 @@ export default function DatePicker({ currentDate, onClose, onSave }) {
                             onClick={() => setIsRepeatPickerVisible(!isRepeatPickerVisible)}
                         />
                         <label htmlFor="repeat" className="text-white">Add repeats</label>
-                        {isRepeatPickerVisible && (
-                            <div className="mt-2 bg-[#2F3036] text-white rounded p-2">
-                                <div className="cursor-pointer text-[#1D77FF]"
-                                     onClick={() => handleRepeatCountChange(1)}>
-                                    None
-                                </div>
-                                <div className="cursor-pointer" onClick={() => handleRepeatCountChange(2)}>
-                                    Daily
-                                </div>
-                                <div className="cursor-pointer" onClick={() => handleRepeatCountChange(3)}>
-                                    Weekly
-                                </div>
-                                <div className="cursor-pointer" onClick={() => handleRepeatCountChange(5)}>
-                                    Monthly
-                                </div>
-                            </div>
-                        )}
+
+                        <div className="ml-auto flex items-center">
+                            <span className="text-[#AEAEB4] ml-2 cursor-pointer">
+                                None
+                            </span>
+                            <img
+                                src={chevronUpDown}
+                                alt="Chevron"
+                                className="w-5 h-5 ml-1 cursor-pointer z-30"
+                                onClick={() => setIsRepeatPickerVisible(!isRepeatPickerVisible)}  // Or another action
+                            />
+                        </div>
                     </div>
                 </div>
 
