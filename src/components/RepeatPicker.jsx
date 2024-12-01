@@ -21,12 +21,12 @@ const TimePicker = ({ onClose }) => {
                             transition-all`}
                         onClick={() => handleSelect(value)}
                     >
-                        <span className="-ml-4">{value}</span>
+                        <span className="-mr-4">{value}</span>
                         {selected === value && (
                             <img
                                 src="/assets/icons/tick.svg" // Replace with the correct path
                                 alt="Selected"
-                                className="w-6 h-6 mr-2"
+                                className="w-6 h-6 mr-4"
                             />
                         )}
                     </li>
