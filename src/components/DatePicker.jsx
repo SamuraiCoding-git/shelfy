@@ -178,7 +178,7 @@ export default function DatePicker({ currentDate, onClose, onSave }) {
                     </div>
                 </div>
 
-                <div className="flex justify-center mt-8">
+                <div className="flex justify-center mt-6">
                     <button
                         onClick={() => handleSelectDate(currentDate.getDate())}
                         className="px-6 py-2 bg-[#1D77FF] w-full text-white font-bold rounded-xl shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl hover:from-[#8BC34A] hover:to-[#4CAF50] focus:outline-none"
