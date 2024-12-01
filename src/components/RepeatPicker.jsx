@@ -16,17 +16,17 @@ const TimePicker = ({ onClose }) => {
                 {['None', 'Daily', 'Weekly', 'Monthly'].map((value) => (
                     <li
                         key={value}
-                        className={`flex items-center justify-between cursor-pointer rounded-lg gap-48 py-2 font-medium mr-2 
+                        className={`flex items-center justify-between cursor-pointer rounded-lg gap-48 py-2 font-medium 
                             ${selected === value ? 'text-[#1D77FF]' : 'text-white'} 
                             transition-all`}
                         onClick={() => handleSelect(value)}
                     >
-                        <span className="-ml-2">{value}</span>
+                        <span className="-ml-4">{value}</span>
                         {selected === value && (
                             <img
                                 src="/assets/icons/tick.svg" // Replace with the correct path
                                 alt="Selected"
-                                className="w-6 h-6"
+                                className="w-6 h-6 mr-2"
                             />
                         )}
                     </li>
