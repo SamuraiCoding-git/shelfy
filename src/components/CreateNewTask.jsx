@@ -3,18 +3,32 @@ import { motion } from "framer-motion";
 import DatePicker from "./DatePicker"; // Import the DatePicker component
 
 export default function CreateNewTask({ onClose }) {
-    const [isExpanded, setIsExpanded] = useState(false);
-    const [showDatePicker, setShowDatePicker] = useState(false);
-    const [currentDate, setCurrentDate] = useState(new Date());
+    const [isExpanded, setIsExpanded] = useState(false); // Tracks the expanded state
+    const [showDatePicker, setShowDatePicker] = useState(false); // Controls visibility of DatePicker
+    const [currentDate, setCurrentDate] = useState(new Date()); // Stores the current date
+    const [currentHeight, setCurrentHeight] = useState(30); // Controls the height of the form
 
-    // Toggle expanded state
-    const toggleExpanded = () => setIsExpanded((prev) => !prev);
+    // Toggle the expansion state and adjust height accordingly
+    const toggleExpanded = (flag = false) => {
+        const newHeight = isExpanded ? 30 : 55; // Toggle height between 30 and 55
+        setCurrentHeight(newHeight);
+        setIsExpanded(prevState => !prevState); // Toggle expansion state using functional update
+        if (flag) {
+            setShowDatePicker(false);
+        }
+    };
 
-    // Toggle DatePicker visibility
+    // Toggle the DatePicker visibility and adjust height accordingly
     const toggleDatePicker = () => {
-        setShowDatePicker((prev) => !prev);
-        if (!isExpanded) {
-            toggleExpanded()
+        const newShowDatePicker = !showDatePicker;
+        setShowDatePicker(newShowDatePicker);
+
+        // If DatePicker is being shown, set height to 95
+        if (newShowDatePicker) {
+            setCurrentHeight(95);
+        } else {
+            // If DatePicker is hidden, revert height to the state based on expansion
+            setCurrentHeight(isExpanded ? 55 : 30);
         }
     };
 
@@ -26,7 +40,7 @@ export default function CreateNewTask({ onClose }) {
                     y: 0,
                     opacity: 1,
                     backgroundColor: "#101114",
-                    height: isExpanded ? "70%" : "30%",
+                    height: `${currentHeight}%` // Dynamically adjust the height based on state
                 }}
                 exit={{
                     y: "100%",
@@ -44,7 +58,7 @@ export default function CreateNewTask({ onClose }) {
                 {/* Top panel */}
                 <div
                     className="absolute left-1/2 transform -translate-x-1/2 top-2 w-9 h-1 rounded bg-[#1e1f24] cursor-pointer"
-                    onClick={toggleExpanded}
+                    onClick={toggleExpanded} // Toggle expand/collapse
                 />
                 <div className="flex justify-between items-center">
                     <button onClick={onClose}>
@@ -73,15 +87,13 @@ export default function CreateNewTask({ onClose }) {
                 </div>
 
                 {/* Buttons */}
-                <div className={`mt-6 ${isExpanded ? "flex flex-col gap-4" : "flex flex-row gap-2"}`}>
+                <div className={`${isExpanded ? "flex flex-col gap-4 mt-4" : "flex flex-row gap-2 mt-6"}`}>
                     <button
                         type="button"
                         className={`flex items-center gap-3 ${
                             isExpanded ? "w-full justify-start px-4 py-3" : "justify-center px-3 py-3"
                         } bg-[#1e1f24] rounded-lg`}
-                        onClick={() => {
-                            toggleDatePicker();
-                        }}
+                        onClick={toggleDatePicker} // Toggle DatePicker visibility
                     >
                         <img
                             src={`${
@@ -126,7 +138,7 @@ export default function CreateNewTask({ onClose }) {
                     {!isExpanded && (
                         <button
                             className="flex items-center justify-center w-12 h-12 bg-[#1e1f24] rounded-lg"
-                            onClick={toggleExpanded}
+                            onClick={toggleExpanded} // Toggle the expand/collapse button
                         >
                             <img src="/assets/icons/task/more.svg" alt="more"/>
                         </button>
@@ -147,16 +159,15 @@ export default function CreateNewTask({ onClose }) {
                 {/* DatePicker Transition */}
                 {showDatePicker && (
                     <div
-                        className="fixed top-0 left-0 w-full h-full bg-[#101114] p-6 flex flex-col items-start justify-start z-60" // Higher z-index
+                        className="fixed top-0 left-0 w-full h-full bg-[#101114] p-6 rounded-t-3xl flex flex-col items-start justify-start z-60"
                     >
                         <DatePicker
                             currentDate={currentDate}   // Pass the current date to DatePicker
-                            onClose={toggleDatePicker}
+                            onClose={toggleExpanded}
                             onSave={(selectedDate) => {
                                 console.log("Selected date:", selectedDate);
                                 setCurrentDate(selectedDate); // Update the current date on save
                             }}
-                            toggleExpanded={toggleExpanded}
                         />
                     </div>
                 )}

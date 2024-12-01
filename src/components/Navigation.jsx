@@ -70,18 +70,30 @@ const Navigation = () => {
                 <Outlet />
             </main>
 
-            {/* Animated CreateNewTask */}
+            {/* Overlay and Animated CreateNewTask */}
             <AnimatePresence>
                 {showCreateTask && (
-                    <motion.div
-                        initial={{ y: '100%', opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        exit={{ y: '100%', opacity: 0 }}
-                        transition={{ duration: 0.4, ease: 'easeInOut' }}
-                        className="fixed inset-x-0 bottom-0 bg-[#101114] shadow-lg z-20 p-6 rounded-t-2xl"
-                    >
-                        <CreateNewTask onClose={closeCreateTask} />
-                    </motion.div>
+                    <>
+                        {/* Dimmed overlay */}
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 0.5 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.4, ease: 'easeInOut' }}
+                            className="fixed inset-0 bg-black z-10"
+                        />
+
+                        {/* CreateNewTask Modal */}
+                        <motion.div
+                            initial={{ y: '100%', opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            exit={{ y: '100%', opacity: 0 }}
+                            transition={{ duration: 0.4, ease: 'easeInOut' }}
+                            className="fixed inset-x-0 bottom-0 bg-[#101114] shadow-lg z-20 p-6 rounded-t-2xl"
+                        >
+                            <CreateNewTask onClose={closeCreateTask} />
+                        </motion.div>
+                    </>
                 )}
             </AnimatePresence>
 
