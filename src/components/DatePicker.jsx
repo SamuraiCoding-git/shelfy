@@ -98,7 +98,7 @@ export default function DatePicker({ currentDate, onClose, onSave }) {
             />
             <div className="relative p-6 mt-2 w-full">
                 {isTimePickerVisible && (
-                    <div className="absolute bottom-40 right-10 w-1/2 h-1/2 flex justify-center items-center z-10">
+                    <div className="absolute bottom-40 right-8 w-1/2 h-1/2 flex justify-center items-center z-10">
                         <TimePicker onTimeSelect={setSelectedTime} onClose={() => setIsTimePickerVisible(false)} />
                     </div>
                 )}
