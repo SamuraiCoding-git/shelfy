@@ -6,7 +6,7 @@ export default function CreateNewTask({ onClose }) {
     const [isExpanded, setIsExpanded] = useState(false);
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [currentDate, setCurrentDate] = useState(new Date());
-    const [currentHeight, setCurrentHeight] = useState(30);
+    const [currentHeight, setCurrentHeight] = useState(35);
 
     // Функция для предотвращения отправки формы
     const handleSubmit = (e) => {
@@ -15,7 +15,7 @@ export default function CreateNewTask({ onClose }) {
     };
 
     const toggleExpanded = (flag = false) => {
-        const newHeight = isExpanded ? 40 : 65;
+        const newHeight = isExpanded ? 35 : 65;
         setCurrentHeight(newHeight);
         setIsExpanded(prevState => !prevState);
         if (flag) {
@@ -30,7 +30,7 @@ export default function CreateNewTask({ onClose }) {
         if (newShowDatePicker) {
             setCurrentHeight(100);
         } else {
-            setCurrentHeight(isExpanded ? 75 : 40);
+            setCurrentHeight(isExpanded ? 35 : 40);
         }
     };
 
