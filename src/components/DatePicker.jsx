@@ -84,6 +84,10 @@ export default function DatePicker({ currentDate, onClose, onSave }) {
 
     const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+    // Get today's date
+    const today = new Date();
+    const isToday = today.getDate() === currentDate.getDate() && today.getMonth() === currentDate.getMonth() && today.getFullYear() === currentDate.getFullYear();
+
     return (
         <>
             <div
@@ -117,11 +121,12 @@ export default function DatePicker({ currentDate, onClose, onSave }) {
                             key={index}
                             className={`
                                 p-4 cursor-pointer
-                                ${day ? 'hover:bg-[#3A92FF]' : 'bg-transparent'} 
-                                ${day === currentDate.getDate() ? 'bg-[#2B85FF] text-white' : ''} 
+                                ${day ? 'hover:bg-[#1D77FF]' : 'bg-transparent'} 
+                                ${day === today.getDate() && currentDate.getMonth() === today.getMonth() && currentDate.getFullYear() === today.getFullYear() ? 'text-[#1D77FF] hover:text-white' : ''} 
+                                ${day === currentDate.getDate() ? 'bg-[#1D77FF] text-white' : ''}
                                 w-10 h-10 rounded-full 
                                 flex items-center justify-center 
-                                ${day ? 'border border-transparent hover:ring-2 hover:ring-[#3A92FF]' : ''}
+                                ${day ? 'border border-transparent hover:ring-2 hover:ring-[#1D77FF]' : ''}
                             `}
                             onClick={() => handleSelectDate(day)}
                         >
