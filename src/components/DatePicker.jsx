@@ -121,7 +121,7 @@ export default function DatePicker({ currentDate, onClose, onSave }) {
                     </button>
                 </div>
 
-                <div className="mt-12 grid grid-cols-7 gap-4 text-white">
+                <div className="mt-8 grid grid-cols-7 gap-4 text-white">
                     {weekdays.map((day, index) => (
                         <div key={index} className="font-bold ml-3 text-[#AEAEB4]">
                             {day}
