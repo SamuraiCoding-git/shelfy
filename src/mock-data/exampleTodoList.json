@@ -9,12 +9,12 @@
       "description": "Let him cook",
       "tags": [
         {
-          "name": "urgent",
-          "color": "#e27d60"
+          "name": "Youtube",
+          "color": "#FF3E3D"
         },
         {
-          "name": "important",
-          "color": "#8d8741"
+          "name": "Crypto",
+          "color": "#6949FF"
         }
       ]
     },
