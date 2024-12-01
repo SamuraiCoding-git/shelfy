@@ -28,9 +28,9 @@ export default function CreateNewTask({ onClose }) {
         setShowDatePicker(newShowDatePicker);
 
         if (newShowDatePicker) {
-            setCurrentHeight(95);
+            setCurrentHeight(100);
         } else {
-            setCurrentHeight(isExpanded ? 65 : 30);
+            setCurrentHeight(isExpanded ? 75 : 30);
         }
     };
 
