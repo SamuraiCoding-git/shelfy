@@ -6,6 +6,7 @@
       "duration": ["2024-12-01T09:00:00", "2024-12-01T10:30:00"],
       "status": false,
       "title": "Breakfast",
+      "repeat": "daily",
       "description": "Let him cook",
       "tags": [
         {
@@ -23,6 +24,7 @@
       "time": "2024-12-01T10:00:00",
       "status": false,
       "title": "Morning run",
+      "repeat": "daily",
       "description": "Let him cook",
       "tags": [
         {

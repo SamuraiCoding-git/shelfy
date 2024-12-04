@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const TodoCard = ({ isCalendarPage, todo, toggleStatus }) => {
+    // Log the todo object to the console whenever it changes
+    useEffect(() => {
+        console.log('Todo:', todo);
+    }, [todo]); // This hook will log whenever the todo prop changes
+
     return (
         <div
             className={`flex flex-col p-4 gap-2 rounded-3xl ${
@@ -41,7 +46,8 @@ const TodoCard = ({ isCalendarPage, todo, toggleStatus }) => {
             <div className="flex items-center gap-2">
                 {/* Tags */}
                 <div className="flex gap-2">
-                    {todo.tags.map((badge, index) => (
+                    {/* Ensure todo.tags is an array before calling .map() */}
+                    {Array.isArray(todo.tags) && todo.tags.map((badge, index) => (
                         <div
                             key={index}
                             className="flex items-center justify-center px-2 py-1 text-xs font-semibold text-white rounded-full"

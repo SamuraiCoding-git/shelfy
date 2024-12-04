@@ -11,7 +11,7 @@ const apiService = {
     },
     addTodo: async (userId, todo) => {
         // Simulate API request for adding a todo
-        console.log(`Adding todo for user ${userId}`, todo);
+        console.log(`Adding todo for user ${userId}:`, todo);
     },
 };
 
@@ -62,6 +62,25 @@ export const TodoProvider = ({ children }) => {
         updateFilteredTodos(updatedTodos, selectedDate);
     };
 
+    // New createTask function
+    const createTask = (title, description, dueDate, dueTime, tags, repeat) => {
+        const newTask = {
+            id: allTodos.length + 1, // Generate a new ID
+            title,
+            description,
+            time: new Date(dueDate).toISOString(), // Convert dueDate to ISO string for 'time'
+            duration: [new Date(dueDate).toISOString(), new Date(dueDate).toISOString()], // Set duration (can be updated later)
+            status: false, // Task is initially not completed
+            repeat: repeat, // Default repeat value, can be updated
+            tags: tags, // You can add tags as needed (e.g., based on user input)
+        };
+
+        const updatedTodos = [...allTodos, newTask];
+        setAllTodos(updatedTodos);
+        apiService.addTodo(tgService.getUserId(), newTask);
+        updateFilteredTodos(updatedTodos, selectedDate);
+    };
+
     const toggleTodoStatus = (id) => {
         const updatedTodos = allTodos.map((todo) =>
             todo.id === id ? { ...todo, status: !todo.status } : todo
@@ -81,6 +100,7 @@ export const TodoProvider = ({ children }) => {
                 toggleTodoStatus,
                 setSelectedDate,
                 getTodosCount,
+                createTask, // Provide the new createTask function
             }}
         >
             {children}

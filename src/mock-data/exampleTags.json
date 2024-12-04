@@ -1,44 +1,37 @@
 [
   {
     "id": 1,
-    "name": "urgent",
-    "color": "#e27d60",
-    "checked": false
+    "name": "Youtube",
+    "color": "#FF3E3D"
   },
   {
     "id": 2,
-    "name": "important",
-    "color": "#8d8741",
-    "checked": false
+    "name": "Crypto",
+    "color": "#6949FF"
   },
   {
     "id": 3,
-    "name": "optional",
-    "color": "#e8a87c",
-    "checked": false
+    "name": "Telegram",
+    "color": "#1EAEFF"
   },
   {
     "id": 4,
     "name": "completed",
-    "color": "#7395ae",
-    "checked": false
+    "color": "#7395ae"
   },
   {
     "id": 5,
     "name": "in-progress",
-    "color": "#41b3a3",
-    "checked": false
+    "color": "#41b3a3"
   },
   {
     "id": 6,
     "name": "review",
-    "color": "#242582",
-    "checked": false
+    "color": "#242582"
   },
   {
     "id": 7,
     "name": "scheduled",
-    "color": "#553d67",
-    "checked": false
+    "color": "#553d67"
   }
 ]
