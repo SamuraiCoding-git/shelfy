@@ -69,7 +69,7 @@ export const TodoProvider = ({ children }) => {
             title,
             description,
             time: new Date(dueDate).toISOString(), // Convert dueDate to ISO string for 'time'
-            duration: [new Date(dueDate).toISOString(), new Date(dueDate).toISOString()], // Set duration (can be updated later)
+            duration: [new Date().toISOString(), new Date(dueDate).toISOString()], // Set duration (can be updated later)
             status: false, // Task is initially not completed
             repeat: repeat, // Default repeat value, can be updated
             tags: tags, // You can add tags as needed (e.g., based on user input)
