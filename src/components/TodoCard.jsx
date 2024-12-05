@@ -63,10 +63,7 @@ const TodoCard = ({ isCalendarPage, todo, toggleStatus }) => {
                     <div className="flex items-center gap-1">
                         <img src="/assets/icons/clock.svg" alt="clock" className="w-4 h-4" />
                         <p className="text-xs font-semibold text-gray-400">
-                            {`${new Date(todo.duration[0]).toLocaleTimeString([], {
-                                hour: '2-digit',
-                                minute: '2-digit',
-                            })} - ${new Date(todo.duration[1]).toLocaleTimeString([], {
+                            {`${new Date(todo.duration).toLocaleTimeString([], {
                                 hour: '2-digit',
                                 minute: '2-digit',
                             })}`}
