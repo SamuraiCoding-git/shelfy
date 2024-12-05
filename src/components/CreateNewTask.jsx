@@ -164,9 +164,10 @@ export default function CreateNewTask({ onClose }) {
 
 
                 {/* Buttons */}
-                <div className={`${isExpanded ? "flex flex-col gap-4 mt-4" : "flex flex-row gap-2 mt-6"}`}>
+                <div
+                    className={`${isExpanded ? "flex flex-col gap-4 mt-4" : "flex flex-row gap-2 mt-6"} whitespace-nowrap`}>
                     {/* Контейнер для Today и Repeat */}
-                    <div className={`flex ${isExpanded ? "flex-row" : "flex-row"} gap-2`}>
+                    <div className={`flex ${isExpanded ? "flex-row" : "flex-row"} gap-2 whitespace-nowrap`}>
                         <button
                             type="button"
                             className={`flex items-center gap-3 ${isExpanded ? "justify-start px-4 py-3" : "justify-center px-3 py-3"} bg-[#1e1f24] rounded-lg`}
@@ -178,8 +179,8 @@ export default function CreateNewTask({ onClose }) {
                                 className={`${isExpanded ? "w-5 h-5" : "w-6 h-6"}`}
                             />
                             <span className="text-sm font-semibold text-[#1D77FF]">
-                                {isToday ? `Today ${selectedTime ?`, ${selectedTime}` : ""}` : formatDate(currentDate)}
-                            </span>
+                {isToday ? `Today ${selectedTime ? `, ${selectedTime}` : ""}` : formatDate(currentDate)}
+            </span>
                         </button>
 
                         {selectedRepeat !== "None" && isExpanded && (
@@ -195,8 +196,8 @@ export default function CreateNewTask({ onClose }) {
                                         className={`${isExpanded ? "w-5 h-5" : "w-6 h-6"}`}
                                     />
                                     <span className="text-sm font-semibold text-[#1D77FF]">
-                                        {selectedRepeat}
-                                    </span>
+                        {selectedRepeat}
+                    </span>
                                 </button>
 
                                 <button
@@ -214,9 +215,8 @@ export default function CreateNewTask({ onClose }) {
                         )}
                     </div>
 
-
                     {/* Остальные кнопки */}
-                    <div className="flex flex-row gap-3">
+                    <div className="flex flex-row gap-3 whitespace-nowrap">
                         <button
                             className={`flex items-center ${isExpanded ? "justify-start px-4 py-3" : "justify-center px-3 py-3"} bg-[#1e1f24] rounded-lg`}
                             onClick={toggleReminderPicker}
@@ -227,13 +227,13 @@ export default function CreateNewTask({ onClose }) {
                             {selectedReminder !== "None" && (
                                 <span
                                     className={`ml-3 ${isExpanded ? "text-white" : "text-[#1D77FF]"} text-sm font-semibold`}>
-                                {formatReminder()}
-                            </span>
+                {formatReminder()}
+                </span>
                             )}
                             {selectedReminder === "None" && (
                                 <span className="ml-3 text-white text-sm font-semibold">
-                                Add reminder
-                            </span>
+                Add reminder
+                </span>
                             )}
                         </button>
                         {isExpanded && selectedReminder !== "None" && (
@@ -258,21 +258,21 @@ export default function CreateNewTask({ onClose }) {
                         {!isExpanded && selectedTags.length > 0 && selectedTags.length < 3 && (
                             <span
                                 className={`ml-1 ${isExpanded ? "text-white" : "text-[#1D77FF]"} text-sm font-semibold`}>
-                                {selectedTags.length}
-                            </span>
+                {selectedTags.length}
+            </span>
                         )}
                         {isExpanded && (
                             selectedTags.length === 0 ? (
                                 <span className="ml-3 text-white text-sm font-semibold">
-                                    Assign Tags
-                                </span>
+                    Assign Tags
+                </span>
                             ) : (
                                 <div
                                     className="flex flex-row gap-3 max-h-64 scrollbar-thin scrollbar-thumb-[#1D77FF] scrollbar-track-transparent">
                                     {selectedTags.map((tag) => (
                                         tag ? (
                                             <div key={tag.id} className="flex-shrink-0">
-                                                <TagCard tag={tag} deleteSelectedTags={deleteSelectedTags} />
+                                                <TagCard tag={tag} deleteSelectedTags={deleteSelectedTags}/>
                                             </div>
                                         ) : null
                                     ))}
@@ -280,7 +280,6 @@ export default function CreateNewTask({ onClose }) {
                             )
                         )}
                     </div>
-
 
                     {!isExpanded && (
                         <button
@@ -366,7 +365,7 @@ export default function CreateNewTask({ onClose }) {
                             }}
                         />
                     </div>
-                    )}
+                )}
             </motion.form>
         </>
     );
