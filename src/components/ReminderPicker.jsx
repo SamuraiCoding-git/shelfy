@@ -40,7 +40,7 @@ export default function ReminderPicker({
                 <div className="flex items-center justify-center">
                     <p className="text-white text-lg font-semibold leading-6 -mt-8">Reminder</p>
                 </div>
-                <ul className="text-white space-y-1">
+                <ul className="text-white space-y-1 whitespace-nowrap">
                     {/* Example list items */}
                     {['None', 'On the day', '1 day early', '2 days early', '3 days early', '1 week early'].map((value) => (
                         <li
