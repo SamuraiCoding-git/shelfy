@@ -1,13 +1,13 @@
 {
   "user": {
     "id": 1,
-    "name": "Жмышенко Валерий Альбертович",
+    "name": "SamuraiCoding",
     "friends": 5,
     "invitation": 12,
     "achievements": 3,
     "currentLeague": "Gold",
     "taskCompleted": 120,
-    "userImageProfile": "https://i.ibb.co/8s6Hr6x/photo-2024-11-24-12-30-43.jpg",
+    "photo_url": "https://i.ibb.co/8s6Hr6x/photo-2024-11-24-12-30-43.jpg",
     "burningDays": 365,
     "tokenBalance": 12021
   }

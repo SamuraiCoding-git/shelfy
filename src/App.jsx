@@ -5,6 +5,7 @@ import Navigation from './components/Navigation';
 import Features from "./pages/Features.jsx";
 import Calendar from "./pages/Calendar.jsx";
 import UserProfile from "./pages/Profile.jsx";
+import Leaderboard from "./pages/Leaderboard.jsx";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -13,6 +14,7 @@ const router = createBrowserRouter(
             <Route path="/features" element={<Features />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/profile" element={<UserProfile />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
         </Route>
     )
 );

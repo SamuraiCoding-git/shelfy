@@ -9,15 +9,35 @@ export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null); // Initialize user state to null
 
     useEffect(() => {
-        // Function to fetch user info (simulated here)
         const fetchUserInfo = () => {
             const telegramUser = window.Telegram?.WebApp?.initDataUnsafe?.user;
             console.log(telegramUser);
-            setUser(telegramUser || userInfo.user); // Use Telegram user or fallback to mock data
+
+            if (telegramUser) {
+                console.log("Telegram user found:", telegramUser);
+
+                // Merge additional properties with the telegramUser
+                const extendedUser = {
+                    ...telegramUser,
+                    friends: 5,
+                    invitation: 12,
+                    achievements: 3,
+                    currentLeague: "Gold",
+                    taskCompleted: 120,
+                    burningDays: 365,
+                    tokenBalance: 12021
+                };
+
+                setUser(extendedUser);
+            } else {
+                console.log("Telegram user undefined. Falling back to mock data:", userInfo.user);
+                setUser(userInfo.user);
+            }
         };
 
         fetchUserInfo(); // Fetch user info on component mount
     }, []);
+
 
     return (
         <UserContext.Provider value={user}>

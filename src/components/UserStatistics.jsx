@@ -38,7 +38,7 @@ const UserStatistics = () => {
                 onClick={openProfile}
             >
                 <img
-                    src={user.userImageProfile}
+                    src={user.photo_url}
                     alt="profile"
                     className="w-full h-full object-cover rounded-full" // Avatar styles
                     // onError={(e) => (e.target.src = '/path/to/default-image.png')} // Fallback image
