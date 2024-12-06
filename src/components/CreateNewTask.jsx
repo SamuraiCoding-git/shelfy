@@ -164,24 +164,20 @@ export default function CreateNewTask({ onClose }) {
 
                 {/* Input fields */}
                 <div className="flex flex-col gap-3 mt-6">
-                    <FocusLock>
-                        <input
-                            type="text"
-                            placeholder="Task Title"
-                            className="outline-none caret-primary bg-transparent text-white text-lg font-semibold leading-6"
-                            value={taskTitle} // Bind to taskTitle state
-                            onChange={(e) => setTaskTitle(e.target.value)} // Update state on change
-                        />
-                    </FocusLock>
-                    <FocusLock>
-                        <input
-                            type="text"
-                            placeholder="Description"
-                            className="outline-none caret-primary bg-transparent text-gray-400 text-sm font-medium leading-4"
-                            value={taskDescription} // Bind to taskDescription state
-                            onChange={(e) => setTaskDescription(e.target.value)} // Update state on change
-                        />
-                    </FocusLock>
+                    <input
+                        type="text"
+                        placeholder="Task Title"
+                        className="outline-none caret-primary bg-transparent text-white text-lg font-semibold leading-6"
+                        value={taskTitle} // Bind to taskTitle state
+                        onChange={(e) => setTaskTitle(e.target.value)} // Update state on change
+                    />
+                    <input
+                        type="text"
+                        placeholder="Description"
+                        className="outline-none caret-primary bg-transparent text-gray-400 text-sm font-medium leading-4"
+                        value={taskDescription} // Bind to taskDescription state
+                        onChange={(e) => setTaskDescription(e.target.value)} // Update state on change
+                    />
                 </div>
 
 
