@@ -37,19 +37,15 @@ const UserProfile = () => {
                     <p className="secondary-text">friends</p>
                 </div>
 
-                <div className="divider bg-secondary-text w-px h-full"></div>
-
                 <div className="user-acquisition-statistics flex flex-col items-center justify-center gap-2">
                     <p>{user.invitation}</p>
                     <p className="secondary-text">invitation</p>
                 </div>
 
-                <div className="divider bg-secondary-text w-px h-full"></div>
-
-                <div className="user-acquisition-statistics flex flex-col items-center justify-center gap-2">
-                    <p>{user.achievements}</p>
-                    <p className="secondary-text">achievements</p>
-                </div>
+                {/*<div className="user-acquisition-statistics flex flex-col items-center justify-center gap-2">*/}
+                {/*    <p>{user.achievements}</p>*/}
+                {/*    <p className="secondary-text">achievements</p>*/}
+                {/*</div>*/}
             </div>
 
             <button
@@ -100,24 +96,24 @@ const UserProfile = () => {
             </div>
 
 
-            <div className="achievements-navigation-wrapper flex justify-between items-center mb-3">
-                <h1 className="text-primary font-bold text-2xl mb-0">Your Achievements</h1>
-                <button className="next-button p-2">
-                    <img src="/assets/icons/profile/arrow-right.svg" alt="go next"/>
-                </button>
-            </div>
+            {/*<div className="achievements-navigation-wrapper flex justify-between items-center mb-3">*/}
+            {/*    <h1 className="text-primary font-bold text-2xl mb-0">Your Achievements</h1>*/}
+            {/*    <button className="next-button p-2">*/}
+            {/*        <img src="/assets/icons/profile/arrow-right.svg" alt="go next"/>*/}
+            {/*    </button>*/}
+            {/*</div>*/}
 
-            <div className="league-card-wrapper flex gap-2">
-                <div className="league-card bg-gray-800 rounded-xl p-3 w-full flex justify-center">
-                    <img src="/assets/icons/profile/gold-league.svg" alt="gold league"/>
-                </div>
-                <div className="league-card bg-gray-800 rounded-xl p-3 w-full flex justify-center">
-                    <img src="/assets/icons/profile/silver-league.svg" alt="silver league"/>
-                </div>
-                <div className="league-card bg-gray-800 rounded-xl p-3 w-full flex justify-center">
-                    <img src="/assets/icons/profile/bronze-league.svg" alt="bronze league"/>
-                </div>
-            </div>
+            {/*<div className="league-card-wrapper flex gap-2">*/}
+            {/*    <div className="league-card bg-gray-800 rounded-xl p-3 w-full flex justify-center">*/}
+            {/*        <img src="/assets/icons/profile/gold-league.svg" alt="gold league"/>*/}
+            {/*    </div>*/}
+            {/*    <div className="league-card bg-gray-800 rounded-xl p-3 w-full flex justify-center">*/}
+            {/*        <img src="/assets/icons/profile/silver-league.svg" alt="silver league"/>*/}
+            {/*    </div>*/}
+            {/*    <div className="league-card bg-gray-800 rounded-xl p-3 w-full flex justify-center">*/}
+            {/*        <img src="/assets/icons/profile/bronze-league.svg" alt="bronze league"/>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
         </section>
     );
 };

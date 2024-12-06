@@ -1,15 +1,16 @@
 import React from 'react';
 import TodoCard from './TodoCard';
-import { useTodos } from '../context/TodoContext'; // Import the context hook
+import { useTodos } from '../context/TodoContext'; // Импортируем хук контекста
 
 const TodoList = ({ isCalendarPage }) => {
-    const { filteredTodos, toggleTodoStatus, selectedDate } = useTodos(); // Добавлено selectedDate
+    const { filteredTodos, toggleTodoStatus, selectedDate } = useTodos(); // Извлекаем filteredTodos, toggleTodoStatus и selectedDate
 
     return (
         <div
             className={`flex flex-col gap-4 ${
                 isCalendarPage ? 'bg-none py-6 pt-6 pb-[74px]' : 'p-6 bg-gray-900 rounded-3xl'
-            }`}
+            } overflow-y-auto`} // Добавили прокрутку для всего контейнера
+            style={{ maxHeight: 'calc(100vh - 74px)' }} // Максимальная высота для всего контейнера, исключая отступы
         >
             {/* Title */}
             {!isCalendarPage && (
@@ -29,7 +30,7 @@ const TodoList = ({ isCalendarPage }) => {
             {/* Todos */}
             {filteredTodos.length > 0 ? (
                 <div
-                    className="flex flex-col gap-4 overflow-y-auto min-h-[200px] max-h-[500px] scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900"
+                    className="flex flex-col gap-4 overflow-y-auto" // Убрали ограничения по высоте для контейнера задач
                 >
                     {filteredTodos.map((todo) => (
                         <TodoCard
@@ -46,7 +47,7 @@ const TodoList = ({ isCalendarPage }) => {
                         filteredTodos.length < 1 ? 'min-h-[30vh]' : ''
                     }`}
                 >
-                    <img className="text-lg font-medium" src="/assets/icons/validation.svg"/>
+                    <img className="text-lg font-medium" src="/assets/icons/validation.svg" />
                 </div>
             )}
         </div>
