@@ -114,7 +114,7 @@ const Navigation = () => {
                                 src={button.active ? button.activeIcon : button.icon}
                                 alt="icon"
                                 aria-label={button.path}
-                                className="h-8 w-8"
+                                className="h-8 w-8 -mt-4"
                             />
                         </button>
                     ))}
