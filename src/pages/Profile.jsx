@@ -38,7 +38,7 @@ const UserProfile = () => {
                 <div className="divider bg-secondary-text w-px h-full"></div>
 
                 <div className="user-acquisition-statistics flex flex-col items-center justify-center gap-2">
-                    <p>{user.id}</p>
+                    <p>{user.invitation}</p>
                     <p className="secondary-text">invitation</p>
                 </div>
 
