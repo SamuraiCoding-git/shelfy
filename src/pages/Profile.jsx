@@ -51,7 +51,7 @@ const UserProfile = () => {
             </div>
 
             <button
-                className="invite-button w-full py-4 bg-primary text-primary-text font-semibold text-xl rounded-xl mb-6"
+                className="invite-button w-full py-4 bg-custom-blue text-primary-text font-semibold text-xl rounded-xl mb-6"
                 onClick={inviteUser}
             >
                 Invite a friend +200x
