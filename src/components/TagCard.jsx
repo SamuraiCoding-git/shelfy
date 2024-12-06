@@ -19,7 +19,7 @@ const TagCard = ({ tag, handleSelect = null, handleEdit = false, deleteSelectedT
     };
 
     const handleDeleteTag = () => {
-        deleteSelectedTags(tag);
+        deleteSelectedTags(tag); // Delete the tag from the parent
     }
 
     return (

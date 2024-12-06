@@ -46,9 +46,7 @@ const TodoList = ({ isCalendarPage }) => {
                         filteredTodos.length < 1 ? 'min-h-[30vh]' : ''
                     }`}
                 >
-                    <p className="text-lg font-medium">
-                        Just do something you lazy piece of crap
-                    </p>
+                    <img className="text-lg font-medium" src="/assets/icons/validation.svg"/>
                 </div>
             )}
         </div>

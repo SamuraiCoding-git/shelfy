@@ -20,8 +20,7 @@ export default function CreateNewTask({ onClose }) {
     const [selectedRepeat, setSelectedRepeat] = useState("None");
     const [selectedReminder, setSelectedReminder] = useState("None");
     const [selectedReminderTime, setSelectedReminderTime] = useState();
-    const { selectedTags } = useTags([]);
-    const { deleteSelectedTags } = useTags();
+    const { selectedTags, deleteSelectedTags, resetSelectedTags } = useTags([]);
 
     const { createTask } = useTodos(); // Access the createTask function from context
 
@@ -31,6 +30,7 @@ export default function CreateNewTask({ onClose }) {
         // Call createTask with title, description, and selected date
         if (taskTitle && taskDescription) {
             createTask(taskTitle, taskDescription, currentDate, selectedTime, selectedTags, selectedRepeat);
+            resetSelectedTags()
             onClose(); // Close the modal after task is created
         }
     };
@@ -249,11 +249,11 @@ export default function CreateNewTask({ onClose }) {
 
                     <div
                         className={`flex items-center ${isExpanded ? `${selectedTags.length > 0 ? "w-14 h-14 gap-7" : "w-36"} justify-start px-4 py-3` : "justify-center w-12 h-12"} bg-[#1e1f24] rounded-lg`}
-                        onClick={selectedTags.length < 3 && toggleTagPicker}
                     >
                         <img
                             src={selectedTags.length > 0 && !isExpanded ? "/assets/icons/tag-blue.svg" : "/assets/icons/task/tag.svg"}
                             alt="tags"
+                            onClick={selectedTags.length < 3 && toggleTagPicker}
                         />
                         {!isExpanded && selectedTags.length > 0 && selectedTags.length < 3 && (
                             <span
@@ -263,7 +263,7 @@ export default function CreateNewTask({ onClose }) {
                         )}
                         {isExpanded && (
                             selectedTags.length === 0 ? (
-                                <span className="ml-3 text-white text-sm font-semibold">
+                                <span onClick={selectedTags.length < 3 && toggleTagPicker} className="ml-3 text-white text-sm font-semibold">
                                     Assign Tags
                                 </span>
                             ) : (
