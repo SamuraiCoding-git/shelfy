@@ -6,6 +6,8 @@ import ReminderPicker from "./ReminderPicker.jsx";
 import AssignTags from "./AssignTags.jsx";
 import TagCard from "./TagCard.jsx";
 import {useTags} from "../context/TagsContext.jsx";
+import FocusLock from 'react-focus-lock';
+
 
 export default function CreateNewTask({ onClose }) {
     const [isExpanded, setIsExpanded] = useState(false);
@@ -101,6 +103,22 @@ export default function CreateNewTask({ onClose }) {
         return `${selectedReminder}, ${selectedReminderTime}`
     }
 
+    useEffect(() => {
+        const handleFocus = () => {
+            // Прокручиваем страницу вверх
+            window.scrollTo(0, 0);
+        };
+
+        // Добавляем обработчик событий
+        const inputs = document.querySelectorAll('input, textarea');
+        inputs.forEach(input => input.addEventListener('focus', handleFocus));
+
+        return () => {
+            // Убираем обработчик, когда компонент будет удалён
+            inputs.forEach(input => input.removeEventListener('focus', handleFocus));
+        };
+    }, []);
+
 
     return (
         <>
@@ -146,20 +164,24 @@ export default function CreateNewTask({ onClose }) {
 
                 {/* Input fields */}
                 <div className="flex flex-col gap-3 mt-6">
-                    <input
-                        type="text"
-                        placeholder="Task Title"
-                        className="outline-none caret-primary bg-transparent text-white text-lg font-semibold leading-6"
-                        value={taskTitle} // Bind to taskTitle state
-                        onChange={(e) => setTaskTitle(e.target.value)} // Update state on change
-                    />
-                    <input
-                        type="text"
-                        placeholder="Description"
-                        className="outline-none caret-primary bg-transparent text-gray-400 text-sm font-medium leading-4"
-                        value={taskDescription} // Bind to taskDescription state
-                        onChange={(e) => setTaskDescription(e.target.value)} // Update state on change
-                    />
+                    <FocusLock>
+                        <input
+                            type="text"
+                            placeholder="Task Title"
+                            className="outline-none caret-primary bg-transparent text-white text-lg font-semibold leading-6"
+                            value={taskTitle} // Bind to taskTitle state
+                            onChange={(e) => setTaskTitle(e.target.value)} // Update state on change
+                        />
+                    </FocusLock>
+                    <FocusLock>
+                        <input
+                            type="text"
+                            placeholder="Description"
+                            className="outline-none caret-primary bg-transparent text-gray-400 text-sm font-medium leading-4"
+                            value={taskDescription} // Bind to taskDescription state
+                            onChange={(e) => setTaskDescription(e.target.value)} // Update state on change
+                        />
+                    </FocusLock>
                 </div>
 
 
