@@ -8,7 +8,7 @@ const UserStatistics = () => {
     const navigate = useNavigate();
 
     const openProfile = () => {
-        navigate(`/profile/${user.id}`); // Assuming `user.id` is available
+        navigate(`/profile`); // Assuming `user.id` is available
     };
 
     return (

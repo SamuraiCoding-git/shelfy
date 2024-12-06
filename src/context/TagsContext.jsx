@@ -5,13 +5,13 @@ import tags from '../mock-data/exampleTags.json';
 const ADD_TAG = 'ADD_TAG';
 const UPDATE_TAG = 'UPDATE_TAG';
 const DELETE_TAG = 'DELETE_TAG';
-const DELETE_SELECTED_TAGS = 'DELETE_SELECTED_TAGS'; // New action type
+const DELETE_SELECTED_TAGS = 'DELETE_SELECTED_TAGS';
 const SELECT_TAG = 'SELECT_TAG';
 const RESET_SELECTED_TAGS = 'RESET_SELECTED_TAGS';
 
 // Initial state
 const initialState = {
-    tags: tags.map(tag => ({ ...tag, checked: false })),  // Initialize tags with checked state
+    tags: tags.map(tag => ({ ...tag, checked: false })),
     selectedTags: [],
 };
 
@@ -19,10 +19,17 @@ const initialState = {
 const tagsReducer = (state, action) => {
     switch (action.type) {
         case ADD_TAG:
+            // Get the next ID based on the maximum existing ID
+            const nextId = Math.max(...state.tags.map(tag => tag.id), 0) + 1;
+
+            // Create the new tag with the next ID
+            const newTagWithId = { ...action.payload, id: nextId, checked: false };
+
             return {
                 ...state,
-                tags: [...state.tags, { ...action.payload, checked: false }],
+                tags: [...state.tags, newTagWithId],
             };
+
         case UPDATE_TAG:
             return {
                 ...state,
@@ -32,47 +39,45 @@ const tagsReducer = (state, action) => {
                         : tag
                 ),
             };
+
         case DELETE_TAG:
             return {
                 ...state,
-                tags: state.tags.filter((tag) => tag.name !== action.payload),
+                tags: state.tags.filter((tag) => tag !== action.payload),
             };
-        case DELETE_SELECTED_TAGS:
-            // Получаем тег для удаления из payload
-            const tagToDelete = action.payload;
-            console.log("Deleting tag:", tagToDelete);
 
-            // Фильтруем массив selectedTags, удаляя тег, который соответствует tagToDelete
+        case DELETE_SELECTED_TAGS:
+            const tagToDelete = action.payload;
             const remainingTags = state.selectedTags.filter(tag => tag.id !== tagToDelete.id);
 
             return {
                 ...state,
-                tags: tags,         // Update tags if needed
-                selectedTags: remainingTags,    // Update selectedTags
+                tags: tags,  // Delete from tags as well
+                selectedTags: remainingTags,
             };
 
         case SELECT_TAG:
-            // Toggle the checked state of the selected tag
             const updatedTagsForSelection = state.tags.map(tag =>
                 tag.name === action.payload.name
-                    ? { ...tag, checked: !tag.checked } // Toggle checked state for the tag
+                    ? { ...tag, checked: !tag.checked }
                     : tag
             );
 
-            // Update selectedTags based on the new checked state
             const updatedSelectedTagsForSelection = updatedTagsForSelection.filter(tag => tag.checked);
 
             return {
                 ...state,
-                tags: updatedTagsForSelection,              // Updated tags array
-                selectedTags: updatedSelectedTagsForSelection, // Updated selectedTags
+                tags: updatedTagsForSelection,
+                selectedTags: updatedSelectedTagsForSelection,
             };
+
         case RESET_SELECTED_TAGS:
             return {
                 ...state,
                 tags: state.tags.map((tag) => ({ ...tag, checked: false })),
                 selectedTags: [],
             };
+
         default:
             return state;
     }
@@ -87,10 +92,9 @@ export const TagsProvider = ({ children }) => {
 
     const addTag = (tag) => dispatch({ type: ADD_TAG, payload: tag });
     const updateTag = (oldName, newTag) => dispatch({ type: UPDATE_TAG, payload: { oldName, newTag } });
-    const deleteTag = (tagName) => dispatch({ type: DELETE_TAG, payload: tagName });
+    const deleteTag = (tag) => dispatch({ type: DELETE_TAG, payload: tag });
 
-    // Modify deleteSelectedTags to accept a tag parameter and dispatch it
-    const deleteSelectedTags = (tag) => dispatch({ type: DELETE_SELECTED_TAGS, payload: tag });  // Pass tag as payload
+    const deleteSelectedTags = (tag) => dispatch({ type: DELETE_SELECTED_TAGS, payload: tag });
 
     const selectTag = (tag) => dispatch({ type: SELECT_TAG, payload: tag });
     const resetSelectedTags = () => dispatch({ type: RESET_SELECTED_TAGS });
@@ -103,7 +107,7 @@ export const TagsProvider = ({ children }) => {
                 addTag,
                 updateTag,
                 deleteTag,
-                deleteSelectedTags,  // Expose modified function
+                deleteSelectedTags,
                 selectTag,
                 resetSelectedTags,
             }}

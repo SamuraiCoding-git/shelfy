@@ -40,7 +40,7 @@ const Navigation = () => {
             {
                 path: '/features',
                 icon: `${absoluteIconPath}/features.svg`,
-                activeIcon: `${absoluteIconPath}/features-active.svg`,
+                activeIcon: `${absoluteIconPath}/features.svg`,
                 active: false,
             },
         ];

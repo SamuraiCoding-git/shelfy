@@ -28,17 +28,21 @@ export default function ReminderPicker({
     return (
         <>
             <div
-                className="absolute left-1/2 transform -translate-x-1/2 top-2 w-9 h-1 rounded bg-[#1e1f24] cursor-pointer"
+                className="absolute left-1/2 transform -translate-x-1/2 top-4 w-9 h-1 rounded bg-[#1e1f24] cursor-pointer"
                 onClick={onClose} // Use the callback here
             />
             <div className="relative p-6 mt-2 w-full">
                 {isTimePickerVisible && (
                     <div className="absolute bottom-40 right-6 w-1/2 h-1/2 flex justify-center items-center z-10">
-                        <TimePicker onTimeSelect={setSelectedReminderTime} onClose={() => setIsTimePickerVisible(false)} />
+                        <TimePicker onTimeSelect={setSelectedReminderTime}
+                                    onClose={() => setIsTimePickerVisible(false)}/>
                     </div>
                 )}
-                <div className="flex items-center justify-center">
-                    <p className="text-white text-lg font-semibold leading-6 -mt-8">Reminder</p>
+                <div className="flex items-center -ml-1 -space-x-3 -mt-6 mb-4">
+                    <button onClick={() => onClose(true)} className="flex-shrink-0">
+                        <img src="/assets/icons/task/chevron-left.svg" alt="back"/>
+                    </button>
+                    <h1 className="text-lg font-semibold text-center flex-grow">Reminder</h1>
                 </div>
                 <ul className="text-white space-y-1 whitespace-nowrap">
                     {/* Example list items */}

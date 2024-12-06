@@ -1,17 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useTags } from "../context/TagsContext";
 import TagCard from "./TagCard.jsx";
+import CreateTag from "./CreateTag.jsx";
 
 const AssignTags = ({ toggleTag, setCurrentHeight, onSave }) => {
     const {
         tags, // Tags from context (with checked state)
         selectedTags, // Selected tags (checked ones)
-        updateTag,
-        selectTag,
+        selectTag
     } = useTags();
 
     useEffect(() => {
-        setCurrentHeight(60); // Adjust height for UI (if needed)
+        const newHeight = tags.length < 5 ? 65 - (5 - tags.length) * 7 : 65;
+        setCurrentHeight(newHeight);
     }, [tags]);
 
     // Handle tag selection (toggle checked state)
@@ -27,15 +28,25 @@ const AssignTags = ({ toggleTag, setCurrentHeight, onSave }) => {
 
     const isSaveButtonActive = selectedTags.length > 0;
     const isDisabled = selectedTags.length >= 2; // Disable all checkboxes when there are 2 selected tags
+    const [showCreateTag, setShowCreateTag] = useState(false);
+
+    const handleShowCreateTag = () => {
+        setShowCreateTag(!showCreateTag);
+    };
 
     return (
         <>
             <div
-                className="absolute left-1/2 transform -translate-x-1/2 top-2 w-9 h-1 rounded bg-[#1e1f24] cursor-pointer"
+                className="absolute left-1/2 transform -translate-x-1/2 w-9 h-1 rounded bg-[#1e1f24] cursor-pointer"
                 onClick={() => toggleTag(true)}
             />
             <div className="container mx-auto p-4">
-                <h1 className="text-lg font-semibold -mt-4 mb-4 text-center">Assign Tags</h1>
+                <div className="flex items-center -ml-1 -space-x-4 mb-6"> {/* Increased margin-bottom */}
+                    <button onClick={() => toggleTag(true)} className="flex-shrink-0">
+                        <img src="/assets/icons/task/chevron-left.svg" alt="back"/>
+                    </button>
+                    <h1 className="text-lg font-semibold text-center flex-grow">Assign Tags</h1>
+                </div>
 
                 {tags.length > 0 ? (
                     <div className="space-y-3">
@@ -47,8 +58,11 @@ const AssignTags = ({ toggleTag, setCurrentHeight, onSave }) => {
                                     <TagCard
                                         tag={tag}
                                         handleSelect={handleSelectTag} // Pass the handler to toggle checked state
-                                        handleEdit={updateTag}
-                                        disabled={isDisabled && !selectedTags.includes(tag)} // Disable checkbox if 2 tags selected and tag not in selectedTags
+                                        handleEdit={true}
+                                        disabled={isDisabled && !selectedTags.includes(tag)}
+                                        toggleTag={toggleTag}
+                                        setCurrentHeight={setCurrentHeight}
+                                        // Disable checkbox if 2 tags selected and tag not in selectedTags
                                     />
                                 </li>
                             ))}
@@ -59,6 +73,7 @@ const AssignTags = ({ toggleTag, setCurrentHeight, onSave }) => {
                         <h2 className="text-[14px] text-center py-3 w-full">You don&#39;t have any tags yet</h2>
                         <button
                             className="px-6 py-2 bg-[#1D77FF] text-white font-bold rounded-xl shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl hover:from-[#8BC34A] hover:to-[#4CAF50] focus:outline-none flex items-center justify-center gap-2 w-1/2"
+                            onClick={handleShowCreateTag}
                         >
                             <img
                                 src="/assets/icons/add.svg"
@@ -69,9 +84,11 @@ const AssignTags = ({ toggleTag, setCurrentHeight, onSave }) => {
                         </button>
                     </div>
                 )}
+
                 <div className="mt-8 flex flex-row justify-between gap-3">
                     <button
                         className="w-full px-6 py-3 bg-[#1E1F24] text-white font-bold rounded-xl shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl focus:outline-none"
+                        onClick={handleShowCreateTag}
                     >
                         Create Tag
                     </button>
@@ -84,6 +101,16 @@ const AssignTags = ({ toggleTag, setCurrentHeight, onSave }) => {
                     </button>
                 </div>
             </div>
+
+            {showCreateTag && (
+                <div
+                    className="fixed top-0 left-0 w-full h-full bg-[#101114] p-6 rounded-t-3xl flex flex-col items-start justify-start z-60">
+                    <CreateTag
+                        toggleTag={toggleTag}
+                        setCurrentHeight={setCurrentHeight}
+                    />
+                </div>
+            )}
         </>
     );
 };

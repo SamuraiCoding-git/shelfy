@@ -138,7 +138,7 @@ export default function CreateNewTask({ onClose }) {
                     <p className="text-white text-lg font-semibold leading-6">
                         Create new task
                     </p>
-                    <button type="submit" className="text-primary text-[#1D77FF] text-base font-semibold leading-5 z-50">
+                    <button type="submit" className="text-primary text-[#1D77FF] text-base font-semibold leading-5">
                         Save
                     </button>
 
@@ -179,8 +179,8 @@ export default function CreateNewTask({ onClose }) {
                                 className={`${isExpanded ? "w-5 h-5" : "w-6 h-6"}`}
                             />
                             <span className="text-sm font-semibold text-[#1D77FF]">
-                {isToday ? `Today ${selectedTime ? `, ${selectedTime}` : ""}` : formatDate(currentDate)}
-            </span>
+                                {isToday ? `Today ${selectedTime ? `, ${selectedTime}` : ""}` : formatDate(currentDate)}
+                            </span>
                         </button>
 
                         {selectedRepeat !== "None" && isExpanded && (
@@ -196,8 +196,8 @@ export default function CreateNewTask({ onClose }) {
                                         className={`${isExpanded ? "w-5 h-5" : "w-6 h-6"}`}
                                     />
                                     <span className="text-sm font-semibold text-[#1D77FF]">
-                        {selectedRepeat}
-                    </span>
+                                        {selectedRepeat}
+                                    </span>
                                 </button>
 
                                 <button
@@ -227,13 +227,13 @@ export default function CreateNewTask({ onClose }) {
                             {selectedReminder !== "None" && (
                                 <span
                                     className={`ml-3 ${isExpanded ? "text-white" : "text-[#1D77FF]"} text-sm font-semibold`}>
-                {formatReminder()}
-                </span>
+                                {formatReminder()}
+                                </span>
                             )}
                             {selectedReminder === "None" && (
                                 <span className="ml-3 text-white text-sm font-semibold">
-                Add reminder
-                </span>
+                                Add reminder
+                                </span>
                             )}
                         </button>
                         {isExpanded && selectedReminder !== "None" && (
@@ -258,14 +258,14 @@ export default function CreateNewTask({ onClose }) {
                         {!isExpanded && selectedTags.length > 0 && selectedTags.length < 3 && (
                             <span
                                 className={`ml-1 ${isExpanded ? "text-white" : "text-[#1D77FF]"} text-sm font-semibold`}>
-                {selectedTags.length}
-            </span>
+                                {selectedTags.length}
+                            </span>
                         )}
                         {isExpanded && (
                             selectedTags.length === 0 ? (
                                 <span className="ml-3 text-white text-sm font-semibold">
-                    Assign Tags
-                </span>
+                                    Assign Tags
+                                </span>
                             ) : (
                                 <div
                                     className="flex flex-row gap-3 max-h-64 scrollbar-thin scrollbar-thumb-[#1D77FF] scrollbar-track-transparent">

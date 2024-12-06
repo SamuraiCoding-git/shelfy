@@ -1,9 +1,13 @@
-// TagCard.jsx
-
 import React, { useEffect, useState } from "react";
+import CreateTag from "./CreateTag.jsx";
 
-const TagCard = ({ tag, handleSelect = null, handleEdit = null, deleteSelectedTags = null, disabled }) => {
+const TagCard = ({ tag, handleSelect = null, handleEdit = false, deleteSelectedTags = null, disabled, toggleTag, setCurrentHeight }) => {
     const [checked, setChecked] = useState(tag.checked);
+    const [showEditTag, setShowEditTag] = useState(false);
+
+    const handleShowEditTag = () => {
+        setShowEditTag(!showEditTag);
+    }
 
     useEffect(() => {
         setChecked(tag.checked); // Sync checked state with the parent state
@@ -64,7 +68,7 @@ const TagCard = ({ tag, handleSelect = null, handleEdit = null, deleteSelectedTa
             {handleEdit && (
                 <button
                     className="ml-3 p-2"
-                    onClick={() => handleEdit(tag)}
+                    onClick={handleShowEditTag}
                 >
                     <img
                         src="/assets/icons/tag/edit.svg"
@@ -72,6 +76,17 @@ const TagCard = ({ tag, handleSelect = null, handleEdit = null, deleteSelectedTa
                         className="w-5 h-5"
                     />
                 </button>
+            )}
+            {showEditTag && (
+                <div
+                    className="fixed top-0 left-0 w-full h-full bg-[#101114] p-6 rounded-t-3xl flex flex-col items-start justify-start z-60">
+                    <CreateTag
+                        toggleTag={toggleTag}
+                        setCurrentHeight={setCurrentHeight}
+                        editTag={true}
+                        tag={tag}
+                    />
+                </div>
             )}
         </div>
     );

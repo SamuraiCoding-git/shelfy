@@ -1,12 +1,13 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import mockData from '../mock-data/exampleTodoList.json';
 
+// Mock data and services
 const todos = mockData.todos;
 
 // Mock API Service
 const apiService = {
     getTodos: async (userId) => {
-        // Simulate API request
+        // Simulate an API request and return the todos
         return todos;
     },
     addTodo: async (userId, todo) => {
@@ -27,7 +28,7 @@ const TodoContext = createContext();
 export const TodoProvider = ({ children }) => {
     const [allTodos, setAllTodos] = useState([]);
     const [filteredTodos, setFilteredTodos] = useState([]);
-    const [selectedDate, setSelectedDate] = useState();
+    const [selectedDate, setSelectedDate] = useState(null); // Keep track of selected date
 
     // Load initial todos
     useEffect(() => {
@@ -36,17 +37,23 @@ export const TodoProvider = ({ children }) => {
             try {
                 const todos = await apiService.getTodos(userId);
                 setAllTodos(todos);
-                updateFilteredTodos(todos, selectedDate);
+                updateFilteredTodos(todos, selectedDate); // Apply initial filtering
             } catch (error) {
                 console.error('Error loading todos:', error);
             }
         };
         loadInitialTodos();
-    }, [selectedDate]);
+    }, []); // Only load todos once on mount
 
+    // Update filtered todos based on the selected date
+    useEffect(() => {
+        updateFilteredTodos(allTodos, selectedDate);
+    }, [selectedDate, allTodos]);
+
+    // Function to filter todos by the selected date
     const updateFilteredTodos = (todos, date) => {
         if (!date) {
-            setFilteredTodos(todos);
+            setFilteredTodos(todos); // If no date is selected, show all todos
             return;
         }
         const selectedDateString = new Date(date).toDateString();
@@ -54,15 +61,16 @@ export const TodoProvider = ({ children }) => {
         setFilteredTodos(filtered);
     };
 
+    // Add a new todo
     const addTodo = (todo) => {
         const newTodo = { ...todo, id: allTodos.length + 1, status: false };
         const updatedTodos = [...allTodos, newTodo];
         setAllTodos(updatedTodos);
         apiService.addTodo(tgService.getUserId(), newTodo);
-        updateFilteredTodos(updatedTodos, selectedDate);
+        updateFilteredTodos(updatedTodos, selectedDate); // Update filtered todos after adding
     };
 
-    // New createTask function
+    // Create a new task with additional details
     const createTask = (title, description, dueDate, dueTime, tags, repeat) => {
         const newTask = {
             id: allTodos.length + 1, // Generate a new ID
@@ -71,24 +79,26 @@ export const TodoProvider = ({ children }) => {
             time: new Date(dueDate).toISOString(), // Convert dueDate to ISO string for 'time'
             duration: new Date(dueDate).toISOString(), // Set duration (can be updated later)
             status: false, // Task is initially not completed
-            repeat: repeat, // Default repeat value, can be updated
-            tags: tags, // You can add tags as needed (e.g., based on user input)
+            repeat, // Repeat value for the task
+            tags, // Tags for the task
         };
 
         const updatedTodos = [...allTodos, newTask];
         setAllTodos(updatedTodos);
         apiService.addTodo(tgService.getUserId(), newTask);
-        updateFilteredTodos(updatedTodos, selectedDate);
+        updateFilteredTodos(updatedTodos, selectedDate); // Update filtered todos after creating a task
     };
 
+    // Toggle todo status (completed / not completed)
     const toggleTodoStatus = (id) => {
         const updatedTodos = allTodos.map((todo) =>
             todo.id === id ? { ...todo, status: !todo.status } : todo
         );
         setAllTodos(updatedTodos);
-        updateFilteredTodos(updatedTodos, selectedDate);
+        updateFilteredTodos(updatedTodos, selectedDate); // Update filtered todos after status change
     };
 
+    // Get count of filtered todos (e.g., for display)
     const getTodosCount = () => filteredTodos.length;
 
     return (
@@ -100,7 +110,7 @@ export const TodoProvider = ({ children }) => {
                 toggleTodoStatus,
                 setSelectedDate,
                 getTodosCount,
-                createTask, // Provide the new createTask function
+                createTask, // Provide the createTask function
             }}
         >
             {children}

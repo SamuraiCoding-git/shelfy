@@ -45,22 +45,20 @@ export default function DatePicker({ currentDate, onClose, onChange, onSave }) {
             for (let i = currentDay + 1; i <= 31; i++) {
                 const repeatDate = new Date(currentYear, currentMonth, i);
                 if (repeatDate > startDate) {
-                    dates.push(repeatDate.getDate());
+                    dates.push(repeatDate);
                 }
             }
         } else if (repeatType === 'Weekly') {
             // For weekly, highlight the same weekday every week starting from the selected date
-            const currentDayOfWeek = startDate.getDay(); // For weekly repeat
-            const daysInCurrentMonth = new Date(currentYear, currentMonth + 1, 0).getDate(); // Get the number of days in the current month
+            const currentDayOfWeek = startDate.getDay();
+            const daysInCurrentMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-            // Start with the first upcoming occurrence of the same weekday
             for (let i = 1; i <= 4; i++) {
                 const daysToAdd = (7 - (currentDayOfWeek - startDate.getDay()) + 7) % 7 + i * 7;
                 const repeatDate = new Date(currentYear, currentMonth, currentDay + daysToAdd);
 
-                // Ensure repeatDate is still in the same month and after startDate
                 if (repeatDate > startDate && repeatDate.getDate() <= daysInCurrentMonth) {
-                    dates.push(repeatDate.getDate());
+                    dates.push(repeatDate);
                 }
             }
         } else if (repeatType === 'Monthly') {
@@ -68,13 +66,13 @@ export default function DatePicker({ currentDate, onClose, onChange, onSave }) {
             for (let i = 1; i <= 12; i++) { // For the next 12 months
                 const repeatDate = new Date(currentYear, currentMonth + i, currentDay);
                 if (repeatDate > startDate) {
-                    dates.push(repeatDate.getDate());
+                    dates.push(repeatDate);
                 }
             }
         }
-        console.log(dates)
         return dates;
     };
+
 
     const formatMonthYear = (date) => {
         const options = { year: "numeric", month: "short" };
@@ -158,30 +156,31 @@ export default function DatePicker({ currentDate, onClose, onChange, onSave }) {
             <div className="relative p-6 mt-2 w-full">
                 {isTimePickerVisible && (
                     <div className="absolute bottom-40 right-6 w-1/2 h-1/2 flex justify-center items-center z-10">
-                        <TimePicker onTimeSelect={setSelectedTime} onClose={() => setIsTimePickerVisible(false)} />
+                        <TimePicker onTimeSelect={setSelectedTime} onClose={() => setIsTimePickerVisible(false)}/>
                     </div>
                 )}
                 {isRepeatPickerVisible && (
                     <div className="absolute bottom-24 right-16 w-1/2 h-1/2 flex justify-center items-center z-30">
-                        <RepeatPicker handleSelectRepeat={handleSelectRepeat} selectedRepeat={selectedRepeat} />
+                        <RepeatPicker handleSelectRepeat={handleSelectRepeat} selectedRepeat={selectedRepeat}/>
                     </div>
                 )}
-                <div className="flex items-center justify-between">
-                    <button
-                        onClick={handlePrevMonth}
-                        disabled={currentDate.getFullYear() === today.getFullYear() && currentDate.getMonth() === today.getMonth()}
-                    >
-                        <img src="/assets/icons/task/chevron-left.svg" alt="Previous month" className="w-6 h-6" />
-                    </button>
-
+                <div className="flex items-center justify-between w-full">
                     <span className="text-white text-xl font-semibold">
                         {formatMonthYear(currentDate)}
                     </span>
-
-                    <button onClick={handleNextMonth}>
-                        <img src="/assets/icons/task/chevron-right.svg" alt="Next month" className="w-6 h-6" />
-                    </button>
+                    <div className="flex items-center space-x-4">
+                        <button
+                            onClick={handlePrevMonth}
+                            disabled={currentDate.getFullYear() === today.getFullYear() && currentDate.getMonth() === today.getMonth()}
+                        >
+                            <img src="/assets/icons/task/chevron-left.svg" alt="Previous month" className="w-6 h-6"/>
+                        </button>
+                        <button onClick={handleNextMonth}>
+                            <img src="/assets/icons/task/chevron-right.svg" alt="Next month" className="w-6 h-6"/>
+                        </button>
+                    </div>
                 </div>
+
 
                 <div className="mt-8 grid grid-cols-7 gap-4 text-white">
                     {weekdays.map((day, index) => (
@@ -195,10 +194,10 @@ export default function DatePicker({ currentDate, onClose, onChange, onSave }) {
                             key={index}
                             className={`
                             p-4 cursor-pointer
-                            ${day ? 'hover:bg-[#1D77FF]' : 'bg-transparent'}
+                            ${day ? 'hover:bg-[#1E1F24]' : 'bg-transparent'}
                             ${day === today.getDate() && currentDate.getMonth() === today.getMonth() && currentDate.getFullYear() === today.getFullYear() ? 'text-[#1D77FF] hover:text-white' : ''}
                             ${day === currentDate.getDate() ? 'bg-[#1D77FF] text-white' : ''}
-                            ${repeatDates.includes(day) && day > selectedDay ? 'bg-[#132037] text-white' : ''}
+                            ${repeatDates.some(repeatDate => repeatDate.getDate() === day && repeatDate.getMonth() === currentDate.getMonth() && repeatDate.getFullYear() === currentDate.getFullYear()) ? 'bg-[#1E1F24] text-white' : ''}
                             ${day && (new Date(currentDate.getFullYear(), currentDate.getMonth(), day).setHours(0, 0, 0, 0) < today.setHours(0, 0, 0, 0)) ? 'bg-transparent cursor-not-allowed' : ''}
                             w-10 h-10 rounded-full
                             flex items-center justify-center
@@ -209,6 +208,7 @@ export default function DatePicker({ currentDate, onClose, onChange, onSave }) {
                             {day}
                         </div>
                     ))}
+
                 </div>
 
                 <div className="mt-6 bg-[#1E1F24] px-3 rounded-xl py-1">
