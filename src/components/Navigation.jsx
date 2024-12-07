@@ -97,7 +97,7 @@ const Navigation = () => {
                 )}
             </AnimatePresence>
 
-            <footer className="fixed bottom-0 left-0 w-full h-16 bg-gray-900 bg-opacity-90 backdrop-blur-md z-10">
+            <footer className="fixed bottom-0 left-0 w-full h-24 bg-gray-900 bg-opacity-90 backdrop-blur-md z-10">
                 <div className="flex justify-between px-8 py-3">
                     {buttons.map((button, index) => (
                         <button
