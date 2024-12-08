@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home';
 import Navigation from './components/Navigation';
@@ -20,28 +20,38 @@ const router = createBrowserRouter(
     )
 );
 
-useEffect(() => {
-    if (window.Telegram && window.Telegram.WebApp) {
-        // Alternatively to what can be set with react-telegram-web-app, you can directly set the following properties:
-        try {
-            window.Telegram.WebApp.requestWriteAccess()
-        } catch (e) {
-            console.log(e)
-        }
-        window.Telegram.WebApp.expand()
-    }
-    axios.post('https://6ac0-46-183-186-2.ngrok-free.app/users', initData)
-        .then(response => {
-            console.log('Response:', response.data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-}, [])
-
 function App() {
-    const tg = window.Telegram.WebApp;
-    tg.expand();
+    useEffect(() => {
+        if (window.Telegram && window.Telegram.WebApp) {
+            // Request write access for the Telegram WebApp
+            try {
+                window.Telegram.WebApp.requestWriteAccess();
+            } catch (e) {
+                console.error("Error requesting write access:", e);
+            }
+
+            // Expand the WebApp
+            window.Telegram.WebApp.expand();
+        }
+
+        // Send initData to your server
+        const initData = {
+            userInitData: {
+                name: "John Doe",
+                email: "john.doe@example.com",
+                age: 30
+            }
+        };
+
+        axios.post('https://6ac0-46-183-186-2.ngrok-free.app/users', initData)
+            .then(response => {
+                console.log('Response:', response.data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }, []); // Empty dependency array ensures this runs only once when the component mounts
+
     return <RouterProvider router={router} />;
 }
 
