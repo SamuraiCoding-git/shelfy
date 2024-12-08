@@ -33,7 +33,7 @@ function App() {
             // Expand the WebApp
             window.Telegram.WebApp.expand();
         }
-
+        console.log(window.Telegram.WebApp.initData)
         axios.post('https://6ac0-46-183-186-2.ngrok-free.app/api/users/', window.Telegram.WebApp.initData, {
             headers: {
                 'ngrok-skip-browser-warning': 'true' // Add this header to bypass the warning
