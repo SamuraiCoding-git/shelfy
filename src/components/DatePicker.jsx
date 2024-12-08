@@ -95,7 +95,6 @@ export default function DatePicker({ currentDate, onClose, onChange, onSave }) {
     const daysInMonth = getDaysInMonth(currentDate);
 
     const handleSelectDate = (day) => {
-        console.log(daysInMonth)
         if (day) {
             const selectedDate = new Date(currentDate);
             selectedDate.setDate(day);
@@ -189,25 +188,38 @@ export default function DatePicker({ currentDate, onClose, onChange, onSave }) {
                         </div>
                     ))}
 
-                    {daysInMonth.map((day, index) => (
-                        <div
-                            key={index}
-                            className={`
-                            p-4 cursor-pointer
-                            ${day ? 'hover:bg-[#1E1F24]' : 'bg-transparent'}
-                            ${day === today.getDate() && currentDate.getMonth() === today.getMonth() && currentDate.getFullYear() === today.getFullYear() ? 'text-[#1D77FF] hover:text-white' : ''}
-                            ${day === currentDate.getDate() ? 'bg-[#1D77FF] text-white' : ''}
-                            ${repeatDates.some(repeatDate => repeatDate.getDate() === day && repeatDate.getMonth() === currentDate.getMonth() && repeatDate.getFullYear() === currentDate.getFullYear()) ? 'bg-[#1E1F24] text-white' : ''}
-                            ${day && (new Date(currentDate.getFullYear(), currentDate.getMonth(), day).setHours(0, 0, 0, 0) < today.setHours(0, 0, 0, 0)) ? 'bg-transparent cursor-not-allowed' : ''}
-                            w-10 h-10 rounded-full
-                            flex items-center justify-center
-                            ${day ? 'border border-transparent hover:ring-2 hover:ring-[#1D77FF]' : ''}
+                    {daysInMonth.map((day, index) => {
+                        const currentDateObj = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+                        const todayDateObj = new Date(); // Создаём новый объект Date для сегодня
+
+                        // Сравнение дня
+                        const isToday = day === todayDateObj.getDate() && currentDate.getMonth() === todayDateObj.getMonth() && currentDate.getFullYear() === todayDateObj.getFullYear();
+
+                        // Проверка на прошедшую дату
+                        const isPastDate = day && currentDateObj.setHours(0, 0, 0, 0) < todayDateObj.setHours(0, 0, 0, 0);
+
+                        return (
+                            <div
+                                key={index}
+                                className={`
+                                p-4 cursor-pointer
+                                ${day ? 'hover:bg-[#1E1F24]' : 'bg-transparent'}
+                                ${isToday ? 'text-[#1D77FF] hover:text-white' : ''}
+                                ${day === currentDate.getDate() ? 'bg-[#1D77FF] text-white' : ''}
+                                ${repeatDates.some(repeatDate => repeatDate.getDate() === day && repeatDate.getMonth() === currentDate.getMonth() && repeatDate.getFullYear() === currentDate.getFullYear()) ? 'bg-[#1E1F24] text-white' : ''}
+                                ${isPastDate ? 'bg-transparent cursor-not-allowed' : ''}
+                                w-10 h-10 rounded-full
+                                flex items-center justify-center
+                                ${day ? 'border border-transparent hover:ring-2 hover:ring-[#1D77FF]' : ''}
                             `}
-                            onClick={() => day && new Date(currentDate.getFullYear(), currentDate.getMonth(), day) >= today && handleSelectDate(day)}
-                        >
-                            {day}
-                        </div>
-                    ))}
+                                onClick={() => handleSelectDate(day)}
+                            >
+                                {day}
+                            </div>
+                        );
+                    })}
+
+
 
                 </div>
 

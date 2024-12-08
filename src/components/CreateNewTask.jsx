@@ -6,8 +6,6 @@ import ReminderPicker from "./ReminderPicker.jsx";
 import AssignTags from "./AssignTags.jsx";
 import TagCard from "./TagCard.jsx";
 import {useTags} from "../context/TagsContext.jsx";
-import FocusLock from 'react-focus-lock';
-
 
 export default function CreateNewTask({ onClose }) {
     const [isExpanded, setIsExpanded] = useState(false);

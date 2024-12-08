@@ -8,6 +8,7 @@ const DELETE_TAG = 'DELETE_TAG';
 const DELETE_SELECTED_TAGS = 'DELETE_SELECTED_TAGS';
 const SELECT_TAG = 'SELECT_TAG';
 const RESET_SELECTED_TAGS = 'RESET_SELECTED_TAGS';
+const SET_SELECTED_TAGS = 'SET_SELECTED_TAGS'; // New action type
 
 // Initial state
 const initialState = {
@@ -19,12 +20,8 @@ const initialState = {
 const tagsReducer = (state, action) => {
     switch (action.type) {
         case ADD_TAG:
-            // Get the next ID based on the maximum existing ID
             const nextId = Math.max(...state.tags.map(tag => tag.id), 0) + 1;
-
-            // Create the new tag with the next ID
             const newTagWithId = { ...action.payload, id: nextId, checked: false };
-
             return {
                 ...state,
                 tags: [...state.tags, newTagWithId],
@@ -49,7 +46,6 @@ const tagsReducer = (state, action) => {
         case DELETE_SELECTED_TAGS:
             const tagToDelete = action.payload;
             const remainingTags = state.selectedTags.filter(tag => tag.id !== tagToDelete.id);
-
             return {
                 ...state,
                 tags: tags,  // Delete from tags as well
@@ -62,9 +58,7 @@ const tagsReducer = (state, action) => {
                     ? { ...tag, checked: !tag.checked }
                     : tag
             );
-
             const updatedSelectedTagsForSelection = updatedTagsForSelection.filter(tag => tag.checked);
-
             return {
                 ...state,
                 tags: updatedTagsForSelection,
@@ -76,6 +70,12 @@ const tagsReducer = (state, action) => {
                 ...state,
                 tags: state.tags.map((tag) => ({ ...tag, checked: false })),
                 selectedTags: [],
+            };
+
+        case SET_SELECTED_TAGS:  // New case to handle setting selected tags
+            return {
+                ...state,
+                selectedTags: action.payload, // Directly set selected tags
             };
 
         default:
@@ -93,11 +93,12 @@ export const TagsProvider = ({ children }) => {
     const addTag = (tag) => dispatch({ type: ADD_TAG, payload: tag });
     const updateTag = (oldName, newTag) => dispatch({ type: UPDATE_TAG, payload: { oldName, newTag } });
     const deleteTag = (tag) => dispatch({ type: DELETE_TAG, payload: tag });
-
     const deleteSelectedTags = (tag) => dispatch({ type: DELETE_SELECTED_TAGS, payload: tag });
-
     const selectTag = (tag) => dispatch({ type: SELECT_TAG, payload: tag });
     const resetSelectedTags = () => dispatch({ type: RESET_SELECTED_TAGS });
+
+    // New function to set selected tags explicitly
+    const setSelectedTags = (tags) => dispatch({ type: SET_SELECTED_TAGS, payload: tags });
 
     return (
         <TagsContext.Provider
@@ -110,6 +111,7 @@ export const TagsProvider = ({ children }) => {
                 deleteSelectedTags,
                 selectTag,
                 resetSelectedTags,
+                setSelectedTags,  // Expose setSelectedTags function
             }}
         >
             {children}
