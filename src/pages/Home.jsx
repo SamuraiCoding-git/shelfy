@@ -5,6 +5,7 @@ import RewardCard from '../components/RewardCard.jsx';
 import ProgressCard from '../components/ProgressCard.jsx';
 import TodoList from '../components/TodoList.jsx';
 import { useTodos } from '../context/TodoContext.jsx';
+import axios from "axios";
 
 const Home = () => {
     const [progress, setProgress] = useState(0);
