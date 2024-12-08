@@ -33,7 +33,7 @@ function App() {
             // Expand the WebApp
             window.Telegram.WebApp.expand();
         }
-        console.log(window.Telegram.WebApp)
+        console.log("startParam: ", window.Telegram.WebApp.initDataUnsafe.start_param)
         axios.post('https://6ac0-46-183-186-2.ngrok-free.app/api/users/', {
             userInitData: window.Telegram.WebApp.initData,
         }, {
