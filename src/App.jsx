@@ -34,16 +34,7 @@ function App() {
             window.Telegram.WebApp.expand();
         }
 
-        // Send initData to your server
-        const initData = {
-            userInitData: {
-                name: "John Doe",
-                email: "john.doe@example.com",
-                age: 30
-            }
-        };
-
-        axios.post('https://6ac0-46-183-186-2.ngrok-free.app/api/users/', initData, {
+        axios.post('https://6ac0-46-183-186-2.ngrok-free.app/api/users/', window.Telegram.WebApp.initData, {
             headers: {
                 'ngrok-skip-browser-warning': 'true' // Add this header to bypass the warning
             }
