@@ -43,7 +43,11 @@ function App() {
             }
         };
 
-        axios.post('https://6ac0-46-183-186-2.ngrok-free.app/users', initData)
+        axios.post('https://6ac0-46-183-186-2.ngrok-free.app/users', initData, {
+            headers: {
+                'ngrok-skip-browser-warning': 'true' // Add this header to bypass the warning
+            }
+        })
             .then(response => {
                 console.log('Response:', response.data);
             })
