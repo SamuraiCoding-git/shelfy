@@ -34,17 +34,21 @@ function App() {
             window.Telegram.WebApp.expand();
         }
         console.log(window.Telegram.WebApp.initData)
-        axios.post('https://6ac0-46-183-186-2.ngrok-free.app/api/users/', window.Telegram.WebApp.initData, {
+        axios.post('https://6ac0-46-183-186-2.ngrok-free.app/api/users/', {
+            userInitData: window.Telegram.WebApp.initData // Make sure it's correctly structured
+        }, {
             headers: {
-                'ngrok-skip-browser-warning': 'true' // Add this header to bypass the warning
+                'ngrok-skip-browser-warning': 'true', // Skips ngrok browser warning
+                'Content-Type': 'application/json'   // Ensures correct content-type header
             }
         })
             .then(response => {
                 console.log('Response:', response.data);
             })
             .catch(error => {
-                console.error('Error:', error);
+                console.error('Error:', error.response ? error.response.data : error.message);
             });
+
     }, []); // Empty dependency array ensures this runs only once when the component mounts
 
     return <RouterProvider router={router} />;
