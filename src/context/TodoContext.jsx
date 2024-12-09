@@ -8,7 +8,7 @@ const todos = mockData.todos;
 // Mock API Service
 const apiService = {
     getTodos: async () => {
-        await axios.get('https://6ac0-46-183-186-2.ngrok-free.app/api/todos/', {
+        await axios.post('https://6ac0-46-183-186-2.ngrok-free.app/api/todos/', {
             userInitData: window.Telegram.WebApp.initData
         }, {
             headers: {
