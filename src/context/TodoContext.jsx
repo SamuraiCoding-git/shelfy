@@ -9,11 +9,12 @@ const todos = mockData.todos;
 const apiService = {
     getTodos: async () => {
         await axios.get('https://6ac0-46-183-186-2.ngrok-free.app/api/todos/', {
-            userInitData: window.Telegram.WebApp.initData,
+            userInitData: window.Telegram.WebApp.initData
         }, {
             headers: {
-                'ngrok-skip-browser-warning': 'true', // Skips ngrok browser warning
-                'Content-Type': 'application/json'   // Ensures correct content-type header
+                'ngrok-skip-browser-warning': 'true',
+                'User-Agent': 'CustomUserAgent/1.0',
+                'Content-Type': 'application/json'
             }
         })
             .then(response => {
