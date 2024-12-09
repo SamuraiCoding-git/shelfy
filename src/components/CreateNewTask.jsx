@@ -28,7 +28,7 @@ export default function CreateNewTask({ onClose }) {
         e.preventDefault(); // Prevent f orm submission
         console.log("Hi")
         // Call createTask with title, description, and selected date
-        if (taskTitle && taskDescription) {
+        if (taskTitle && taskDescription && currentDate) {
             createTask(taskTitle, taskDescription, currentDate, selectedTime, selectedTags, selectedRepeat);
             resetSelectedTags()
             onClose(); // Close the modal after task is created

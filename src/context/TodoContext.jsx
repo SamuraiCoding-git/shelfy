@@ -1,14 +1,27 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import mockData from '../mock-data/exampleTodoList.json';
+import axios from "axios";
 
 // Mock data and services
 const todos = mockData.todos;
 
 // Mock API Service
 const apiService = {
-    getTodos: async (userId) => {
-        // Simulate an API request and return the todos
-        return todos;
+    getTodos: async () => {
+        await axios.get('https://6ac0-46-183-186-2.ngrok-free.app/api/todos/', {
+            userInitData: window.Telegram.WebApp.initData,
+        }, {
+            headers: {
+                'ngrok-skip-browser-warning': 'true', // Skips ngrok browser warning
+                'Content-Type': 'application/json'   // Ensures correct content-type header
+            }
+        })
+            .then(response => {
+                return response.data.todos
+            })
+            .catch(error => {
+                return todos
+            });
     },
     addTodo: async (userId, todo) => {
         // Simulate API request for adding a todo
@@ -26,7 +39,7 @@ const apiService = {
 
 // Mock Telegram Service
 const tgService = {
-    getUserId: () => '422999166', // Simulate getting user ID
+    getUserId: () => window.Telegram.WebApp.initDataUnsafe.user.id, // Simulate getting user ID
 };
 
 // Create Context
@@ -41,9 +54,8 @@ export const TodoProvider = ({ children }) => {
     // Load initial todos
     useEffect(() => {
         const loadInitialTodos = async () => {
-            const userId = tgService.getUserId();
             try {
-                const todos = await apiService.getTodos(userId);
+                const todos = await apiService.getTodos();
                 setAllTodos(todos);
                 updateFilteredTodos(todos, selectedDate); // Apply initial filtering
             } catch (error) {
