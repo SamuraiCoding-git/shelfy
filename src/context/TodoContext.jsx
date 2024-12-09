@@ -17,10 +17,11 @@ const apiService = {
             }
         })
             .then(response => {
-                return response.data.todos
+                return response.data.todos;
             })
             .catch(error => {
-                return todos
+                console.log(error)
+                return [];
             });
     },
     addTodo: async (userId, todo) => {
@@ -55,11 +56,12 @@ export const TodoProvider = ({ children }) => {
     useEffect(() => {
         const loadInitialTodos = async () => {
             try {
-                const todos = await apiService.getTodos();
-                setAllTodos(todos);
-                updateFilteredTodos(todos, selectedDate); // Apply initial filtering
+                const apiTodos = await apiService.getTodos();
+                setAllTodos(apiTodos);
+                updateFilteredTodos(apiTodos, selectedDate); // Apply initial filtering
             } catch (error) {
-                console.error('Error loading todos:', error);
+                setAllTodos([])
+                updateFilteredTodos([], selectedDate);
             }
         };
         loadInitialTodos();
