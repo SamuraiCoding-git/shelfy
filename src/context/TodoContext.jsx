@@ -13,7 +13,6 @@ const apiService = {
         }, {
             headers: {
                 'ngrok-skip-browser-warning': 'true',
-                'User-Agent': 'CustomUserAgent/1.0',
                 'Content-Type': 'application/json'
             }
         })
