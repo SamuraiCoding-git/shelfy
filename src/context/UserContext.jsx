@@ -11,11 +11,8 @@ export const UserProvider = ({ children }) => {
     useEffect(() => {
         const fetchUserInfo = () => {
             const telegramUser = window.Telegram?.WebApp?.initDataUnsafe?.user;
-            console.log(telegramUser);
 
             if (telegramUser) {
-                console.log("Telegram user found:", telegramUser);
-
                 // Merge additional properties with the telegramUser
                 const extendedUser = {
                     ...telegramUser,
@@ -30,7 +27,6 @@ export const UserProvider = ({ children }) => {
 
                 setUser(extendedUser);
             } else {
-                console.log("Telegram user undefined. Falling back to mock data:", userInfo.user);
                 setUser(userInfo.user);
             }
         };

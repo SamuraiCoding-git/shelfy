@@ -137,7 +137,6 @@ const Calendar = () => {
                             if (isCurrentMonth) { // Only handle click for current month
                                 handleSelectDate(day, isCurrentMonth);
                             }
-                            console.log(`Day ${day} clicked. Selected: ${isSelected(day)}`);
                         }}
                     >
                         <div>

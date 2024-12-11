@@ -11,9 +11,9 @@ const TodoCard = ({ isCalendarPage, todo, toggleStatus }) => {
                     <div className="relative w-6 h-6">
                         <input
                             type="checkbox"
-                            id={`todo-${todo.id}`}
-                            checked={todo.status}
-                            onChange={toggleStatus}
+                            id={`todo-${todo.todo_id}`}  // Use `todo.todo_id` here
+                            checked={todo.status}  // Bind the checkbox to `todo.status`
+                            onChange={() => toggleStatus(todo.todo_id)}  // Call `toggleStatus` when clicked
                             className="appearance-none w-full h-full rounded-full bg-gray-700 border-2 border-gray-600 checked:bg-blue-500 transition-all duration-200 focus:outline-dotted focus:outline-2 focus:outline-black"
                         />
                         <span
@@ -24,7 +24,7 @@ const TodoCard = ({ isCalendarPage, todo, toggleStatus }) => {
 
                     {/* Title */}
                     <label
-                        htmlFor={`todo-${todo.id}`}
+                        htmlFor={`todo-${todo.todo_id}`}
                         className={`text-lg font-semibold leading-6 transition-all duration-500 ${
                             todo.status ? 'line-through text-blue-500' : 'text-white'
                         }`}
@@ -47,7 +47,7 @@ const TodoCard = ({ isCalendarPage, todo, toggleStatus }) => {
                             <div
                                 key={index}
                                 className="flex items-center justify-center px-2 py-1 text-xs font-semibold text-white rounded-full"
-                                style={{backgroundColor: badge.color}}
+                                style={{ backgroundColor: badge.color }}
                             >
                                 {badge.name}
                             </div>
@@ -57,7 +57,7 @@ const TodoCard = ({ isCalendarPage, todo, toggleStatus }) => {
                     {/* Duration */}
                     {todo.time && (
                         <div className="flex items-center gap-1">
-                            <img src="/assets/icons/clock.svg" alt="clock" className="w-4 h-4"/>
+                            <img src="/assets/icons/clock.svg" alt="clock" className="w-4 h-4" />
                             <p className="text-xs font-semibold text-gray-400">
                                 {`${new Date(todo.time).toLocaleTimeString([], {
                                     hour: '2-digit',

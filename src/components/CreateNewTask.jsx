@@ -329,11 +329,9 @@ export default function CreateNewTask({ onClose }) {
                             currentDate={currentDate}
                             onClose={toggleExpanded}
                             onChange={(selectedDate) => {
-                                console.log("Selected date:", selectedDate);
                                 setCurrentDate(selectedDate);
                             }}
                             onSave={(selectedDate, time, repeat) => {
-                                console.log("Selected date:", selectedDate);
                                 setCurrentDate(selectedDate);
                                 setSelectedTime(time);
                                 setSelectedRepeat(repeat);

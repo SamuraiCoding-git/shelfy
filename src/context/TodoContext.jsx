@@ -1,28 +1,30 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import mockData from '../mock-data/exampleTodoList.json';
 import axios from "axios";
-
-// Mock data and services
-const todos = mockData.todos;
 
 // Mock API Service
 const apiService = {
     getTodos: async () => {
-        await axios.post('https://b4ca-192-36-61-126.ngrok-free.app/api/todos/all', {
-            userInitData: window.Telegram.WebApp.initData
-        }, {
-            headers: {
-                'ngrok-skip-browser-warning': 'true',
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => {
+        try {
+            const response = await axios.post(
+                'https://b4ca-192-36-61-126.ngrok-free.app/api/todos/all',
+                { userInitData: window.Telegram.WebApp.initData },
+                {
+                    headers: {
+                        'ngrok-skip-browser-warning': 'true',
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            if (response.data && response.data.todos) {
                 return response.data.todos;
-            })
-            .catch(error => {
-                console.log(error)
+            } else {
+                console.error('Invalid API response format');
                 return [];
-            });
+            }
+        } catch (error) {
+            console.error('Error fetching todos:', error);
+            return [];
+        }
     },
     addTodo: async (userId, todo) => {
         // Simulate API request for adding a todo
@@ -36,7 +38,31 @@ const apiService = {
         // Simulate API request for editing a todo
         console.log(`Editing todo with ID ${updatedTodo.id} for user ${userId}:`, updatedTodo);
     },
+    toggleTodoStatus: async (todoId) => {
+        try {
+            const response = await axios.patch(
+                `https://b4ca-192-36-61-126.ngrok-free.app/api/todos/${todoId}/toggle_status`,
+                { userInitData: window.Telegram.WebApp.initData },
+                {
+                    headers: {
+                        'ngrok-skip-browser-warning': 'true',
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            if (response.data && response.data.updated_todo) {
+                return response.data.updated_todo;
+            } else {
+                console.error('Invalid API response format');
+                return null;
+            }
+        } catch (error) {
+            console.error('Error toggling todo status:', error);
+            return null;
+        }
+    }
 };
+
 
 // Mock Telegram Service
 const tgService = {
@@ -56,9 +82,9 @@ export const TodoProvider = ({ children }) => {
     useEffect(() => {
         const loadInitialTodos = async () => {
             try {
-                const apiTodos = await apiService.getTodos();
-                setAllTodos(apiTodos);
-                updateFilteredTodos(apiTodos, selectedDate); // Apply initial filtering
+                const todos = await apiService.getTodos();
+                setAllTodos(todos || []);
+                updateFilteredTodos(todos || [], selectedDate); // Apply initial filtering
             } catch (error) {
                 setAllTodos([])
                 updateFilteredTodos([], selectedDate);
@@ -85,7 +111,7 @@ export const TodoProvider = ({ children }) => {
 
     // Add a new todo
     const addTodo = (todo) => {
-        const newTodo = { ...todo, id: allTodos.length + 1, status: false };
+        const newTodo = { ...todo, todo_id: allTodos.length + 1, status: false };
         const updatedTodos = [...allTodos, newTodo];
         setAllTodos(updatedTodos);
         apiService.addTodo(tgService.getUserId(), newTodo);
@@ -95,7 +121,7 @@ export const TodoProvider = ({ children }) => {
     // Create a new task with additional details
     const createTask = (title, description, dueDate, reminder, dueTime, reminderTime, tags, repeat) => {
         const newTask = {
-            id: allTodos.length + 1, // Generate a new ID
+            todo_id: allTodos.length + 1, // Generate a new ID
             title: title,
             description: description,
             reminder: reminder,
@@ -114,22 +140,24 @@ export const TodoProvider = ({ children }) => {
     };
 
     // Toggle todo status (completed / not completed)
-    const toggleTodoStatus = (id) => {
+    const toggleTodoStatus = async (todo_id) => {
+        console.log("ID: ", todo_id)
         const updatedTodos = allTodos.map((todo) =>
-            todo.id === id ? { ...todo, status: !todo.status } : todo
+            todo.todo_id === todo_id ? { ...todo, status: !todo.status } : todo
         );
+        await apiService.toggleTodoStatus(todo_id)
         setAllTodos(updatedTodos);
-        updateFilteredTodos(updatedTodos, selectedDate); // Update filtered todos after status change
+        updateFilteredTodos(updatedTodos, selectedDate);// Update filtered todos after status change
     };
 
     // Delete a todo by ID
-    const deleteTodo = async (id) => {
+    const deleteTodo = async (todo_id) => {
         try {
-            const updatedTodos = allTodos.filter((todo) => todo.id !== id);
+            const updatedTodos = allTodos.filter((todo) => todo.todo_id !== todo_id);
             setAllTodos(updatedTodos);
             updateFilteredTodos(updatedTodos, selectedDate); // Update filtered todos after deletion
-            await apiService.deleteTodo(tgService.getUserId(), id); // Call API to simulate deletion
-            console.log(`Todo with ID ${id} deleted`);
+            await apiService.deleteTodo(tgService.getUserId(), todo_id); // Call API to simulate deletion
+            console.log(`Todo with ID ${todo_id} deleted`);
         } catch (error) {
             console.error('Error deleting todo:', error);
         }

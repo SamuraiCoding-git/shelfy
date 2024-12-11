@@ -1,16 +1,16 @@
 import React from 'react';
 import TodoCard from './TodoCard';
-import { useTodos } from '../context/TodoContext'; // Импортируем хук контекста
+import { useTodos } from '../context/TodoContext'; // Assuming you're using a context hook
 
 const TodoList = ({ isCalendarPage }) => {
-    const { filteredTodos, toggleTodoStatus, selectedDate } = useTodos(); // Извлекаем filteredTodos, toggleTodoStatus и selectedDate
+    const { filteredTodos, toggleTodoStatus, selectedDate } = useTodos(); // Get todos, toggle function, and selected date
 
     return (
         <div
             className={`flex flex-col gap-4 ${
                 isCalendarPage ? 'bg-none py-6 pt-6 pb-[74px]' : 'p-6 bg-gray-900 rounded-3xl'
-            } overflow-y-auto`} // Добавили прокрутку для всего контейнера
-            style={{ maxHeight: 'calc(100vh - 74px)' }} // Максимальная высота для всего контейнера, исключая отступы
+            } overflow-y-auto`} // Add scrolling
+            style={{ maxHeight: 'calc(100vh - 74px)' }} // Set max height
         >
             {/* Title */}
             {!isCalendarPage && (
@@ -29,25 +29,20 @@ const TodoList = ({ isCalendarPage }) => {
 
             {/* Todos */}
             {filteredTodos.length > 0 ? (
-                <div
-                    className="flex flex-col gap-4 overflow-y-auto" // Убрали ограничения по высоте для контейнера задач
-                >
+                <div className="flex flex-col gap-4 overflow-y-auto">
                     {filteredTodos.map((todo) => (
                         <TodoCard
-                            key={todo.id}
+                            key={todo.todo_id}
                             isCalendarPage={isCalendarPage}
                             todo={todo}
-                            toggleStatus={() => toggleTodoStatus(todo.id)}
+                            toggleStatus={toggleTodoStatus}  // Pass toggle function
                         />
                     ))}
                 </div>
             ) : (
-                <div
-                    className={`flex flex-col items-center justify-center text-white ${
-                        filteredTodos.length < 1 ? 'min-h-[30vh]' : ''
-                    }`}
-                >
+                <div className="flex flex-col items-center justify-center text-white min-h-[30vh]">
                     <img className="text-lg font-medium" src="/assets/icons/validation.svg" />
+                    <p>No tasks found!</p>
                 </div>
             )}
         </div>
