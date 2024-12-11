@@ -26,9 +26,31 @@ const apiService = {
             return [];
         }
     },
-    addTodo: async (userId, todo) => {
-        // Simulate API request for adding a todo
-        console.log(`Adding todo for user ${userId}:`, todo);
+    addTodo: async (todo) => {
+        try {
+            const response = await axios.post(
+                'https://b4ca-192-36-61-126.ngrok-free.app/api/todos/',
+                {
+                    todoData: todo, // Send todoData in the request body
+                    userInitData: window.Telegram.WebApp.initData
+                },
+                {
+                    headers: {
+                        'ngrok-skip-browser-warning': 'true',
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            if (response.data && response.data.todo) {
+                return response.data.todo; // Return the created todo from the API response
+            } else {
+                console.error('Invalid API response format');
+                return null;
+            }
+        } catch (error) {
+            console.error('Error creating todo:', error);
+            return null;
+        }
     },
     deleteTodo: async (userId, todoId) => {
         // Simulate API request for deleting a todo
@@ -110,16 +132,21 @@ export const TodoProvider = ({ children }) => {
     };
 
     // Add a new todo
-    const addTodo = (todo) => {
+    const addTodo = async (todo) => {
         const newTodo = { ...todo, todo_id: allTodos.length + 1, status: false };
         const updatedTodos = [...allTodos, newTodo];
         setAllTodos(updatedTodos);
-        apiService.addTodo(tgService.getUserId(), newTodo);
-        updateFilteredTodos(updatedTodos, selectedDate); // Update filtered todos after adding
+
+        // Call API to add the new todo
+        const createdTodo = await apiService.addTodo(tgService.getUserId(), newTodo);
+        if (createdTodo) {
+            setAllTodos([...allTodos, createdTodo]); // Add the newly created todo to the state
+            updateFilteredTodos(updatedTodos, selectedDate); // Update filtered todos after adding
+        }
     };
 
     // Create a new task with additional details
-    const createTask = (title, description, dueDate, reminder, dueTime, reminderTime, tags, repeat) => {
+    const createTask = async (title, description, dueDate, reminder, dueTime, reminderTime, tags, repeat) => {
         const newTask = {
             todo_id: allTodos.length + 1, // Generate a new ID
             title: title,
@@ -135,13 +162,12 @@ export const TodoProvider = ({ children }) => {
 
         const updatedTodos = [...allTodos, newTask];
         setAllTodos(updatedTodos);
-        apiService.addTodo(tgService.getUserId(), newTask);
+        await apiService.addTodo(newTask);
         updateFilteredTodos(updatedTodos, selectedDate); // Update filtered todos after creating a task
     };
 
     // Toggle todo status (completed / not completed)
     const toggleTodoStatus = async (todo_id) => {
-        console.log("ID: ", todo_id)
         const updatedTodos = allTodos.map((todo) =>
             todo.todo_id === todo_id ? { ...todo, status: !todo.status } : todo
         );
