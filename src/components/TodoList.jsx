@@ -42,7 +42,6 @@ const TodoList = ({ isCalendarPage }) => {
             ) : (
                 <div className="flex flex-col items-center justify-center text-white min-h-[30vh]">
                     <img className="text-lg font-medium" src="/assets/icons/validation.svg" />
-                    <p>No tasks found!</p>
                 </div>
             )}
         </div>
