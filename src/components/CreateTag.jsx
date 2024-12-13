@@ -84,6 +84,8 @@ const CreateTag = ({ toggleTag, setCurrentHeight, editTag = false, tag = false }
                             placeholder="Title"
                             value={tagName}
                             onChange={(e) => setTagName(e.target.value)}
+                            onFocus={() => setCurrentHeight(80)}
+                            onBlur={() => setCurrentHeight(30)}
                         />
                     </div>
                 </div>
