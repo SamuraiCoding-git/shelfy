@@ -26,7 +26,7 @@ const UserStatistics = () => {
                     <img
                         src="/assets/icons/fire.svg"
                         alt="days in fire icon"
-                        className="w-6"
+                        className="w-8"
                     />
                     {/* Safely access user.burningDays */}
                     <span className="text-lg font-bold">{formatNumber(user.burningDays)}</span>
@@ -35,7 +35,7 @@ const UserStatistics = () => {
                     <img
                         src="/assets/icons/diamond_header.svg"
                         alt="token balance icon"
-                        className="w-6"
+                        className="w-8"
                     />
                     {/* Safely access user.points */}
                     <span className="text-lg font-bold">{formatNumber(user.points)}</span>
