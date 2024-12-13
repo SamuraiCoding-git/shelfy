@@ -1,12 +1,13 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from "axios";
+import { format, parseISO } from 'date-fns';
 
 // Mock API Service
 const apiService = {
     getTodos: async () => {
         try {
             const response = await axios.post(
-                'https://b4ca-192-36-61-126.ngrok-free.app/api/todos/all',
+                'https://2ff1-192-36-61-126.ngrok-free.app/api/todos/all',
                 { userInitData: window.Telegram.WebApp.initData },
                 {
                     headers: {
@@ -27,9 +28,10 @@ const apiService = {
         }
     },
     addTodo: async (todo) => {
+        console.log(todo)
         try {
             const response = await axios.post(
-                'https://b4ca-192-36-61-126.ngrok-free.app/api/todos/',
+                'https://2ff1-192-36-61-126.ngrok-free.app/api/todos/',
                 {
                     todoData: todo, // Send todoData in the request body
                     userInitData: window.Telegram.WebApp.initData
@@ -63,7 +65,7 @@ const apiService = {
     toggleTodoStatus: async (todoId) => {
         try {
             const response = await axios.patch(
-                `https://b4ca-192-36-61-126.ngrok-free.app/api/todos/${todoId}/toggle_status`,
+                `https://2ff1-192-36-61-126.ngrok-free.app/api/todos/${todoId}/toggle_status`,
                 { userInitData: window.Telegram.WebApp.initData },
                 {
                     headers: {
@@ -126,8 +128,19 @@ export const TodoProvider = ({ children }) => {
             setFilteredTodos(todos); // If no date is selected, show all todos
             return;
         }
-        const selectedDateString = new Date(date).toDateString();
-        const filtered = todos.filter((todo) => new Date(todo.time).toDateString() === selectedDateString);
+
+        // Convert the input date to YYYY-MM-DD format
+        const formattedDate = format(new Date(date), 'yyyy-MM-dd');
+
+        const filtered = todos.filter((todo) => {
+            // Ensure todo.date is a valid date string before parsing
+            if (!todo.date) return false;
+            console.log(todo.date)
+            // Parse the todo.date and remove the time component
+            const todoDate = format(parseISO(todo.date), 'yyyy-MM-dd');
+            return todoDate === formattedDate;
+        });
+
         setFilteredTodos(filtered);
     };
 
@@ -137,8 +150,10 @@ export const TodoProvider = ({ children }) => {
         const updatedTodos = [...allTodos, newTodo];
         setAllTodos(updatedTodos);
 
+        console.log(newTodo)
+
         // Call API to add the new todo
-        const createdTodo = await apiService.addTodo(tgService.getUserId(), newTodo);
+        const createdTodo = await apiService.addTodo(newTodo);
         if (createdTodo) {
             setAllTodos([...allTodos, createdTodo]); // Add the newly created todo to the state
             updateFilteredTodos(updatedTodos, selectedDate); // Update filtered todos after adding
@@ -147,6 +162,8 @@ export const TodoProvider = ({ children }) => {
 
     // Create a new task with additional details
     const createTask = async (title, description, dueDate, reminder, dueTime, reminderTime, tags, repeat) => {
+        const tagIds = tags.map(tag => tag.tag_id);
+
         const newTask = {
             todo_id: allTodos.length + 1, // Generate a new ID
             title: title,
@@ -157,13 +174,13 @@ export const TodoProvider = ({ children }) => {
             reminderTime: reminderTime,// Convert dueDate to ISO string for 'time'
             status: false, // Task is initially not completed
             repeat: repeat, // Repeat value for the task
-            tags: tags, // Tags for the task
+            tags: tagIds, // Tags for the task
         };
 
         const updatedTodos = [...allTodos, newTask];
         setAllTodos(updatedTodos);
-        await apiService.addTodo(newTask);
-        updateFilteredTodos(updatedTodos, selectedDate); // Update filtered todos after creating a task
+        updateFilteredTodos(updatedTodos, selectedDate);
+        await apiService.addTodo(newTask);// Update filtered todos after creating a task
     };
 
     // Toggle todo status (completed / not completed)
@@ -171,9 +188,9 @@ export const TodoProvider = ({ children }) => {
         const updatedTodos = allTodos.map((todo) =>
             todo.todo_id === todo_id ? { ...todo, status: !todo.status } : todo
         );
-        await apiService.toggleTodoStatus(todo_id)
         setAllTodos(updatedTodos);
-        updateFilteredTodos(updatedTodos, selectedDate);// Update filtered todos after status change
+        updateFilteredTodos(updatedTodos, selectedDate);
+        await apiService.toggleTodoStatus(todo_id)
     };
 
     // Delete a todo by ID

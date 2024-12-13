@@ -5,7 +5,7 @@ const DeleteTag = ( { toggleTag, setCurrentHeight, tag}) => {
     const { deleteTag } = useTags();
 
     const handleDeleteTag = () => {
-        deleteTag(tag);
+        deleteTag(tag.tag_id);
         toggleTag(true);
     }
 

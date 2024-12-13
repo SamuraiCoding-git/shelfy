@@ -6,7 +6,6 @@ import Features from "./pages/Features.jsx";
 import Calendar from "./pages/Calendar.jsx";
 import UserProfile from "./pages/Profile.jsx";
 import Leaderboard from "./pages/Leaderboard.jsx";
-import axios from 'axios';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -33,22 +32,6 @@ function App() {
             // Expand the WebApp
             window.Telegram.WebApp.expand();
         }
-        axios.post('https://b4ca-192-36-61-126.ngrok-free.app/api/users/', {
-            userInitData: window.Telegram.WebApp.initData,
-            startParam: window.Telegram.WebApp.initDataUnsafe.start_param,
-        }, {
-            headers: {
-                'ngrok-skip-browser-warning': 'true', // Skips ngrok browser warning
-                'Content-Type': 'application/json'   // Ensures correct content-type header
-            }
-        })
-            .then(response => {
-                console.log('Response:', response.data);
-            })
-            .catch(error => {
-                console.error('Error:', error.response ? error.response.data : error.message);
-            });
-
     }, []); // Empty dependency array ensures this runs only once when the component mounts
 
     return <RouterProvider router={router} />;

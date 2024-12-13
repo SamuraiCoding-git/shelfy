@@ -12,7 +12,7 @@ const CreateTag = ({ toggleTag, setCurrentHeight, editTag = false, tag = false }
 
     // Set tag data when `tag` changes and ensure controlled inputs are never undefined
     useEffect(() => {
-        setCurrentHeight(35); // Adjust height for UI (if needed)
+        setCurrentHeight(30); // Adjust height for UI (if needed)
         if (tag) {
             setTagName(tag.name || ''); // Ensure it's always a valid string
             setTagColor(tag.color || '#1E79FF'); // Set default color if no tag.color
@@ -39,7 +39,7 @@ const CreateTag = ({ toggleTag, setCurrentHeight, editTag = false, tag = false }
     };
 
     const handleEditTag = () => {
-        updateTag(tag.name, { "name": tagName, "color": tagColor });
+        updateTag(tag.tag_id, { "name": tagName, "color": tagColor });
         toggleTag(true);
     };
 
@@ -54,7 +54,7 @@ const CreateTag = ({ toggleTag, setCurrentHeight, editTag = false, tag = false }
                 onClick={() => toggleTag(true)}
             />
             <div className="container mx-auto p-4">
-                <h1 className="text-lg font-semibold -mt-4 mb-4 text-center">Create Tag</h1>
+                <h1 className="text-lg font-semibold -mt-4 mb-4 text-center">{editTag ? "Edit Tag" : "Create Tag"}</h1>
                 {/* Input Section */}
                 <div className="flex items-center mb-2 py-3 mt-6 text-[#47474E] border-[#2C2D35] px-3 rounded-xl border-2 w-full">
                     <button className="color-preview" onClick={toggleChooseColor}>

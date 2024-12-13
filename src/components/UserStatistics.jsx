@@ -1,14 +1,21 @@
 import React from 'react';
-import mockData from '../mock-data/exampleUser.json';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from "../context/UserContext.jsx";
 
 const UserStatistics = () => {
-    const user = mockData.user;
-    const formatNumber = (num) => num?.toLocaleString();
+    const { user } = useUser();
     const navigate = useNavigate();
 
+    // Function to format numbers with commas
+    const formatNumber = (num) => num?.toLocaleString();
+
+    // Early return if user is null or undefined
+    if (!user) {
+        return <div>Loading...</div>; // or any loading fallback UI you prefer
+    }
+
     const openProfile = () => {
-        navigate(`/profile`); // Assuming `user.id` is available
+        navigate(`/profile`);
     };
 
     return (
@@ -19,29 +26,31 @@ const UserStatistics = () => {
                     <img
                         src="/assets/icons/fire.svg"
                         alt="days in fire icon"
-                        className="w-6" // Icon width: 24px
+                        className="w-6"
                     />
+                    {/* Safely access user.burningDays */}
                     <span className="text-lg font-bold">{formatNumber(user.burningDays)}</span>
                 </div>
                 <div className="flex items-center gap-3">
                     <img
                         src="/assets/icons/diamond_header.svg"
                         alt="token balance icon"
-                        className="w-6" // Icon width: 24px
+                        className="w-6"
                     />
-                    <span className="text-lg font-bold">{formatNumber(user.tokenBalance)}</span>
+                    {/* Safely access user.points */}
+                    <span className="text-lg font-bold">{formatNumber(user.points)}</span>
                 </div>
             </div>
             {/* Profile button */}
             <button
-                className="flex justify-center items-center w-12 h-12 rounded-full overflow-hidden" // Avatar wrapper
+                className="flex justify-center items-center w-12 h-12 rounded-full overflow-hidden"
                 onClick={openProfile}
             >
+                {/* Safely access user.photo_url */}
                 <img
-                    src={user.photo_url}
+                    src={user.photo_url || '/path/to/default-image.png'} // Fallback image if photo_url is missing
                     alt="profile"
-                    className="w-full h-full object-cover rounded-full" // Avatar styles
-                    // onError={(e) => (e.target.src = '/path/to/default-image.png')} // Fallback image
+                    className="w-full h-full object-cover rounded-full"
                 />
             </button>
         </header>

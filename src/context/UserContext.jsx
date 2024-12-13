@@ -1,42 +1,63 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import userInfo from '../mock-data/exampleUser.json'; // Example user data, if needed
+import userInfo from '../mock-data/exampleUser.json';
+import axios from "axios"; // Example user data, if needed
 
 // Create a User Context
 const UserContext = createContext();
 
 // Context Provider Component
-export const UserProvider = ({ children }) => {
-    const [user, setUser] = useState(null); // Initialize user state to null
+export const UserProvider = ({ children, startParam }) => {
+    const [user, setUser] = useState(null);
+    const initData = window.Telegram.WebApp.initDataUnsafe.user// Initialize user state to null
 
     useEffect(() => {
-        const fetchUserInfo = () => {
-            const telegramUser = window.Telegram?.WebApp?.initDataUnsafe?.user;
+        const fetchUserInfo = async () => {
+            try {
+                const response = await axios.post('https://2ff1-192-36-61-126.ngrok-free.app/api/users/', {
+                    userInitData: window.Telegram.WebApp.initData,
+                    startParam: startParam || window.Telegram.WebApp.initDataUnsafe.start_param,
+                }, {
+                    headers: {
+                        'ngrok-skip-browser-warning': 'true', // Skips ngrok browser warning
+                        'Content-Type': 'application/json'   // Ensures correct content-type header
+                    }
+                });
 
-            if (telegramUser) {
-                // Merge additional properties with the telegramUser
-                const extendedUser = {
-                    ...telegramUser,
-                    friends: 5,
-                    invitation: 12,
-                    achievements: 3,
-                    currentLeague: "Gold",
-                    taskCompleted: 120,
-                    burningDays: 365,
-                    tokenBalance: 12021
-                };
+                const fetchedUser = response.data.user;
+                console.log('Response:', response.data);
+
+                const extendedUser = fetchedUser
+                    ? { ...fetchedUser, currentLeague: "Gold", photo_url: initData.photo_url,  }
+                    : { ...userInfo.user };
+
+                console.log(extendedUser)
 
                 setUser(extendedUser);
-            } else {
-                setUser(userInfo.user);
+            } catch (error) {
+                console.error('Error:', error.response ? error.response.data : error.message);
+                setUser(userInfo.user); // Fallback to mock data in case of an error
             }
         };
 
         fetchUserInfo(); // Fetch user info on component mount
-    }, []);
+    }, [startParam]);
 
+    const addPoints = (points) => {
+        setUser((prevUser) => {
+            if (prevUser && prevUser.points !== undefined) {
+                return { ...prevUser, points: prevUser.points + points };
+            }
+            return prevUser; // If there's no points property, just return the user as is
+        });
+    };
 
     return (
-        <UserContext.Provider value={user}>
+        <UserContext.Provider
+            value={{
+                user,
+                addPoints
+            }}
+        >
             {children}
         </UserContext.Provider>
     );

@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import TodoList from "../components/TodoList.jsx";
 import { useTodos } from "../context/TodoContext";
+import { isSameDay, isSameMonth, isSameYear, parseISO } from 'date-fns';
 
 const Calendar = () => {
     const [currentDate, setCurrentDate] = useState(new Date());
@@ -63,11 +64,22 @@ const Calendar = () => {
 
     // Function to get tags for a specific day
     const getTagsForDay = (day) => {
-        const tags = allTodos
-            .filter(todo => new Date(todo.time).getDate() === day && new Date(todo.time).getMonth() === currentDate.getMonth() && new Date(todo.time).getFullYear() === currentDate.getFullYear())  // Filter todos for the current day, month, and year
-            .flatMap(todo => todo.tags || [])  // Ensure that 'tags' exists before flattening
-            .slice(0, 5);  // Limit to 5 tags
-        return tags;
+        const dayDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+        return allTodos
+            .filter(todo => {
+                if (!todo.date) return false;
+                const todoDate = parseISO(todo.date);
+                return isSameDay(todoDate, dayDate) &&
+                    isSameMonth(todoDate, currentDate) &&
+                    isSameYear(todoDate, currentDate);
+            })
+            .flatMap(todo => todo.tags || [])
+            .reduce((uniqueTags, tag) => {
+                if (uniqueTags.length < 5 && !uniqueTags.some(t => t.tag_id === tag.tag_id)) {
+                    uniqueTags.push(tag);
+                }
+                return uniqueTags;
+            }, []);
     };
 
     // Function to get tags for the entire month
@@ -161,3 +173,4 @@ const Calendar = () => {
 };
 
 export default Calendar;
+

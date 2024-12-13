@@ -20,16 +20,15 @@ export default function CreateNewTask({ onClose }) {
     const [selectedRepeat, setSelectedRepeat] = useState("None");
     const [selectedReminder, setSelectedReminder] = useState("None");
     const [selectedReminderTime, setSelectedReminderTime] = useState();
-    const { selectedTags, deleteSelectedTags, resetSelectedTags } = useTags([]);
+    const { selectedTags, removeSelectedTag, resetSelectedTags } = useTags([]);
 
     const { createTask } = useTodos(); // Access the createTask function from context
 
     const handleSubmit = (e) => {
-        e.preventDefault(); // Prevent f orm submission
-        console.log("Hi")
-        // Call createTask with title, description, and selected date
+        e.preventDefault();
+
         if (taskTitle && taskDescription && currentDate) {
-            createTask(taskTitle, taskDescription, currentDate, selectedTime, selectedTags, selectedRepeat);
+            createTask(taskTitle, taskDescription, currentDate, selectedReminder, selectedTime, selectedReminderTime || null, selectedTags, selectedRepeat);
             resetSelectedTags()
             onClose(); // Close the modal after task is created
         }
@@ -287,8 +286,8 @@ export default function CreateNewTask({ onClose }) {
                                     className="flex flex-row gap-3 max-h-64 scrollbar-thin scrollbar-thumb-[#1D77FF] scrollbar-track-transparent">
                                     {selectedTags.map((tag) => (
                                         tag ? (
-                                            <div key={tag.id} className="flex-shrink-0">
-                                                <TagCard tag={tag} deleteSelectedTags={deleteSelectedTags}/>
+                                            <div key={tag.tag_id} className="flex-shrink-0">
+                                                <TagCard tag={tag} removeSelectedTag={removeSelectedTag}/>
                                             </div>
                                         ) : null
                                     ))}

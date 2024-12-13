@@ -21,15 +21,15 @@ const LeaderCard = ({ user, rank }) => {
             {/* Avatar Image */}
             <img
                 src={user.photo_url}
-                alt={`${user.name}'s avatar`}
+                alt={`${user.full_name}'s avatar`}
                 className="w-12 h-12 rounded-full ml-4"  // Add margin-left to move the avatar slightly to the right
             />
 
             {/* Display Name */}
-            <span className="font-medium text-lg text-white ml-4">{user.name}</span> {/* Move name more to the left */}
+            <span className="font-medium text-lg text-white ml-4">{user.full_name}</span> {/* Move name more to the left */}
 
             {/* Display Token Balance */}
-            <span className="text-white ml-auto">{`${formatTokenBalance(user.tokenBalance)} points`}</span> {/* Move token balance to the far right */}
+            <span className="text-white ml-auto">{`${formatTokenBalance(user.earnings)} points`}</span> {/* Move token balance to the far right */}
         </div>
     );
 };

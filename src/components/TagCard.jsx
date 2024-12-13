@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import CreateTag from "./CreateTag.jsx";
 
-const TagCard = ({ tag, handleSelect = null, handleEdit = false, deleteSelectedTags = null, disabled, toggleTag, setCurrentHeight }) => {
-    const [checked, setChecked] = useState(tag.checked);
-    const [showEditTag, setShowEditTag] = useState(false);
+const TagCard = ({ tag, handleSelect = null, handleEdit = false, removeSelectedTag = null, disabled, toggleTag, setCurrentHeight, showEditTag=false, setShowEditTag=false }) => {
+    const [checked, setChecked] = useState(tag.checked || false);  // Ensure checked is always a boolean
 
     const handleShowEditTag = () => {
         setShowEditTag(!showEditTag);
     }
 
     useEffect(() => {
-        setChecked(tag.checked); // Sync checked state with the parent state
+        setChecked(tag.checked || false); // Sync checked state with the parent state, ensuring it's always boolean
     }, [tag]);
 
     const toggleTagStatus = () => {
@@ -19,7 +18,7 @@ const TagCard = ({ tag, handleSelect = null, handleEdit = false, deleteSelectedT
     };
 
     const handleDeleteTag = () => {
-        deleteSelectedTags(tag); // Delete the tag from the parent
+        removeSelectedTag(tag.tag_id); // Delete the tag from the parent
     }
 
     return (
@@ -31,7 +30,7 @@ const TagCard = ({ tag, handleSelect = null, handleEdit = false, deleteSelectedT
                         <label htmlFor={`tag-${tag.name}`}>
                             <input
                                 type="checkbox"
-                                id={`tag-${tag.name}`}
+                                id={`tag-${tag.tag_id}`}
                                 checked={checked}
                                 onChange={toggleTagStatus}
                                 disabled={disabled}

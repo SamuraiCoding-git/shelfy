@@ -3,7 +3,7 @@ import {useUser} from "../context/UserContext.jsx";
 import {useNavigate} from "react-router-dom";
 
 const UserProfile = () => {
-    const user = useUser();
+    const { user } = useUser();
     const tg = window.Telegram.WebApp;
     const navigate = useNavigate();
 
@@ -28,7 +28,7 @@ const UserProfile = () => {
             </div>
 
             <div className="user-name text-center text-primary font-bold text-2xl mb-3">
-                {user.first_name ? `${user.first_name} ${user.last_name}` : user.name}
+                {user.first_name ? `${user.first_name} ${user.last_name}` : user.full_name}
             </div>
 
             <div className="user-acquisition-statistics-wrapper text-center text-primary font-medium text-base mb-4 flex justify-evenly">
@@ -37,10 +37,10 @@ const UserProfile = () => {
                     <p className="secondary-text">friends</p>
                 </div>
 
-                <div className="user-acquisition-statistics flex flex-col items-center justify-center gap-2">
-                    <p>{user.invitation}</p>
-                    <p className="secondary-text">invitation</p>
-                </div>
+                {/*<div className="user-acquisition-statistics flex flex-col items-center justify-center gap-2">*/}
+                {/*    <p>{user.invitation}</p>*/}
+                {/*    <p className="secondary-text">invitation</p>*/}
+                {/*</div>*/}
 
                 {/*<div className="user-acquisition-statistics flex flex-col items-center justify-center gap-2">*/}
                 {/*    <p>{user.achievements}</p>*/}
@@ -71,7 +71,7 @@ const UserProfile = () => {
                     className="statistics-card bg-gray-800 text-primary rounded-xl p-4 flex items-center gap-3 font-bold text-lg">
                     <img src="/assets/icons/profile/diamond.svg" alt="diamond icon"/>
                     <div className="statistics-card-info flex flex-col gap-1">
-                        <p className="leading-relaxed">{user.tokenBalance}</p>
+                        <p className="leading-relaxed">{user.points}</p>
                         <p className="secondary-text text-[#AEAEB4] text-[14px] leading-3">XP points</p>
                     </div>
                 </div>

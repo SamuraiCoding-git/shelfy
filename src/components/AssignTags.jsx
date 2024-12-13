@@ -17,18 +17,12 @@ const AssignTags = ({ toggleTag, setCurrentHeight, onSave }) => {
 
     // Handle tag selection (toggle checked state)
     const handleSelectTag = (tag) => {
-        if (selectedTags.includes(tag)) {
-            // Deselect the tag if it's already selected
-            selectTag(tag); // This will remove the tag from selectedTags
-        } else if (selectedTags.length < 2) {
-            // Select the tag if there are less than 2 tags selected
-            selectTag(tag); // This will add the tag to selectedTags
-        }
+        selectTag(tag)
     };
 
-    const isSaveButtonActive = selectedTags.length > 0;
     const isDisabled = selectedTags.length >= 2; // Disable all checkboxes when there are 2 selected tags
     const [showCreateTag, setShowCreateTag] = useState(false);
+    const [showEditTag, setShowEditTag] = useState(false);
 
     const handleShowCreateTag = () => {
         setShowCreateTag(!showCreateTag);
@@ -54,7 +48,7 @@ const AssignTags = ({ toggleTag, setCurrentHeight, onSave }) => {
                             className={`flex flex-col gap-3 ${tags.length > 5 ? 'overflow-y-auto' : ''} max-h-64`}
                         >
                             {tags.map((tag) => (
-                                <li key={tag.id} className="w-full flex flex-col gap-3">
+                                <li key={tag.tag_id} className="w-full flex flex-col gap-3">
                                     <TagCard
                                         tag={tag}
                                         handleSelect={handleSelectTag} // Pass the handler to toggle checked state
@@ -62,6 +56,8 @@ const AssignTags = ({ toggleTag, setCurrentHeight, onSave }) => {
                                         disabled={isDisabled && !selectedTags.includes(tag)}
                                         toggleTag={toggleTag}
                                         setCurrentHeight={setCurrentHeight}
+                                        showEditTag={showEditTag}
+                                        setShowEditTag={setShowEditTag}
                                         // Disable checkbox if 2 tags selected and tag not in selectedTags
                                     />
                                 </li>
@@ -69,7 +65,7 @@ const AssignTags = ({ toggleTag, setCurrentHeight, onSave }) => {
                         </div>
                     </div>
                 ) : (
-                    <div className="flex flex-col justify-center items-center mt-8 w-full max-w-lg mx-auto">
+                    <div className="flex flex-col justify-center items-center -mt-4 w-full max-w-lg mx-auto">
                         <h2 className="text-[14px] text-center py-3 w-full">You don&#39;t have any tags yet</h2>
                         <button
                             className="px-6 py-2 bg-[#1D77FF] text-white font-bold rounded-xl shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl hover:from-[#8BC34A] hover:to-[#4CAF50] focus:outline-none flex items-center justify-center gap-2 w-1/2"
@@ -85,21 +81,23 @@ const AssignTags = ({ toggleTag, setCurrentHeight, onSave }) => {
                     </div>
                 )}
 
-                <div className="mt-8 flex flex-row justify-between gap-3">
-                    <button
-                        className="w-full px-6 py-3 bg-[#1E1F24] text-white font-bold rounded-xl shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl focus:outline-none"
-                        onClick={handleShowCreateTag}
-                    >
-                        Create Tag
-                    </button>
-                    <button
-                        className={`w-full px-6 py-3 font-bold rounded-xl shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl focus:outline-none ${isSaveButtonActive ? 'bg-[#1D77FF] text-white' : 'bg-[#1E1F24] text-[#AEAEB4]'}`}
-                        onClick={() => onSave(selectedTags)}
-                        disabled={!isSaveButtonActive}
-                    >
-                        Save
-                    </button>
-                </div>
+                {tags.length > 0 && !showEditTag && (
+                    <div className="mt-8 flex flex-row justify-between gap-3">
+                        <button
+                            className="w-full px-6 py-3 bg-[#1E1F24] text-white font-bold rounded-xl shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl focus:outline-none"
+                            onClick={handleShowCreateTag}
+                        >
+                            Create Tag
+                        </button>
+                        <button
+                            className={`w-full px-6 py-3 font-bold rounded-xl shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl focus:outline-none ${selectedTags.length > 0 ? 'bg-[#1D77FF] text-white' : 'bg-[#1E1F24] text-[#AEAEB4]'}`}
+                            onClick={() => onSave()}
+                            disabled={!selectedTags.length > 0}
+                        >
+                            Save
+                        </button>
+                    </div>
+                )}
             </div>
 
             {showCreateTag && (

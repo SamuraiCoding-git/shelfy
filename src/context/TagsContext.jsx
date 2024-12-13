@@ -1,197 +1,193 @@
-import React, { createContext, useContext, useReducer, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-
-// Action types
-const ADD_TAG = 'ADD_TAG';
-const UPDATE_TAG = 'UPDATE_TAG';
-const DELETE_TAG = 'DELETE_TAG';
-const DELETE_SELECTED_TAGS = 'DELETE_SELECTED_TAGS';
-const SELECT_TAG = 'SELECT_TAG';
-const RESET_SELECTED_TAGS = 'RESET_SELECTED_TAGS';
-const SET_SELECTED_TAGS = 'SET_SELECTED_TAGS';
-const SET_TAGS_FROM_API = 'SET_TAGS_FROM_API'; // New action type for setting tags from API
-
-// Initial state
-const initialState = {
-    tags: [],
-    selectedTags: [],
-};
 
 // API Service for Tags
 const apiService = {
-    getTags: async (userInitData) => {
+    getTags: async () => {
         try {
-            // Send the userInitData (which includes the user_id) along with the request
-            const response = await axios.post('/tags/fetch-all', { user: userInitData });
-            return response.data.tags || []; // Ensure the correct response format
+            const response = await axios.post(
+                'https://2ff1-192-36-61-126.ngrok-free.app/api/tags/fetch-all',
+                { userInitData: window.Telegram.WebApp.initData },
+                {
+                    headers: {
+                        'ngrok-skip-browser-warning': 'true',
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            return response.data.tags || [];
         } catch (error) {
             console.error('Error fetching tags:', error);
-            return []; // Return empty array if there's an error
+            return [];
         }
     },
     addTag: async (tag) => {
         try {
-            const response = await axios.post('/tags', { tagData: tag });
-            return response.data.tag; // Assuming API returns the newly created tag
+            const response = await axios.post(
+                'https://2ff1-192-36-61-126.ngrok-free.app/api/tags',
+                {
+                    userInitData: window.Telegram.WebApp.initData,
+                    tagData: tag
+                },
+                {
+                    headers: {
+                        'ngrok-skip-browser-warning': 'true',
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            return response.data.tag;
         } catch (error) {
             console.error('Error adding tag:', error);
-            return null; // Return null in case of error
+            return null;
         }
     },
     updateTag: async (tagId, updatedTag) => {
         try {
-            const response = await axios.post(`/tags/update`, { tagId, tagData: updatedTag });
-            return response.data.updated_tag; // Assuming API returns the updated tag
+            const response = await axios.post(
+                `https://2ff1-192-36-61-126.ngrok-free.app/api/tags/update`,
+                {
+                    tagId: tagId,
+                    tagData: updatedTag,
+                    userInitData: window.Telegram.WebApp.initData
+                },
+                {
+                    headers: {
+                        'ngrok-skip-browser-warning': 'true',
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            return response.data.updated_tag;
         } catch (error) {
             console.error('Error updating tag:', error);
-            return null; // Return null in case of error
+            return null;
         }
     },
     deleteTag: async (tagId) => {
         try {
-            const response = await axios.post(`/tags/delete`, { tagId });
-            return response.data; // Assuming API returns confirmation of deletion
+            const response = await axios.post(
+                `https://2ff1-192-36-61-126.ngrok-free.app/api/tags/delete`,
+                {
+                    tagId: tagId,
+                    userInitData: window.Telegram.WebApp.initData
+                },
+                {
+                    headers: {
+                        'ngrok-skip-browser-warning': 'true',
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            return response.data;
         } catch (error) {
             console.error('Error deleting tag:', error);
-            return null; // Return null in case of error
+            return null;
         }
     }
 };
 
+// Create Context
+const TagsContext = createContext();
 
-// Reducer function to handle state changes
-const tagsReducer = (state, action) => {
-    switch (action.type) {
-        case ADD_TAG:
-            return {
-                ...state,
-                tags: [...state.tags, action.payload],
-            };
-
-        case UPDATE_TAG:
-            return {
-                ...state,
-                tags: state.tags.map((tag) =>
-                    tag.id === action.payload.id ? action.payload : tag
-                ),
-            };
-
-        case DELETE_TAG:
-            return {
-                ...state,
-                tags: state.tags.filter((tag) => tag.id !== action.payload),
-            };
-
-        case DELETE_SELECTED_TAGS:
-            return {
-                ...state,
-                tags: state.tags.filter(tag => !action.payload.some(t => t.id === tag.id)),
-                selectedTags: [],
-            };
-
-        case SELECT_TAG:
-            return {
-                ...state,
-                tags: state.tags.map(tag =>
-                    tag.id === action.payload.id ? { ...tag, checked: !tag.checked } : tag
-                ),
-                selectedTags: state.tags.filter(tag => tag.checked),
-            };
-
-        case RESET_SELECTED_TAGS:
-            return {
-                ...state,
-                tags: state.tags.map((tag) => ({ ...tag, checked: false })),
-                selectedTags: [],
-            };
-
-        case SET_SELECTED_TAGS:
-            return {
-                ...state,
-                selectedTags: action.payload,
-            };
-
-        case SET_TAGS_FROM_API:
-            return {
-                ...state,
-                tags: action.payload.map(tag => ({ ...tag, checked: false })),
-            };
-
-        default:
-            return state;
-    }
-};
-
-// Create the context for tags state
-const TagsContext = createContext(null);
-
-// TagsProvider component to provide global tags state
+// TagsProvider Component
 export const TagsProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(tagsReducer, initialState);
+    const [tags, setTags] = useState([]);
+    const [selectedTags, setSelectedTags] = useState([]);
 
-    // Action creators for dispatching actions
+    // Load initial tags
+    useEffect(() => {
+        const loadInitialTags = async () => {
+            try {
+                const tags = await apiService.getTags();
+                setTags(tags || []);
+            } catch (error) {
+                setTags([]);
+            }
+        };
+        loadInitialTags();
+    }, []);
+
+    // Add a new tag
     const addTag = async (tag) => {
         const createdTag = await apiService.addTag(tag);
         if (createdTag) {
-            dispatch({ type: ADD_TAG, payload: createdTag });
+            setTags(prevTags => [...prevTags, createdTag]);
         }
     };
 
+    // Update a tag
     const updateTag = async (tagId, updatedTag) => {
         const updated = await apiService.updateTag(tagId, updatedTag);
         if (updated) {
-            dispatch({ type: UPDATE_TAG, payload: updated });
+            setTags(prevTags => prevTags.map(tag => tag.tag_id === tagId ? updated : tag));
         }
     };
 
+    // Delete a tag
     const deleteTag = async (tagId) => {
         const result = await apiService.deleteTag(tagId);
         if (result) {
-            dispatch({ type: DELETE_TAG, payload: tagId });
+            setTags(prevTags => prevTags.filter(tag => tag.tag_id !== tagId));
+            setSelectedTags(prevSelected => prevSelected.filter(tag => tag.tag_id !== tagId));
         }
     };
 
+    // Delete selected tags
     const deleteSelectedTags = async () => {
-        const tagIds = state.selectedTags.map(tag => tag.id);
-        const result = await Promise.all(tagIds.map(tagId => apiService.deleteTag(tagId)));
-        if (result.every(res => res !== null)) {
-            dispatch({ type: DELETE_SELECTED_TAGS, payload: state.selectedTags });
+        const tagIds = selectedTags.map(tag => tag.tag_id);
+        const results = await Promise.all(tagIds.map(tagId => apiService.deleteTag(tagId)));
+        if (results.every(result => result !== null)) {
+            setTags(prevTags => prevTags.filter(tag => !tagIds.includes(tag.tag_id)));
+            setSelectedTags([]);
         }
     };
 
+    // Select or deselect a tag
     const selectTag = (tag) => {
-        dispatch({ type: SELECT_TAG, payload: tag });
+        setTags(prevTags => prevTags.map(t =>
+            t.tag_id === tag.tag_id ? { ...t, checked: !t.checked } : t
+        ));
+        setSelectedTags(prevSelected => {
+            const isSelected = prevSelected.some(t => t.tag_id === tag.tag_id);
+            if (isSelected) {
+                return prevSelected.filter(t => t.tag_id !== tag.tag_id);
+            } else {
+                return [...prevSelected, { ...tag, checked: true }];
+            }
+        });
     };
 
+    // Reset selected tags
     const resetSelectedTags = () => {
-        dispatch({ type: RESET_SELECTED_TAGS });
+        setTags(prevTags => prevTags.map(tag => ({ ...tag, checked: false })));
+        setSelectedTags([]);
     };
 
-    const setSelectedTags = (tags) => {
-        dispatch({ type: SET_SELECTED_TAGS, payload: tags });
+    // Remove a single tag from selectedTags
+    const removeSelectedTag = (tagId) => {
+        setSelectedTags(prevSelected => prevSelected.filter(tag => tag.tag_id !== tagId));
+        setTags(prevTags => prevTags.map(tag =>
+            tag.tag_id === tagId ? { ...tag, checked: false } : tag
+        ));
     };
 
-    // Fetch initial tags from API on component mount
-    useEffect(() => {
-        const loadTags = async () => {
-            const tags = await apiService.getTags();
-            dispatch({ type: SET_TAGS_FROM_API, payload: tags });
-        };
-        loadTags();
-    }, []); // This runs once on mount
+    // Get count of all tags
+    const getTagsCount = () => tags.length;
 
     return (
         <TagsContext.Provider
             value={{
-                tags: state.tags,
-                selectedTags: state.selectedTags,
+                tags,
+                selectedTags,
                 addTag,
                 updateTag,
                 deleteTag,
                 deleteSelectedTags,
                 selectTag,
                 resetSelectedTags,
-                setSelectedTags,
+                getTagsCount,
+                removeSelectedTag,
             }}
         >
             {children}
@@ -199,5 +195,6 @@ export const TagsProvider = ({ children }) => {
     );
 };
 
-// Custom hook to use tags context
+// Custom Hook for Consuming Context
 export const useTags = () => useContext(TagsContext);
+
