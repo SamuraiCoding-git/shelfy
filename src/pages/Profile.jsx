@@ -89,7 +89,7 @@ const UserProfile = () => {
                     className="statistics-card bg-gray-800 text-primary rounded-xl p-4 flex items-center gap-3 font-bold text-lg">
                     <img src="/assets/icons/profile/aim.svg" alt="aim icon"/>
                     <div className="statistics-card-info flex flex-col gap-1">
-                        <p className="leading-relaxed">{user.taskCompleted}</p>
+                        <p className="leading-relaxed">{user.completed_tasks}</p>
                         <p className="secondary-text text-[#AEAEB4] text-[14px] leading-3">Task completed</p>
                     </div>
                 </div>
