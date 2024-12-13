@@ -53,8 +53,8 @@ export const UserProvider = ({ children, startParam }) => {
 
     const updateTasksCompleted = () => {
         setUser((prevUser) => {
-            if (prevUser && prevUser.tasksCompleted !== undefined) {
-                return { ...prevUser, tasksCompleted: prevUser.tasksCompleted + 1 };
+            if (prevUser && prevUser.completed_tasks !== undefined) {
+                return { ...prevUser, completed_tasks: prevUser.completed_tasks + 1 };
             }
             return prevUser; // If tasksCompleted doesn't exist, just return the user as is
         });
