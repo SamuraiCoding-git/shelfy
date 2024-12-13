@@ -41,7 +41,7 @@ export default function CreateNewTask({ onClose }) {
     }
 
     const toggleExpanded = (flag = false) => {
-        const newHeight = isExpanded ? 35 : 80;
+        const newHeight = isExpanded ? 35 : 50;
         setCurrentHeight(newHeight);
         setIsExpanded(prevState => !prevState);
         if (flag) {
@@ -58,7 +58,7 @@ export default function CreateNewTask({ onClose }) {
         if (newShowDatePicker) {
             setCurrentHeight(100);
         } else {
-            setCurrentHeight(isExpanded ? 35 : 80);
+            setCurrentHeight(isExpanded ? 35 : 50);
         }
     };
 
@@ -68,7 +68,7 @@ export default function CreateNewTask({ onClose }) {
         if (newShowReminderPicker) {
             setCurrentHeight(70);
         } else {
-            setCurrentHeight(isExpanded ? 35 : 80);
+            setCurrentHeight(isExpanded ? 35 : 50);
         }
     };
 
@@ -78,7 +78,7 @@ export default function CreateNewTask({ onClose }) {
         if (newShowTagPicker) {
             setCurrentHeight(35);
         } else {
-            setCurrentHeight(isExpanded ? 35 : 80);
+            setCurrentHeight(isExpanded ? 35 : 50);
         }
     };
 
@@ -166,14 +166,18 @@ export default function CreateNewTask({ onClose }) {
                         placeholder="Task Title"
                         className="outline-none caret-primary bg-transparent text-white text-lg font-semibold leading-6"
                         value={taskTitle} // Bind to taskTitle state
-                        onChange={(e) => setTaskTitle(e.target.value)} // Update state on change
+                        onChange={(e) => setTaskTitle(e.target.value)}
+                        onFocus={() => setCurrentHeight(80)}
+                        onBlur={() => isExpanded ? setCurrentHeight(50) : setCurrentHeight(35)}// Update state on change
                     />
                     <input
                         type="text"
                         placeholder="Description"
                         className="outline-none caret-primary bg-transparent text-gray-400 text-sm font-medium leading-4"
                         value={taskDescription} // Bind to taskDescription state
-                        onChange={(e) => setTaskDescription(e.target.value)} // Update state on change
+                        onChange={(e) => setTaskDescription(e.target.value)}
+                        onFocus={() => setCurrentHeight(80)}
+                        onBlur={() => isExpanded ? setCurrentHeight(50) : setCurrentHeight(35)}// Update state on change
                     />
                 </div>
 
