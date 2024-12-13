@@ -1,7 +1,7 @@
 import {useUser} from "../context/UserContext.jsx";
 
 const TodoCard = ({ isCalendarPage, todo, toggleStatus }) => {
-    const { addPoints } = useUser();
+    const { addPoints, updateTasksCompleted } = useUser();
 
     return (
         <>
@@ -17,7 +17,7 @@ const TodoCard = ({ isCalendarPage, todo, toggleStatus }) => {
                             type="checkbox"
                             id={`todo-${todo.todo_id}`}  // Use `todo.todo_id` here
                             checked={todo.status}  // Bind the checkbox to `todo.status`
-                            onChange={() => !todo.status && toggleStatus(todo.todo_id) && addPoints(100)}  // Call `toggleStatus` when clicked
+                            onChange={() => !todo.status && toggleStatus(todo.todo_id) && addPoints(100) && updateTasksCompleted() }  // Call `toggleStatus` when clicked
                             className="appearance-none w-full h-full rounded-full bg-gray-700 border-2 border-gray-600 checked:bg-blue-500 transition-all duration-200 focus:outline-dotted focus:outline-2 focus:outline-black"
                         />
                         <span
