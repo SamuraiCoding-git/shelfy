@@ -41,7 +41,7 @@ export default function CreateNewTask({ onClose }) {
     }
 
     const toggleExpanded = (flag = false) => {
-        const newHeight = isExpanded ? 35 : 50;
+        const newHeight = isExpanded ? 35 : 80;
         setCurrentHeight(newHeight);
         setIsExpanded(prevState => !prevState);
         if (flag) {
@@ -58,7 +58,7 @@ export default function CreateNewTask({ onClose }) {
         if (newShowDatePicker) {
             setCurrentHeight(100);
         } else {
-            setCurrentHeight(isExpanded ? 35 : 50);
+            setCurrentHeight(isExpanded ? 35 : 80);
         }
     };
 
@@ -68,7 +68,7 @@ export default function CreateNewTask({ onClose }) {
         if (newShowReminderPicker) {
             setCurrentHeight(70);
         } else {
-            setCurrentHeight(isExpanded ? 35 : 50);
+            setCurrentHeight(isExpanded ? 35 : 80);
         }
     };
 
@@ -78,7 +78,7 @@ export default function CreateNewTask({ onClose }) {
         if (newShowTagPicker) {
             setCurrentHeight(35);
         } else {
-            setCurrentHeight(isExpanded ? 35 : 50);
+            setCurrentHeight(isExpanded ? 35 : 80);
         }
     };
 
