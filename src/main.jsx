@@ -6,14 +6,10 @@ import { TodoProvider } from "./context/TodoContext.jsx";
 import { TagsProvider } from "./context/TagsContext.jsx";
 import { UserProvider } from "./context/UserContext.jsx";
 
-// Get startParam dynamically from Telegram WebApp
-const startParam = window.Telegram.WebApp.initDataUnsafe.start_param;
-
-console.error('Start Param:', startParam);
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
-        <UserProvider startParam={startParam}>
+        <UserProvider>
             <TodoProvider>
                 <TagsProvider>
                     <App />

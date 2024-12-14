@@ -6,7 +6,7 @@ import axios from "axios"; // Example user data, if needed
 const UserContext = createContext();
 
 // Context Provider Component
-export const UserProvider = ({ children, startParam }) => {
+export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const initData = window.Telegram.WebApp.initDataUnsafe.user// Initialize user state to null
 
@@ -15,7 +15,7 @@ export const UserProvider = ({ children, startParam }) => {
             try {
                 const response = await axios.post('https://2ff1-192-36-61-126.ngrok-free.app/api/users/', {
                     userInitData: window.Telegram.WebApp.initData,
-                    startParam: startParam || window.Telegram.WebApp.initDataUnsafe.start_param,
+                    startParam: window.Telegram.WebApp.initDataUnsafe.start_param,
                 }, {
                     headers: {
                         'ngrok-skip-browser-warning': 'true', // Skips ngrok browser warning
