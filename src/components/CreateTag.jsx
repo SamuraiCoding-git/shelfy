@@ -86,7 +86,7 @@ const CreateTag = ({ toggleTag, setCurrentHeight, editTag = false, tag = false }
                             value={tagName}
                             onChange={(e) => setTagName(e.target.value)}
                             onFocus={() => setCurrentHeight(80)}
-                            onBlur={() => setCurrentHeight(30)}
+                            onBlur={() => setCurrentHeight(40)}
                         />
                     </div>
                 </div>
