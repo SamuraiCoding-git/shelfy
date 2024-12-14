@@ -15,7 +15,7 @@ const TodoList = ({ isCalendarPage }) => {
             {/* Title */}
             {!isCalendarPage && (
                 <div className="flex items-center gap-2 text-white mb-4">
-                    <img src="/assets/icons/task_square.svg" alt="task square" />
+                    <img src="/assets/icons/task-square-black.svg" alt="task square" />
                     <h1 className="text-xl font-semibold">Today&#39;s To-Do List</h1>
                 </div>
             )}

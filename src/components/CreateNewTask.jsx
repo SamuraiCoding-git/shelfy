@@ -27,7 +27,7 @@ export default function CreateNewTask({ onClose }) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (taskTitle && taskDescription && currentDate) {
+        if (taskTitle && currentDate) {
             createTask(taskTitle, taskDescription, currentDate, selectedReminder, selectedTime, selectedReminderTime || null, selectedTags, selectedRepeat);
             resetSelectedTags()
             onClose(); // Close the modal after task is created
