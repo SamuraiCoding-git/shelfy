@@ -2,11 +2,10 @@ import React from 'react';
 
 const RewardCard = () => {
     const tg = window.Telegram.WebApp;
-    const initData = tg.initDataUnsafe;
-    const userId = initData.user ? initData.user.id : 422999166;
 
     const inviteUser = () => {
-        const link = `https://t.me/share/url?url=https://t.me/shelfy_bot_bot/app?startapp=${userId}`;
+        console.log(window.Telegram.WebApp.initDataUnsafe.user.id)
+        const link = `https://t.me/share/url?url=https://t.me/shelfy_bot_bot/app?startapp=${window.Telegram.WebApp.initDataUnsafe.user.id}`;
         tg.openTelegramLink(link);
     };
 
