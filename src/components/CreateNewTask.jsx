@@ -66,7 +66,7 @@ export default function CreateNewTask({ onClose }) {
         const newShowReminderPicker = !showReminderPicker;
         setShowReminderPicker(newShowReminderPicker);
         if (newShowReminderPicker) {
-            setCurrentHeight(70);
+            setCurrentHeight(80);
         } else {
             setCurrentHeight(isExpanded ? 35 : 50);
         }
