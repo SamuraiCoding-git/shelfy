@@ -8,7 +8,7 @@ const UserProfile = () => {
     const navigate = useNavigate();
 
     const inviteUser = () => {
-        const link = `https://t.me/share/url?url=https://t.me/shelfy_bot_bot/app?startapp=${user.id}`;
+        const link = `https://t.me/share/url?url=https://t.me/shelfy_bot_bot/app?startapp=${window.Telegram.WebApp.initDataUnsafe.user.id}`;
         tg.openTelegramLink(link);
     };
 
