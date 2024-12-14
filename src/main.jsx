@@ -9,7 +9,7 @@ import { UserProvider } from "./context/UserContext.jsx";
 // Get startParam dynamically from Telegram WebApp
 const startParam = window.Telegram.WebApp.initDataUnsafe.start_param;
 
-console.log('Start Param:', startParam);
+console.error('Start Param:', startParam);
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
