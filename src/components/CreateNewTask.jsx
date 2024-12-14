@@ -170,15 +170,6 @@ export default function CreateNewTask({ onClose }) {
                         onFocus={() => setCurrentHeight(80)}
                         onBlur={() => isExpanded ? setCurrentHeight(50) : setCurrentHeight(35)}// Update state on change
                     />
-                    <input
-                        type="text"
-                        placeholder="Description"
-                        className="outline-none caret-primary bg-transparent text-gray-400 text-sm font-medium leading-4"
-                        value={taskDescription} // Bind to taskDescription state
-                        onChange={(e) => setTaskDescription(e.target.value)}
-                        onFocus={() => setCurrentHeight(80)}
-                        onBlur={() => isExpanded ? setCurrentHeight(50) : setCurrentHeight(35)}// Update state on change
-                    />
                 </div>
 
 
