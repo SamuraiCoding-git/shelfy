@@ -40,7 +40,7 @@ export const UserProvider = ({ children }) => {
         };
 
         fetchUserInfo(); // Fetch user info on component mount
-    }, [startParam]);
+    }, []);
 
     const addPoints = (points) => {
         setUser((prevUser) => {
