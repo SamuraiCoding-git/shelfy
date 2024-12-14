@@ -12,9 +12,9 @@ const CreateTag = ({ toggleTag, setCurrentHeight, editTag = false, tag = false }
 
     // Set tag data when `tag` changes and ensure controlled inputs are never undefined
     useEffect(() => {
-        setCurrentHeight(30); // Adjust height for UI (if needed)
+        setCurrentHeight(40); // Adjust height for UI (if needed)
         if (tag) {
-            setTagName(tag.name || ''); // Ensure it's always a valid string
+            setTagName(tag.name || '');
             setTagColor(tag.color || '#1E79FF'); // Set default color if no tag.color
         } else {
             setTagName(''); // Default empty string if no tag
@@ -40,6 +40,7 @@ const CreateTag = ({ toggleTag, setCurrentHeight, editTag = false, tag = false }
 
     const handleEditTag = () => {
         updateTag(tag.tag_id, { "name": tagName, "color": tagColor });
+        console.log(`updateTag: ${tag.tag_id, { "name": tagName, "color": tagColor }}`)
         toggleTag(true);
     };
 

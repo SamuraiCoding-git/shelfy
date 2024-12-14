@@ -135,7 +135,7 @@ export const TodoProvider = ({ children }) => {
         const filtered = todos.filter((todo) => {
             // Ensure todo.date is a valid date string before parsing
             if (!todo.date) return false;
-            console.log(todo.date)
+            console.log(formattedDate)
             // Parse the todo.date and remove the time component
             const todoDate = format(parseISO(todo.date), 'yyyy-MM-dd');
             return todoDate === formattedDate;

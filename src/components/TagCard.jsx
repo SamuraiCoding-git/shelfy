@@ -9,7 +9,7 @@ const TagCard = ({ tag, handleSelect = null, handleEdit = false, removeSelectedT
     }
 
     useEffect(() => {
-        setChecked(tag.checked || false); // Sync checked state with the parent state, ensuring it's always boolean
+        setChecked(tag.checked || false);
     }, [tag]);
 
     const toggleTagStatus = () => {
