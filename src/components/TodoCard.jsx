@@ -7,7 +7,7 @@ const TodoCard = ({ isCalendarPage, todo, toggleStatus }) => {
     const handleTodoChange = (todo_id, status) => {
         if (!status) {
             toggleStatus(todo_id);
-            addPoints(100);
+            addPoints(50);
             updateTasksCompleted();
         }
     };

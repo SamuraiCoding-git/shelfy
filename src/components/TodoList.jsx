@@ -8,7 +8,7 @@ const TodoList = ({ isCalendarPage }) => {
     return (
         <div
             className={`flex flex-col gap-4 ${
-                isCalendarPage ? 'bg-none py-6 pt-6 pb-[74px]' : 'p-6 bg-gray-900 rounded-3xl'
+                isCalendarPage ? 'bg-none py-6 pt-6 pb-[74px]' : 'p-6 bg-[#1E79FF] rounded-3xl'
             } overflow-y-auto`} // Add scrolling
             style={{ maxHeight: 'calc(100vh - 74px)' }} // Set max height
         >

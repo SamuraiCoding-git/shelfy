@@ -184,7 +184,7 @@ export default function CreateNewTask({ onClose }) {
 
                 {/* Buttons */}
                 <div
-                    className={`${isExpanded ? "flex flex-col gap-4 mt-4" : "flex flex-row gap-2 mt-6"} whitespace-nowrap`}>
+                    className={`${isExpanded ? "flex flex-col gap-2 mt-4" : "flex flex-row gap-1 mt-6"} whitespace-nowrap`}>
                     {/* Контейнер для Today и Repeat */}
                     <div className={`flex ${isExpanded ? "flex-row" : "flex-row"} gap-2 whitespace-nowrap`}>
                         <button
