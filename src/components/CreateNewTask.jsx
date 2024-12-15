@@ -76,7 +76,7 @@ export default function CreateNewTask({ onClose }) {
         const newShowTagPicker = !showTagPicker;
         setShowTagPicker(newShowTagPicker);
         if (newShowTagPicker) {
-            setCurrentHeight(35);
+            setCurrentHeight(45);
         } else {
             setCurrentHeight(isExpanded ? 35 : 50);
         }
