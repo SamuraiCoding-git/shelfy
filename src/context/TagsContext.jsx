@@ -6,7 +6,7 @@ const apiService = {
     getTags: async () => {
         try {
             const response = await axios.post(
-                'https://2ff1-192-36-61-126.ngrok-free.app/api/tags/fetch-all',
+                'https://3cf7-79-120-9-116.ngrok-free.app/api/tags/fetch-all',
                 { userInitData: window.Telegram.WebApp.initData },
                 {
                     headers: {
@@ -24,7 +24,7 @@ const apiService = {
     addTag: async (tag) => {
         try {
             const response = await axios.post(
-                'https://2ff1-192-36-61-126.ngrok-free.app/api/tags',
+                'https://3cf7-79-120-9-116.ngrok-free.app/api/tags',
                 {
                     userInitData: window.Telegram.WebApp.initData,
                     tagData: tag
@@ -45,7 +45,7 @@ const apiService = {
     updateTag: async (tagId, updatedTag) => {
         try {
             const response = await axios.post(
-                `https://2ff1-192-36-61-126.ngrok-free.app/api/tags/update`,
+                `https://3cf7-79-120-9-116.ngrok-free.app/api/tags/update`,
                 {
                     tagId: tagId,
                     tagData: updatedTag,
@@ -67,7 +67,7 @@ const apiService = {
     deleteTag: async (tagId) => {
         try {
             const response = await axios.post(
-                `https://2ff1-192-36-61-126.ngrok-free.app/api/tags/delete`,
+                `https://3cf7-79-120-9-116.ngrok-free.app/api/tags/delete`,
                 {
                     tagId: tagId,
                     userInitData: window.Telegram.WebApp.initData

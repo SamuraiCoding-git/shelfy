@@ -26,7 +26,7 @@ const Leaderboard = () => {
 
             try {
                 const response = await axios.post(
-                    `https://2ff1-192-36-61-126.ngrok-free.app/api/users/top_earnings?period=${activeCategory}`,
+                    `https://3cf7-79-120-9-116.ngrok-free.app/api/users/top_earnings?period=${activeCategory}`,
                     {
                         headers: {
                             'ngrok-skip-browser-warning': 'true', // Skips ngrok browser warning
