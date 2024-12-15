@@ -34,7 +34,7 @@ const UserProfile = () => {
             <div className="user-acquisition-statistics-wrapper text-center text-primary font-medium text-base mb-4 flex justify-evenly">
                 <div className="user-acquisition-statistics flex flex-col items-center justify-center gap-2">
                     <p>{user.friends}</p>
-                    <p className="secondary-text">friends</p>
+                    <p className="secondary-text -mt-2">friends</p>
                 </div>
 
                 {/*<div className="user-acquisition-statistics flex flex-col items-center justify-center gap-2">*/}

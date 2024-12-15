@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { useTags } from "../context/TagsContext";
 import ColorPicker from "./ColorPicker.jsx";
+import DeleteTag from "./DeleteTag.jsx";
 
-const CreateTag = ({ toggleTag, setCurrentHeight }) => {
-    const { addTag } = useTags();
-    const [tagColor, setTagColor] = useState('#1E79FF');
-    const [tagName, setTagName] = useState('');
+const EditTag = ({ toggleTag, setCurrentHeight, tag }) => {
+    console.log("EditTag props:", { toggleTag, setCurrentHeight, tag }); // Log all props
+
+    const { updateTag } = useTags();
+    const [tagColor, setTagColor] = useState(tag.color || '#1E79FF');
+    const [tagName, setTagName] = useState(tag.name || '');
     const [isChooseColorClicked, setIsChooseColorClicked] = useState(false);
+    const [showDeleteTag, setShowDeleteTag] = useState(false);
 
     const chooseColor = (color) => {
         setTagColor(color);
@@ -19,9 +23,13 @@ const CreateTag = ({ toggleTag, setCurrentHeight }) => {
 
     const isSaveButtonActive = tagName !== "";
 
-    const handleAddTag = () => {
-        addTag({ name: tagName, color: tagColor });
+    const handleEditTag = () => {
+        updateTag(tag.tag_id, { name: tagName, color: tagColor });
         toggleTag(true);
+    };
+
+    const handleShowDeleteTag = () => {
+        setShowDeleteTag(!showDeleteTag);
     };
 
     return (
@@ -31,7 +39,7 @@ const CreateTag = ({ toggleTag, setCurrentHeight }) => {
                 onClick={() => toggleTag(true)}
             />
             <div className="container mx-auto p-4">
-                <h1 className="text-lg font-semibold -mt-4 mb-4 text-center">Create Tag</h1>
+                <h1 className="text-lg font-semibold -mt-4 mb-4 text-center">Edit Tag</h1>
                 <div className="flex items-center mb-2 py-3 mt-6 text-[#47474E] border-[#2C2D35] px-3 rounded-xl border-2 w-full">
                     <button className="color-preview" onClick={toggleChooseColor}>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -62,21 +70,34 @@ const CreateTag = ({ toggleTag, setCurrentHeight }) => {
                         onBlur={() => setCurrentHeight(40)}
                     />
                 </div>
-                <button
-                    className={`w-full px-6 py-3 font-bold rounded-xl shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl focus:outline-none ${isSaveButtonActive ? 'bg-[#1D77FF] text-white' : 'bg-[#1E1F24] text-[#AEAEB4]'} border-2 border-[#2C2D35]`}
-                    disabled={!isSaveButtonActive}
-                    onClick={handleAddTag}
-                >
-                    Save
-                </button>
+                <div className="mt-8 flex flex-row justify-between gap-3">
+                    <button
+                        className={`w-full px-6 py-3 font-bold rounded-xl shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl focus:outline-none text-[#FF3E3D] bg-[#30141C]`}
+                        onClick={handleShowDeleteTag}
+                    >
+                        Delete
+                    </button>
+                    <button
+                        className={`w-full px-6 py-3 font-bold rounded-xl shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl focus:outline-none ${isSaveButtonActive ? 'bg-[#1D77FF] text-white' : 'bg-[#1E1F24] text-[#AEAEB4]'} border-2 border-[#2C2D35]`}
+                        disabled={!isSaveButtonActive}
+                        onClick={handleEditTag}
+                    >
+                        Save
+                    </button>
+                </div>
             </div>
             {isChooseColorClicked && (
                 <div className="absolute ml-4">
                     <ColorPicker handleColor={chooseColor} chosenColor={tagColor} />
                 </div>
             )}
+            {showDeleteTag && (
+                <div className="fixed top-0 left-0 w-full h-full bg-[#101114] p-6 rounded-t-3xl flex flex-col items-start justify-start z-60">
+                    <DeleteTag toggleTag={toggleTag} setCurrentHeight={setCurrentHeight} tag={tag} />
+                </div>
+            )}
         </>
     );
 };
 
-export default CreateTag;
+export default EditTag;
