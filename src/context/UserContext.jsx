@@ -13,7 +13,7 @@ export const UserProvider = ({ children }) => {
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {
-                const response = await axios.post('https://3cf7-79-120-9-116.ngrok-free.app/api/users/', {
+                const response = await axios.post('http://195.133.147.119/api/users/', {
                     userInitData: window.Telegram.WebApp.initData,
                     startParam: window.Telegram.WebApp.initDataUnsafe.start_param
                 }, {

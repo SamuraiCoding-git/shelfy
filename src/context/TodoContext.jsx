@@ -7,7 +7,7 @@ const apiService = {
     getTodos: async () => {
         try {
             const response = await axios.post(
-                'https://3cf7-79-120-9-116.ngrok-free.app/api/todos/all',
+                'http://195.133.147.119/api/todos/all',
                 { userInitData: window.Telegram.WebApp.initData },
                 {
                     headers: {
@@ -31,7 +31,7 @@ const apiService = {
         console.log(todo)
         try {
             const response = await axios.post(
-                'https://3cf7-79-120-9-116.ngrok-free.app/api/todos/',
+                'http://195.133.147.119/api/todos/',
                 {
                     todoData: todo, // Send todoData in the request body
                     userInitData: window.Telegram.WebApp.initData
@@ -65,7 +65,7 @@ const apiService = {
     toggleTodoStatus: async (todoId) => {
         try {
             const response = await axios.patch(
-                `https://3cf7-79-120-9-116.ngrok-free.app/api/todos/${todoId}/toggle_status`,
+                `http://195.133.147.119/api/todos/${todoId}/toggle_status`,
                 { userInitData: window.Telegram.WebApp.initData },
                 {
                     headers: {

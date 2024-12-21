@@ -40,6 +40,11 @@ export default function CreateNewTask({ onClose }) {
         setCurrentDate(new Date());
     }
 
+    const handleResetSelectedTime = () => {
+        setSelectedReminderTime(null);
+        setSelectedReminder("None")// Reset the time
+    };
+
     const toggleExpanded = (flag = false) => {
         const newHeight = isExpanded ? 35 : 50;
         setCurrentHeight(newHeight);
@@ -247,9 +252,9 @@ export default function CreateNewTask({ onClose }) {
                             )}
                         </button>
                         {isExpanded && selectedReminder !== "None" && (
-                            <button>
+                            <button onClick={handleResetSelectedTime}>
                                 <img
-                                    className="z-20 w-6 h-6"  // Ensure the image fits inside the square button
+                                    className="z-50 w-6 h-6"  // Ensure the image fits inside the square button
                                     src="/assets/icons/dismiss.svg"
                                     alt="dismiss"
                                 />
