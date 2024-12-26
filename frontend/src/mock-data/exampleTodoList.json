@@ -1,0 +1,173 @@
+{
+  "todos": [
+    {
+      "id": 1,
+      "time": "2024-12-01T09:00:00",
+      "duration": "2024-12-01T09:00:00",
+      "status": false,
+      "title": "Breakfast",
+      "repeat": "daily",
+      "description": "Let him cook",
+      "tags": [
+        {
+          "name": "Youtube",
+          "color": "#FF3E3D"
+        },
+        {
+          "name": "Crypto",
+          "color": "#6949FF"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "time": "2024-12-01T10:00:00",
+      "status": false,
+      "title": "Morning run",
+      "repeat": "daily",
+      "description": "Let him cook",
+      "tags": [
+        {
+          "name": "Telegram",
+          "color": "#1EAEFF"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "time": "2024-12-01T11:00:00",
+      "status": false,
+      "title": "Reading a book",
+      "description": "Read '1984' by George Orwell",
+      "tags": [
+        {
+          "name": "urgent",
+          "color": "#e27d60"
+        },
+        {
+          "name": "important",
+          "color": "#8d8741"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "time": "2024-12-02T13:00:00",
+      "status": false,
+      "title": "Work meeting",
+      "description": "Weekly project team meeting",
+      "tags": [
+        {
+          "name": "urgent",
+          "color": "#e27d60"
+        },
+        {
+          "name": "important",
+          "color": "#8d8741"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "time": "2024-12-02T15:00:00",
+      "status": true,
+      "title": "Shopping at the store",
+      "description": "Buy groceries for the week",
+      "tags": [
+        {
+          "name": "urgent",
+          "color": "#e27d60"
+        },
+        {
+          "name": "important",
+          "color": "#8d8741"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "time": "2024-12-02T16:00:00",
+      "status": false,
+      "title": "Study",
+      "description": "Learn a new programming topic",
+      "tags": [
+        {
+          "name": "urgent",
+          "color": "#e27d60"
+        },
+        {
+          "name": "important",
+          "color": "#8d8741"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "time": "2024-12-03T22:00:00",
+      "status": false,
+      "title": "Yoga",
+      "description": "One-hour yoga session",
+      "tags": [
+        {
+          "name": "urgent",
+          "color": "#e27d60"
+        },
+        {
+          "name": "important",
+          "color": "#8d8741"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "time": "2024-12-04T19:00:00",
+      "status": false,
+      "title": "Cooking dinner",
+      "description": "Prepare dinner for the family",
+      "tags": [
+        {
+          "name": "urgent",
+          "color": "#e27d60"
+        },
+        {
+          "name": "important",
+          "color": "#8d8741"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "time": "2024-12-04T20:00:00",
+      "status": false,
+      "title": "Playing chess",
+      "description": "Play chess with a friend online",
+      "tags": [
+        {
+          "name": "urgent",
+          "color": "#e27d60"
+        },
+        {
+          "name": "important",
+          "color": "#8d8741"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "time": "2024-12-05T22:00:00",
+      "status": false,
+      "title": "Preparing for tomorrow",
+      "description": "Get ready for tomorrow's events",
+      "tags": [
+        {
+          "name": "urgent",
+          "color": "#e27d60"
+        },
+        {
+          "name": "important",
+          "color": "#8d8741"
+        }
+      ]
+    }
+  ]
+}
