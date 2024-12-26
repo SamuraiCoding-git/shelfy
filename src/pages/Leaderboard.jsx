@@ -26,7 +26,7 @@ const Leaderboard = () => {
 
             try {
                 const response = await axios.post(
-                    `http://195.133.147.119/api/users/top_earnings?period=${activeCategory}`,
+                    `https://shelfy.website/api/users/top_earnings?period=${activeCategory}`,
                     {
                         headers: {
                             'ngrok-skip-browser-warning': 'true', // Skips ngrok browser warning

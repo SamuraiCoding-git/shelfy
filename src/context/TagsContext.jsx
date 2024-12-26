@@ -6,7 +6,7 @@ const apiService = {
     getTags: async () => {
         try {
             const response = await axios.post(
-                'http://195.133.147.119/api/tags/fetch-all',
+                'https://shelfy.website/api/tags/fetch-all',
                 { userInitData: window.Telegram.WebApp.initData },
                 {
                     headers: {
@@ -24,7 +24,7 @@ const apiService = {
     addTag: async (tag) => {
         try {
             const response = await axios.post(
-                'http://195.133.147.119/api/tags',
+                'https://shelfy.website/api/tags',
                 {
                     userInitData: window.Telegram.WebApp.initData,
                     tagData: tag
@@ -45,7 +45,7 @@ const apiService = {
     updateTag: async (tagId, updatedTag) => {
         try {
             const response = await axios.post(
-                `http://195.133.147.119/api/tags/update`,
+                `https://shelfy.website/api/tags/update`,
                 {
                     tagId: tagId,
                     tagData: updatedTag,
@@ -67,7 +67,7 @@ const apiService = {
     deleteTag: async (tagId) => {
         try {
             const response = await axios.post(
-                `http://195.133.147.119/api/tags/delete`,
+                `https://shelfy.website/api/tags/delete`,
                 {
                     tagId: tagId,
                     userInitData: window.Telegram.WebApp.initData
